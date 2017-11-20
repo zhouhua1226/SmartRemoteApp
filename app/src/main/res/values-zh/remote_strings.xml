@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="video_loading_text">正在加载!</string>
+    <string name="money_temp">%d次</string>
+    <string name="free_text">空闲中</string>
+    <string name="busy_text">游戏中</string>
+    <string name="preserve_text">维护中</string>
+    <string name="player_counter_text">%d人在线</string>
+    <string name="room_default_name">抓娃娃</string>
+</resources>
