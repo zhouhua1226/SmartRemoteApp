@@ -1,6 +1,7 @@
 package com.game.smartremoteapp.activity.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
@@ -28,7 +29,6 @@ import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.EmptyLayout;
 import com.game.smartremoteapp.view.LoginDialog;
-import com.game.smartremoteapp.view.MyToast;
 import com.gatz.netty.AppClient;
 import com.gatz.netty.utils.AppProperties;
 import com.gatz.netty.utils.NettyUtils;
@@ -83,16 +83,30 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_welcome;
     }
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         Utils.showLogE(TAG, "afterCreate");
-        initView();
-        initData();
-        showZwwFg();
+        initWelcome();
     }
+
+    private void initWelcome() {
+        setContentView(R.layout.activity_welcome);//闪屏
+        new Handler().postDelayed(initRunnable, 2000);
+    }
+
+    private Runnable initRunnable = new Runnable() {
+        @Override
+        public void run() {
+            View MainView = getLayoutInflater().inflate(R.layout.activity_main, null);
+            setContentView(MainView);
+            initView();
+            initData();
+            showZwwFg();
+        }
+    };
 
     private void setListener() {
         zwwjFragment.setOnClickEmptyListener(new EmptyLayout.OnClickReTryListener() {
@@ -113,6 +127,7 @@ public class MainActivity extends BaseActivity {
         RxBus.get().register(this);
         loginDialog = new LoginDialog(this, R.style.easy_dialog_style);
         loginDialog.setDialogClickListener(idialogClick);
+        doServcerConnect();
         if ((boolean) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_LOGIN, false)) {
             //用户已经注册
             ph = (String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "0");
@@ -144,7 +159,6 @@ public class MainActivity extends BaseActivity {
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
                 zwwjFragment.dismissEmptyLayout();
                 setListener();
-                doServcerConnect();
                 Utils.showLogE(TAG, "logIn::::" + loginInfoResult.getMsg());
                 Utils.token = loginInfoResult.getData().getAccessToken();
                 EZOpenSDK.getInstance().setAccessToken(Utils.token);
@@ -197,7 +211,7 @@ public class MainActivity extends BaseActivity {
                 public void _onSuccess(Result<LoginInfo> result) {
                     zwwjFragment.dismissEmptyLayout();
                     if (result.getMsg().equals(Utils.HTTP_OK)) {
-                        doServcerConnect();
+                        //doServcerConnect();
                         Utils.showLogE(TAG, "logInWithSMS::::" + result.getMsg());
                         dollLists = result.getData().getDollList();
                         Utils.token = result.getData().getAccessToken();
@@ -359,7 +373,7 @@ public class MainActivity extends BaseActivity {
             Utils.showLogE(TAG, "TAG_CONNECT_SUCESS");
         } else if (state.equals(Utils.TAG_SESSION_INVALID)) {
             Utils.showLogE(TAG, "TAG_SESSION_INVALID");
-            logIn((String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "0"),false);
+            logIn((String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "0"), false);
         } else if (state.equals(Utils.TAG_GATEWAT_USING)) {
             Utils.showLogE(TAG, "TAG_GATEWAT_USING");
         }
@@ -406,5 +420,4 @@ public class MainActivity extends BaseActivity {
     public void getSingleGatwayConnect(String id) {
         Utils.showLogE(TAG, "getSingleGatwayConnect id" + id);
     }
-
 }
