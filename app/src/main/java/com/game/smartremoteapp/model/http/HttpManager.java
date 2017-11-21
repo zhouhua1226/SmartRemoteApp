@@ -36,10 +36,11 @@ public class HttpManager {
     private HttpManager() {
         Gson gson = new GsonBuilder().create();
         retrofit = new Retrofit.Builder()
-                .client(HttpInstance.getInstance().getClient())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(UrlUtils.VIDEO_ROOT_URL).build();
+                .client(HttpInstance.getInstance().getClient())
+                .baseUrl(UrlUtils.VIDEO_ROOT_URL)
+                .build();
         smartService = retrofit.create(SmartService.class);
     }
 
@@ -96,7 +97,6 @@ public class HttpManager {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
-
     }
 
 }

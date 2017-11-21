@@ -108,16 +108,6 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    private void setListener() {
-        zwwjFragment.setOnClickEmptyListener(new EmptyLayout.OnClickReTryListener() {
-            @Override
-            public void onClickReTry(View view) {
-                ph = (String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "0");
-                logIn(ph, true);
-            }
-        });
-    }
-
     @Override
     protected void initView() {
         ButterKnife.bind(this);
@@ -130,11 +120,13 @@ public class MainActivity extends BaseActivity {
         doServcerConnect();
         if ((boolean) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_LOGIN, false)) {
             //用户已经注册
-            ph = (String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "0");
+            ph = (String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "");
             if (Utils.isEmpty(ph)) {
                 return;
             }
-            logIn(ph, false);
+            if (Utils.isNetworkAvailable(getApplicationContext())) {
+                logIn(ph, false);
+            }
         } else {
             loginDialog.show();
         }
@@ -158,7 +150,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
                 zwwjFragment.dismissEmptyLayout();
-                setListener();
                 Utils.showLogE(TAG, "logIn::::" + loginInfoResult.getMsg());
                 Utils.token = loginInfoResult.getData().getAccessToken();
                 EZOpenSDK.getInstance().setAccessToken(Utils.token);
@@ -202,7 +193,6 @@ public class MainActivity extends BaseActivity {
         @Override
         public void login(final String phone, String code) {
             zwwjFragment.showLoading();
-            setListener();
             String str = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
             String str1 = Base64.encodeToString(code.getBytes(), Base64.DEFAULT);
             //TODO 登录
@@ -211,7 +201,6 @@ public class MainActivity extends BaseActivity {
                 public void _onSuccess(Result<LoginInfo> result) {
                     zwwjFragment.dismissEmptyLayout();
                     if (result.getMsg().equals(Utils.HTTP_OK)) {
-                        //doServcerConnect();
                         Utils.showLogE(TAG, "logInWithSMS::::" + result.getMsg());
                         dollLists = result.getData().getDollList();
                         Utils.token = result.getData().getAccessToken();
@@ -257,10 +246,20 @@ public class MainActivity extends BaseActivity {
         tvTabMy.setTextColor(getResources().getColor(R.color.main_gray));
     }
 
+    private EmptyLayout.OnClickReTryListener onClickReTryListener = new EmptyLayout.OnClickReTryListener() {
+        @Override
+        public void onClickReTry(View view) {
+            if (Utils.isNetworkAvailable(getApplicationContext())) {
+                logIn(ph, false);
+            }
+        }
+    };
+
     private void showZwwFg() {
         FragmentTransaction nowTransaction = getSupportFragmentManager().beginTransaction();
         if (zwwjFragment == null) {
             zwwjFragment = new ZWWJFragment();
+            zwwjFragment.setOnClickEmptyListener(onClickReTryListener);
         }
         nowTransaction.replace(R.id.main_center, zwwjFragment);
         nowTransaction.commitAllowingStateLoss();

@@ -40,6 +40,7 @@ public class ZWWJFragment extends BaseFragment {
     private ZWWAdapter zwwAdapter;
     private String sessionId;
     private String phone;
+    private EmptyLayout.OnClickReTryListener onClickReTryListener;
 
     @Override
     protected int getLayoutId() {
@@ -58,6 +59,12 @@ public class ZWWJFragment extends BaseFragment {
         zwwRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
         zwwRecyclerview.addItemDecoration(new SpaceItemDecoration(15));
         zwwRecyclerview.setAdapter(zwwAdapter);
+        if (roomBeens.size() ==  0) {
+            showError();
+        }
+        if (onClickReTryListener != null) {
+            zwwEmptylayout.setOnClickReTryListener(onClickReTryListener);
+        }
     }
 
     private void onClick() {
@@ -69,8 +76,8 @@ public class ZWWJFragment extends BaseFragment {
         zwwAdapter.notify(roomBeens);
     }
 
-    public void setOnClickEmptyListener(EmptyLayout.OnClickReTryListener onClickEmptyListener) {
-        zwwEmptylayout.setOnClickReTryListener(onClickEmptyListener);
+    public void setOnClickEmptyListener(EmptyLayout.OnClickReTryListener o) {
+        this.onClickReTryListener = o;
     }
 
     public void showError() {

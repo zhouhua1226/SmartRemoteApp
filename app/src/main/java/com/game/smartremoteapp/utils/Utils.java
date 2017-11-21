@@ -5,6 +5,8 @@
 package com.game.smartremoteapp.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 import com.gatz.netty.global.ConnectResultEvent;
@@ -135,4 +137,22 @@ public class Utils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    /**
+     * 判断网络是否连接
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) {
+            return false;
+        } else {
+            NetworkInfo info = cm.getActiveNetworkInfo();
+            if (info != null) {
+              return info.isAvailable();
+            }
+        }
+        return false;
+    }
 }
