@@ -54,6 +54,7 @@ public class Utils {
     public static final String HTTP_OK = "success";
 
     public static final int CATCH_TIME_OUT = 20;
+    public static final long CATCH_TIME_DELAY = 10 * 1000;
 
     public static void showLogE(String TAG, String msg) {
         if (D) {

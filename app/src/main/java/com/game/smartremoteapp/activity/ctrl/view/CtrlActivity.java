@@ -197,6 +197,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
         ctrlCompl.stopTimeCounter();
         ctrlCompl.sendCmdOutRoom();
+        NettyUtils.sendGetDeviceStatesCmd();
         ctrlCompl = null;
         RxBus.get().unregister(this);
     }
@@ -355,7 +356,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 catchLl.setVisibility(View.GONE);
                 operationRl.setVisibility(View.GONE);
             }
-        }, 8000); //8s下爪  抵消掉下爪需要的时间
+        }, Utils.CATCH_TIME_DELAY); //8s下爪  抵消掉下爪需要的时间
     }
 
     private void getMoney() {
@@ -484,7 +485,12 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 if (moveControlResponse.getMoveType().name().equals(MoveType.START.name())) {
                     setStartMode(false);
                 } else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
-                    setStartMode(true);
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setStartMode(true);
+                        }
+                    }, Utils.CATCH_TIME_DELAY);
                 }
             }
         } else if (response instanceof String) {

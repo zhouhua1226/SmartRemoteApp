@@ -385,13 +385,11 @@ public class MainActivity extends BaseActivity {
     public void getDeviceStates(Object response) {
         if (response instanceof GetStatusResponse) {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
-            Utils.showLogE(TAG, "getDeviceStates::::::" + getStatusResponse.getStatus());
-            if (!Utils.isEmpty(getStatusResponse.getStatus())) {
+            if ((getStatusResponse.getSeq() != -2) && (!Utils.isEmpty(getStatusResponse.getStatus()))) {
                 String[] devices = getStatusResponse.getStatus().split(";");
                 for (int i = 0; i < devices.length; i++) {
                     String address = devices[i].substring(0, devices[i].indexOf("-"));
                     String stats = devices[i].substring(devices[i].indexOf("-") + 1);
-                    Utils.showLogE(TAG, "getDeviceStates::::::" + address + "::::" + stats);
                     for (int j = 0; j < dollLists.size(); j++) {
                         ZwwRoomBean bean = dollLists.get(j);
                         if (bean.getDOLL_ID().equals(address)) {
@@ -403,8 +401,33 @@ public class MainActivity extends BaseActivity {
                             dollLists.set(j, bean);
                         }
                     }
+                    zwwjFragment.notifyAdapter(dollLists);
                 }
-                zwwjFragment.notifyAdapter(dollLists);
+            } else {
+                //其他用户操作娃娃机了
+                boolean free = getStatusResponse.getFree();
+                String address = getStatusResponse.getRoomId();
+                for (int k = 0; k < dollLists.size(); k++) {
+                    ZwwRoomBean bean = dollLists.get(k);
+                    if (bean.getDOLL_ID().equals(address)) {
+                        if (free) {
+                            bean.setDOLL_STATE("0");
+                        } else {
+                            bean.setDOLL_STATE("1");
+                        }
+                        dollLists.set(k, bean);
+                    }
+                }
+                if (free) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            zwwjFragment.notifyAdapter(dollLists);
+                        }
+                    }, Utils.CATCH_TIME_DELAY);
+                } else {
+                    zwwjFragment.notifyAdapter(dollLists);
+                }
             }
         }
     }
