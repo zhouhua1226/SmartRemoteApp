@@ -116,7 +116,7 @@ public class ZWWJFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), CtrlActivity.class);
         intent.putExtra(Utils.TAG_ROOM_NAME, name);
         intent.putExtra(Utils.TAG_CAMERA_NAME, camera);
-        //intent.putExtra(Utils.TAG_ROOM_STATUS, status);
+        intent.putExtra(Utils.TAG_ROOM_STATUS, status);
         startActivity(intent);
     }
 }

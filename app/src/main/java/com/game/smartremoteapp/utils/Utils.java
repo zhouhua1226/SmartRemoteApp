@@ -51,6 +51,8 @@ public class Utils {
     public static boolean isVibrator;  //是否开启震动  11/18 11:20
     public static final String HTTP_OK = "success";
 
+    public static final int CATCH_TIME_OUT = 20;
+
     public static void showLogE(String TAG, String msg) {
         if (D) {
             android.util.Log.e(TAG, TAG + TAG_DELIMETER + msg);

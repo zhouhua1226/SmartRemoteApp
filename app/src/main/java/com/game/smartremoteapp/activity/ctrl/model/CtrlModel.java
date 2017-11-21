@@ -103,12 +103,14 @@ public class CtrlModel {
                 }
                 if(mDeviceInfo == null) {
                     Utils.showLogE(TAG, "没有找到相关摄像头");
+                    callBack.getErrCode(EZUtils.EZ_OFFLINE);
                     return;
                 }
                 //TODO 不加密
                 mDeviceInfo.setIsEncrypt(0);
                 mCameraInfo = EZUtils.getCameraInfoFromDevice(mDeviceInfo, 0);
                 if (mCameraInfo == null) {
+                    callBack.getErrCode(EZUtils.EZ_OFFLINE);
                     return;
                 }
                 if (mDeviceInfo.getStatus() == EZUtils.EZ_OFFLINE) {

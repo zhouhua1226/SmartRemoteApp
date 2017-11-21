@@ -1,21 +1,5 @@
 [
     {
-        "merged": "D:\\com.hongxiu.wawaji.1.1\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
-        "source": "D:\\com.hongxiu.wawaji.1.1\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
-    },
-    {
-        "merged": "E:\\game_space\\myworkspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
-        "source": "E:\\game_space\\myworkspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
-    },
-    {
-        "merged": "D:\\workspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
-        "source": "D:\\workspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
-    },
-    {
-        "merged": "E:\\game_space\\workspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
-        "source": "E:\\game_space\\workspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
-    },
-    {
         "merged": "E:\\game_space\\myspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
         "source": "E:\\game_space\\myspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
     }

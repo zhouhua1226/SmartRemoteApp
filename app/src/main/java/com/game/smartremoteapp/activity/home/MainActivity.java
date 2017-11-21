@@ -263,7 +263,7 @@ public class MainActivity extends BaseActivity {
             zwwjFragment = new ZWWJFragment();
         }
         nowTransaction.replace(R.id.main_center, zwwjFragment);
-        nowTransaction.commit();
+        nowTransaction.commitAllowingStateLoss();
         setFocuse();
         ivTabZww.setBackgroundResource(R.drawable.zww);
         tvTabHall.setTextColor(getResources().getColor(R.color.pink));
@@ -371,6 +371,7 @@ public class MainActivity extends BaseActivity {
             Utils.showLogE(TAG, "TAG_CONNECT_ERR");
         } else if (state.equals(Utils.TAG_CONNECT_SUCESS)) {
             Utils.showLogE(TAG, "TAG_CONNECT_SUCESS");
+            getDeviceStates();
         } else if (state.equals(Utils.TAG_SESSION_INVALID)) {
             Utils.showLogE(TAG, "TAG_SESSION_INVALID");
             logIn((String) SPUtils.get(getApplicationContext(), UserUtils.SP_TAG_PHONE, "0"), false);
@@ -385,6 +386,7 @@ public class MainActivity extends BaseActivity {
     public void getDeviceStates(Object response) {
         if (response instanceof GetStatusResponse) {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
+            Utils.showLogE(TAG, "getDeviceStates::::::" + getStatusResponse.getStatus());
             if (!Utils.isEmpty(getStatusResponse.getStatus())) {
                 String[] devices = getStatusResponse.getStatus().split(";");
                 for (int i = 0; i < devices.length; i++) {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:zhouh="http://schemas.android.com/apk/res-auto"
     android:background="#ffcad3"
     android:orientation="vertical"
     tools:context=".activity.ctrl.view.CtrlActivity">
@@ -189,7 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/startgame"
+            android:background="@drawable/ctrl_startgame_bg_n"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -206,12 +207,10 @@
                 android:text="50/次"
                 android:textColor="#ffe41f"
                 android:textSize="12sp" />
-
         </LinearLayout>
 
         <!--充值按钮和弹幕发送按钮-->
         <LinearLayout
-
             android:id="@+id/recharge_ll"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -237,24 +236,40 @@
         </LinearLayout>
 
         <!--下爪子按钮-->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/catch_ll"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/ctrl_bg"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:visibility="gone">
-            <!--爪子-->
-            <ImageView
+            android:layout_marginEnd="15dp"
+            android:visibility="gone"
+            android:layout_width="70dp"
+            android:layout_height="70dp">
+            <com.game.smartremoteapp.view.TimeCircleProgressView
+                android:id="@+id/ctrl_time_progress_view"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                zhouh:circleColor="@android:color/transparent"
+                zhouh:radius="28dp"
+                zhouh:progressBgColor="@android:color/white"
+                zhouh:progressColor="#bfece5"
+                zhouh:strokeWidth="5dp"
+                />
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/ctrl_bg"
                 android:gravity="center"
-                android:src="@drawable/catch1" />
-        </LinearLayout>
+                android:orientation="horizontal">
+                <!--爪子-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@drawable/catch1" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <!--操作按钮-->
         <RelativeLayout
@@ -296,11 +311,5 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
-
-
-
-
     </RelativeLayout>
-
-
 </RelativeLayout>

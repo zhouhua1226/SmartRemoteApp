@@ -1,7 +1,6 @@
 package com.game.smartremoteapp.activity.ctrl.view;
 
 import android.content.Intent;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,8 +26,8 @@ import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.FillingCurrencyDialog;
 import com.game.smartremoteapp.view.GifView;
 import com.game.smartremoteapp.view.MyToast;
+import com.game.smartremoteapp.view.TimeCircleProgressView;
 import com.game.smartremoteapp.view.VibratorView;
-import com.gatz.netty.UserInfo;
 import com.gatz.netty.global.ConnectResultEvent;
 import com.gatz.netty.utils.NettyUtils;
 import com.hwangjr.rxbus.RxBus;
@@ -47,7 +45,6 @@ import com.videogo.openapi.bean.EZCameraInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +90,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @BindView(R.id.recharge_ll)
     LinearLayout rechargeLl;
     @BindView(R.id.catch_ll)
-    LinearLayout catchLl;
+    RelativeLayout catchLl;
     @BindView(R.id.operation_rl)
     RelativeLayout operationRl;
     @BindView(R.id.doll_name)
@@ -108,6 +105,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     TextView playerNameTv;
     @BindView(R.id.ctrl_status_iv)
     ImageView ctrlStatusIv;
+    @BindView(R.id.ctrl_time_progress_view)
+    TimeCircleProgressView timeCircleProgressView;
 
     private static final String TAG = "CtrlActivity---";
     private SurfaceHolder mRealPlaySh;
@@ -141,6 +140,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     protected void initView() {
         ButterKnife.bind(this);
         RxBus.get().register(this);
+        Utils.showLogE(TAG, "=====" + UserUtils.UserNickName);
         NettyUtils.sendRoomInCmd(UserUtils.UserNickName);
         ctrlGifView.setVisibility(View.VISIBLE);
         ctrlGifView.setEnabled(false);
@@ -148,12 +148,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlFailIv.setVisibility(View.GONE);
         mRealPlaySh = mRealPlaySv.getHolder();
         mRealPlaySh.addCallback(this);
-
-        //2017/11/17 19:27加如此处适配视屏
-//        FrameLayout.LayoutParams linearParams =(FrameLayout.LayoutParams) mRealPlaySv.getLayoutParams(); //取控件当前的布局参数
-//        linearParams.width = (mRealPlaySv.getHeight()*16)/9;// 视屏控件的宽高适配
-//        mRealPlaySv.setLayoutParams(linearParams);
-//        Log.e(TAG+"<<<<<","新宽度="+mRealPlaySv.getWidth());
+        NettyUtils.pingRequest(); //判断连接
     }
 
     private void initData() {
@@ -166,6 +161,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             dollNameTv.setText(name);
         }
         playerNameTv.setText(UserUtils.UserNickName);
+        setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
     }
 
     @Override
@@ -198,6 +194,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         if (mEZPlayer != null) {
             mEZPlayer.release();
         }
+        ctrlCompl.sendCmdCtrl(MoveType.CATCH);
         ctrlCompl.stopTimeCounter();
         ctrlCompl.sendCmdOutRoom();
         ctrlCompl = null;
@@ -251,13 +248,15 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     @Override
     public void getTime(int time) {
-        Log.e(TAG, "counterTime:::::" + time);
+        timeCircleProgressView.setProgress(Utils.CATCH_TIME_OUT - time);
     }
 
     @Override
     public void getTimeFinish() {
         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
         getStartstation();
+        ctrlCompl.stopTimeCounter();
+        timeCircleProgressView.setProgress(Utils.CATCH_TIME_OUT);
     }
 
     @Override
@@ -324,6 +323,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))) {
                     ctrlCompl.sendCmdCtrl(MoveType.START);
                     getWorkstation();
+
                 }
                 setVibratorTime(300,-1);
                 Log.e(TAG,"<<px="+(mRealPlaySv.getHeight()*16)/9+"<<dp="+Utils.px2dip(getApplicationContext(),(mRealPlaySv.getHeight()*16)/9));
@@ -354,9 +354,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 rechargeLl.setVisibility(View.VISIBLE);
                 catchLl.setVisibility(View.GONE);
                 operationRl.setVisibility(View.GONE);
-                ctrlCompl.stopTimeCounter();
             }
-        }, 4000); //4s下爪  抵消掉下爪需要的时间
+        }, 8000); //8s下爪  抵消掉下爪需要的时间
     }
 
     private void getMoney() {
@@ -459,6 +458,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         break;
                     case R.id.catch_ll:
                         getStartstation();
+                        ctrlCompl.stopTimeCounter();
                         break;
                     default:
                         break;
@@ -480,6 +480,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         if (response instanceof MoveControlResponse) {
             MoveControlResponse moveControlResponse = (MoveControlResponse) response;
             Utils.showLogE(TAG, moveControlResponse.toString());
+            if ((moveControlResponse.getSeq() == -2) && (moveControlResponse.getMoveType()!=null)) {
+                if (moveControlResponse.getMoveType().name().equals(MoveType.START.name())) {
+                    setStartMode(false);
+                } else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
+                    setStartMode(true);
+                }
+            }
         } else if (response instanceof String) {
             Utils.showLogE(TAG, "move faile....");
         } else if (response instanceof AppOutRoomResponse) {
@@ -515,6 +522,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         } else if (state.equals(Utils.TAG_CONNECT_SUCESS)) {
             Utils.showLogE(TAG, "TAG_CONNECT_SUCESS");
             ctrlStatusIv.setImageResource(R.drawable.point_green);
+            NettyUtils.sendRoomInCmd(UserUtils.UserNickName);
         }
     }
 
@@ -524,9 +532,16 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
     //设置震动时间
     private void setVibratorTime(long time,int replay){
-        Log.e("<<<<<<<<","震动了");
         if (null != vibrator)
             vibrator.vibrate(new long[]{0,time,0,0},replay);
     }
 
+    private void setStartMode(boolean isFree) {
+        startgameLl.setEnabled(isFree);
+        if (isFree) {
+            startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_n);
+            return;
+        }
+        startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
+    }
 }
