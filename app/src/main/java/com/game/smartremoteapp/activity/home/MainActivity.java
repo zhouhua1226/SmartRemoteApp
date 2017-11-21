@@ -155,6 +155,7 @@ public class MainActivity extends BaseActivity {
                 EZOpenSDK.getInstance().setAccessToken(Utils.token);
                 dollLists = loginInfoResult.getData().getDollList();
                 UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getUSERNAME();
+                UserUtils.UserImage=loginInfoResult.getData().getAppUser().getIMAGE_URL();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
                 if (dollLists.size() == 0) {
                     zwwjFragment.showError();
@@ -207,7 +208,9 @@ public class MainActivity extends BaseActivity {
                         EZOpenSDK.getInstance().setAccessToken(Utils.token);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_LOGIN, true);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_PHONE, phone);
-                        UserUtils.UserNickName = phone;
+//                        UserUtils.UserNickName = phone;
+                        UserUtils.UserNickName = result.getData().getAppUser().getUSERNAME();
+                        UserUtils.UserImage=result.getData().getAppUser().getIMAGE_URL();
                         zwwjFragment.setSessionId(result.getData().getSessionID());
                         if (dollLists.size() == 0) {
                             zwwjFragment.showError();

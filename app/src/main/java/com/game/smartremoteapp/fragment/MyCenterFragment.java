@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+import com.bumptech.glide.Glide;
 import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.activity.home.InformationActivity;
 import com.game.smartremoteapp.activity.home.RecordGameActivty;
@@ -22,15 +21,19 @@ import com.game.smartremoteapp.activity.home.SettingActivity;
 import com.game.smartremoteapp.activity.wechat.WeChatPayActivity;
 import com.game.smartremoteapp.adapter.MyCenterAdapter;
 import com.game.smartremoteapp.base.BaseFragment;
+import com.game.smartremoteapp.bean.LoginInfo;
+import com.game.smartremoteapp.bean.Result;
+import com.game.smartremoteapp.model.http.HttpManager;
+import com.game.smartremoteapp.model.http.RequestSubscriber;
+import com.game.smartremoteapp.utils.UrlUtils;
+import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.view.FillingCurrencyDialog;
+import com.game.smartremoteapp.view.GlideCircleTransform;
 import com.game.smartremoteapp.view.MyToast;
 import com.game.smartremoteapp.view.SpaceItemDecoration;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -72,9 +75,11 @@ public class MyCenterFragment extends BaseFragment {
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        userName.setText("云梦一霸");
+        userName.setText(UserUtils.UserNickName );
         userNumber.setText("累积抓中100次");
-
+        Glide.with(getContext()).load(UrlUtils.USERFACEIMAGEURL+UserUtils.UserImage)
+                .transform(new GlideCircleTransform(getContext()))
+                .into(userImage);
         initlist();
         initData();
         onClick();
@@ -185,5 +190,6 @@ public class MyCenterFragment extends BaseFragment {
             getContext().startActivity(intent);
         }
     };
+
 
 }

@@ -56,17 +56,19 @@ public interface SmartService {
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST(UrlUtils.FACEIMAGEURL)
-    Observable<Result<LoginInfo>> getFaceImage(
+    Observable<Result> getFaceImage(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.FACEIMAGE) String faceImage
+            @Field(UrlUtils.FACEIMAGE) String base64Image
     );
 
     //修改昵称
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
-    @POST(UrlUtils.UserNickNameURL)
+    @POST(UrlUtils.UserNameURL)
     Observable<Result> getNickName(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.NickName) String nickname
+            @Field(UrlUtils.Name) String name
+
+
     );
 }

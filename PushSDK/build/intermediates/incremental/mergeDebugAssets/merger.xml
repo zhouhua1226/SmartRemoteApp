@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\game_space\myspace\SmartRemoteApp\PushSDK\assets"/><source path="E:\game_space\myspace\SmartRemoteApp\PushSDK\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\game_space\myspace\SmartRemoteApp\PushSDK\build-types\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\com.hongxiu.wawaji.2.2\SmartRemoteApp\PushSDK\assets"/><source path="D:\com.hongxiu.wawaji.2.2\SmartRemoteApp\PushSDK\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\com.hongxiu.wawaji.2.2\SmartRemoteApp\PushSDK\build-types\debug\assets"/></dataSet></merger>

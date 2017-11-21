@@ -14,6 +14,7 @@ public class UserUtils {
     public static final String SP_TAG_PHONE = "SP_TAG_PHONE";
 
     public static String UserNickName = "";
+    public static String UserImage="";
 
     public static void setNettyInfo(String sessionId, String phone, String roomId) {
         UserInfo userInfo = new UserInfo();

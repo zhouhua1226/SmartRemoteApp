@@ -13,12 +13,12 @@ public class UrlUtils {
 
     public static final String PHONE = "phone";
     public static final String SMSCODE = "code";
-    public static final String FACEIMAGE="faceimage";
-    public static final String NickName="nickname";
+    public static final String FACEIMAGE="base64Image";
+    public static final String Name="name";
 
 
-    public static final String URL="http://47.100.15.18:8080";
-//    public static final String URL="http://106.75.142.42:8080/";
+//    public static final String URL="http://47.100.15.18:8080/";
+    public static final String URL="http://106.75.142.42:8080/";
 
     //getSmsCode
     public static final String GETSMSCODE = "http://47.100.15.18:8080/pooh-web/sms/getRegSMSCode";//"http://controller.ngrok.cc/m/sms/getSMSCodeLogin";
@@ -31,7 +31,9 @@ public class UrlUtils {
 
     //头像上传http://47.100.15.18:8080/pooh-web/api/updateUser
     public static final String FACEIMAGEURL="http://47.100.15.18:8080/pooh-web/api/updateUser";
+    //头像上传成功返回的http://106.75.142.42:8080/faceImage/15335756655.png
+    public static final String USERFACEIMAGEURL="http://47.100.15.18:8080/faceImage";
 
     //修改昵称
-    public static final String UserNickNameURL="http;//47100.15.18:8080/faceImage";
+    public static final String UserNameURL="http;//47.100.15.18:8080/pooh-web/api/updateUserName";
 }

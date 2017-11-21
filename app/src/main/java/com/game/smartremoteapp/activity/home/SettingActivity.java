@@ -94,9 +94,10 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(this,AboutUsActivity.class));
                 break;
             case R.id.bt_out:
-                Toast.makeText(this,"退出登录",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this,"退出登录",Toast.LENGTH_SHORT).show();
                 SPUtils.remove(this, UserUtils.SP_TAG_LOGIN);
-                Log.e("<<<<<<<<<<","退出成功！");
+                startActivity(new Intent(this,MainActivity.class));
+                this.finish();
                 break;
         }
     }

@@ -81,8 +81,8 @@ public class HttpManager {
     }
 
     //上传头像
-    public void getFaceImage(String phone, String faceImage, RequestSubscriber<Result<LoginInfo>> subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getFaceImage(phone,faceImage);
+    public void getFaceImage(String phone, String base64Image, RequestSubscriber<Result> subscriber){
+        Observable<Result> o= smartService.getFaceImage(phone,base64Image);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,12 +91,13 @@ public class HttpManager {
     }
 
     //修改昵称UserNickNameURL
-    public void getNickName(String phone,String nickName,Subscriber<Result>subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getFaceImage(phone,nickName);
+    public void getNickName(String phone,String name,Subscriber<Result>subscriber){
+        Observable<Result> o= smartService.getNickName(phone,name);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
+
 
 }

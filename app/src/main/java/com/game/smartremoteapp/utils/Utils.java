@@ -5,8 +5,6 @@
 package com.game.smartremoteapp.utils;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 import com.gatz.netty.global.ConnectResultEvent;
@@ -52,9 +50,6 @@ public class Utils {
 
     public static boolean isVibrator;  //是否开启震动  11/18 11:20
     public static final String HTTP_OK = "success";
-
-    public static final int CATCH_TIME_OUT = 20;
-    public static final long CATCH_TIME_DELAY = 10 * 1000;
 
     public static void showLogE(String TAG, String msg) {
         if (D) {
@@ -138,22 +133,5 @@ public class Utils {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    /**
-     * 判断网络是否连接
-     * @param context
-     * @return
-     */
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm == null) {
-            return false;
-        } else {
-            NetworkInfo info = cm.getActiveNetworkInfo();
-            if (info != null) {
-              return info.isAvailable();
-            }
-        }
-        return false;
-    }
+
 }

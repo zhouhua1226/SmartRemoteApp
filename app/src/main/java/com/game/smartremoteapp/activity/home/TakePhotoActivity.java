@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -78,15 +79,16 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
     public void takeSuccess(String imagePath) {
         Utils.showLogE(TAG,imagePath);
         String string="15335756655";
-        String str = android.util.Base64.encodeToString(string.getBytes(), android.util.Base64.DEFAULT);
-        Bitmap bitmap= BitmapUtils.compressImageFromFile(imagePath);
-        base64=Base64.encode(BitmapUtils.compressBmpFromBmp(bitmap));
-        getFaceImage(str,base64);
+        getFaceImage(string,imagePath);
     }
 
 
-    private void getFaceImage(String phone,String faceImage){
-        HttpManager.getInstance().getFaceImage(phone, faceImage, new RequestSubscriber<Result<LoginInfo>>() {
+    private void getFaceImage(String phone,String base64Image){
+        String stringphone=android.util.Base64.encodeToString(phone.getBytes(), android.util.Base64.DEFAULT);
+        Log.e("@@@@"+"#####",stringphone);
+        Bitmap bitmap= BitmapUtils.compressImageFromFile(base64Image);
+        String base64=Base64.encode(BitmapUtils.compressBmpFromBmp(bitmap));
+        HttpManager.getInstance().getFaceImage(stringphone, base64, new RequestSubscriber<Result>() {
             @Override
             public void _onSuccess(Result result) {
                 Utils.showLogE(TAG,result.getMsg());
@@ -100,6 +102,8 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
         });
 
     }
+
+
 
     private String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());

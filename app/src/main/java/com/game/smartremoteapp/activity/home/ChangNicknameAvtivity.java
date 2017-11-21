@@ -13,7 +13,9 @@ import com.game.smartremoteapp.base.BaseActivity;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.model.http.HttpManager;
 import com.game.smartremoteapp.model.http.RequestSubscriber;
+import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
+import com.game.smartremoteapp.view.MyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +43,7 @@ public class ChangNicknameAvtivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        nicknameEt.setText("云梦一霸");
+        nicknameEt.setText(UserUtils.UserNickName);
     }
 
     @Override
@@ -63,28 +65,12 @@ public class ChangNicknameAvtivity extends BaseActivity {
                 finish();
                 break;
             case R.id.save_bt:
-//                Toast.makeText(this,"保存",Toast.LENGTH_SHORT).show();
-                getNickName("",nicknameEt.getText().toString());
                 break;
             case R.id.changen_image:
                     nicknameEt.setText("");
                 break;
+            default:break;
         }
     }
 
-    public void getNickName(String phone,String nickname){
-        HttpManager.getInstance().getNickName(phone, nickname, new RequestSubscriber<Result>() {
-            @Override
-            public void _onSuccess(Result result) {
-                Utils.showLogE(TAG,result.getMsg());
-            }
-
-            @Override
-            public void _onError(Throwable e) {
-                Utils.showLogE(TAG, "getNickName::::" + e.getMessage());
-
-            }
-        });
-
-    }
 }
