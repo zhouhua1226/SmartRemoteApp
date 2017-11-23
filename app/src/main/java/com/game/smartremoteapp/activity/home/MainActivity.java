@@ -398,6 +398,7 @@ public class MainActivity extends BaseActivity {
     public void getDeviceStates(Object response) {
         if (response instanceof GetStatusResponse) {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
+            Utils.showLogE(TAG, "=====" + response.toString());
             if ((getStatusResponse.getSeq() != -2) && (!Utils.isEmpty(getStatusResponse.getStatus()))) {
                 String[] devices = getStatusResponse.getStatus().split(";");
                 for (int i = 0; i < devices.length; i++) {
@@ -417,6 +418,12 @@ public class MainActivity extends BaseActivity {
                     zwwjFragment.notifyAdapter(dollLists);
                 }
             } else {
+                if (getStatusResponse.getFree() == null) {
+                    return;
+                }
+                if (Utils.isEmpty(getStatusResponse.getRoomId())) {
+                    return;
+                }
                 //其他用户操作娃娃机了
                 boolean free = getStatusResponse.getFree();
                 String address = getStatusResponse.getRoomId();

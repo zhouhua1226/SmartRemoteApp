@@ -7,6 +7,7 @@ import com.game.smartremoteapp.activity.ctrl.model.DeviceCallBack;
 import com.game.smartremoteapp.activity.ctrl.view.IctrlView;
 import com.game.smartremoteapp.base.BasePresenter;
 import com.iot.game.pooh.server.entity.json.enums.MoveType;
+import com.videogo.openapi.EZPlayer;
 import com.videogo.openapi.bean.EZCameraInfo;
 
 import java.util.ArrayList;
@@ -40,6 +41,21 @@ public class CtrlCompl implements BasePresenter, ICtrlPresenter{
         @Override
         public void getClickFinish() {
             ictrlView.getTimeFinish();
+        }
+
+        @Override
+        public void getVideoRecordErr(int errCode) {
+            ictrlView.getRecordErrCode(errCode);
+        }
+
+        @Override
+        public void getVideoSucess() {
+            ictrlView.getRecordSuecss();
+        }
+
+        @Override
+        public void getVideoAttributetoNet(String time) {
+            ictrlView.getRecordAttributetoNet(time);
         }
     };
 
@@ -87,5 +103,15 @@ public class CtrlCompl implements BasePresenter, ICtrlPresenter{
             list.add(os[i]);
         }
         ictrlView.getUserInfos(list);
+    }
+
+    @Override
+    public void startRecordVideo(EZPlayer ezPlayer) {
+        ctrlModel.sendStartSecordVideo(ezPlayer);
+    }
+
+    @Override
+    public void stopRecordView(EZPlayer ezPlayer) {
+        ctrlModel.stopRecordVideo(ezPlayer);
     }
 }

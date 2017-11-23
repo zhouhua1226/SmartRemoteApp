@@ -14,10 +14,13 @@ import com.videogo.errorlayer.ErrorInfo;
 import com.videogo.exception.BaseException;
 import com.videogo.exception.ErrorCode;
 import com.videogo.openapi.EZConstants;
+import com.videogo.openapi.EZPlayer;
 import com.videogo.openapi.bean.EZCameraInfo;
 import com.videogo.openapi.bean.EZDeviceInfo;
 import com.videogo.util.ConnectionDetector;
+import com.videogo.util.SDCardUtil;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +33,7 @@ public class CtrlModel {
     private DeviceCallBack callBack;
     private final long countTime = 20*1000;
     private final long seconds = 1000;
+    private boolean isRecoding = false;
 
     //定时器区
     private CountDownTimer countDownTimer = new CountDownTimer(countTime, seconds) {
@@ -158,5 +162,55 @@ public class CtrlModel {
         countDownTimer.cancel();
     }
 
+    /**
+     * 保存视频到本地
+     * @param ezPlayer
+     */
+    public void sendStartSecordVideo(EZPlayer ezPlayer) {
+        if (!SDCardUtil.isSDCardUseable()) {
+            callBack.getVideoRecordErr(UserUtils.RECODE_ERR_CODE_SDCARD_DISABLE);
+            return;
+        }
 
+        if (SDCardUtil.getSDCardRemainSize() < SDCardUtil.PIC_MIN_MEM_SPACE) {
+            callBack.getVideoRecordErr(UserUtils.RECODE_ERR_CODE_SDCARD_FAIL_FOR_MEMORY);
+            return;
+        }
+        if (ezPlayer == null) {
+            callBack.getVideoRecordErr(UserUtils.RECODE_ERR_CODE_EZPLAY_NULL);
+            return;
+        }
+
+        Date date = new Date();
+        String time = String.format("%tY", date) + String.format("%tm", date) + String.format("%td", date) +
+                String.format("%tH", date) + String.format("%tM", date) +
+                String.format("%tS", date);
+        String strRecordFile = UserUtils.RECODE_URL + time + ".mp4";
+        Utils.showLogE(TAG, "保存的视频:::" + strRecordFile);
+        if (ezPlayer.startLocalRecordWithFile(strRecordFile)) {
+            isRecoding = true;
+            callBack.getVideoAttributetoNet(time);
+        } else {
+            if (isRecoding) {
+                stopRecordVideo(ezPlayer);
+            }
+        }
+    }
+
+    /**
+     * 关闭视频录制
+     * @param ezPlayer
+     */
+    public void stopRecordVideo(EZPlayer ezPlayer) {
+        if (ezPlayer == null) {
+            callBack.getVideoRecordErr(UserUtils.RECODE_ERR_CODE_EZPLAY_NULL);
+            return;
+        }
+        if (!isRecoding) {
+            return;
+        }
+        ezPlayer.stopLocalRecord();
+        callBack.getVideoSucess();
+        isRecoding = false;
+    }
 }
