@@ -186,8 +186,8 @@ public class CtrlModel {
                 String.format("%tH", date) + String.format("%tM", date) +
                 String.format("%tS", date);
         String strRecordFile = UserUtils.RECODE_URL + time + ".mp4";
-        Utils.showLogE(TAG, "保存的视频:::" + strRecordFile);
         if (ezPlayer.startLocalRecordWithFile(strRecordFile)) {
+            Utils.showLogE(TAG, "保存的视频:::" + strRecordFile);
             isRecoding = true;
             callBack.getVideoAttributetoNet(time);
         } else {

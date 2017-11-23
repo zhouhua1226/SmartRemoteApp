@@ -192,6 +192,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     protected void onDestroy() {
         super.onDestroy();
         Utils.showLogE(TAG, "onDestroy");
+        ctrlCompl.stopRecordView(mEZPlayer);
         if (mEZPlayer != null) {
             mEZPlayer.release();
         }
