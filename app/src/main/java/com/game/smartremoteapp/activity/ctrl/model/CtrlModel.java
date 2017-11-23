@@ -164,11 +164,9 @@ public class CtrlModel {
 
     /**
      * 保存视频到本地
-     * @param userName
-     * @param dollName
      * @param ezPlayer
      */
-    public void sendStartSecordVideo(String userName, String dollName, EZPlayer ezPlayer) {
+    public void sendStartSecordVideo(EZPlayer ezPlayer) {
         if (!SDCardUtil.isSDCardUseable()) {
             callBack.getVideoRecordErr(UserUtils.RECODE_ERR_CODE_SDCARD_DISABLE);
             return;
@@ -191,6 +189,7 @@ public class CtrlModel {
         Utils.showLogE(TAG, "保存的视频:::" + strRecordFile);
         if (ezPlayer.startLocalRecordWithFile(strRecordFile)) {
             isRecoding = true;
+            callBack.getVideoAttributetoNet(time);
         } else {
             if (isRecoding) {
                 stopRecordVideo(ezPlayer);

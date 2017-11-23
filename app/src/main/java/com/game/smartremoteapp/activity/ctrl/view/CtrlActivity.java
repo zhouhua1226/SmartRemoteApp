@@ -287,6 +287,11 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     @Override
+    public void getRecordAttributetoNet(String time) {
+        Utils.showLogE(TAG, "视频上传的时间::::" + time);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         if (mEZPlayer != null) {
@@ -334,7 +339,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 if ((EZstatus == EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
                         && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))) {
                     ctrlCompl.sendCmdCtrl(MoveType.START);
-                    ctrlCompl.startRecordVideo(UserUtils.UserNickName, dollName, mEZPlayer);
+                    ctrlCompl.startRecordVideo(mEZPlayer);
                     getWorkstation();
                 }
                 setVibratorTime(300,-1);

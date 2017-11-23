@@ -113,7 +113,7 @@ public class TimeCircleProgressView extends View {
     }
 
     //设置进度
-    public void setProgress(int progress) {
+    public synchronized void setProgress(int progress) {
         mProgress = progress;
         postInvalidate();
     }

@@ -15,6 +15,6 @@ public interface ICtrlPresenter {
     void sendCmdOutRoom();
     void sendGetUserInfos(String o);
 
-    void startRecordVideo(String name, String dollName, EZPlayer ezPlayer);
+    void startRecordVideo(EZPlayer ezPlayer);
     void stopRecordView(EZPlayer ezPlayer);
 }

@@ -52,6 +52,11 @@ public class CtrlCompl implements BasePresenter, ICtrlPresenter{
         public void getVideoSucess() {
             ictrlView.getRecordSuecss();
         }
+
+        @Override
+        public void getVideoAttributetoNet(String time) {
+            ictrlView.getRecordAttributetoNet(time);
+        }
     };
 
     @Override
@@ -101,8 +106,8 @@ public class CtrlCompl implements BasePresenter, ICtrlPresenter{
     }
 
     @Override
-    public void startRecordVideo(String name, String dollName, EZPlayer ezPlayer) {
-        ctrlModel.sendStartSecordVideo(name, dollName, ezPlayer);
+    public void startRecordVideo(EZPlayer ezPlayer) {
+        ctrlModel.sendStartSecordVideo(ezPlayer);
     }
 
     @Override
