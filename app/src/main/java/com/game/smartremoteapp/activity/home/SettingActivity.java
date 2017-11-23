@@ -96,6 +96,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.bt_out:
                 Toast.makeText(this,"退出登录",Toast.LENGTH_SHORT).show();
                 SPUtils.remove(this, UserUtils.SP_TAG_LOGIN);
+                UserUtils.UserPhone="";
                 Log.e("<<<<<<<<<<","退出成功！");
                 break;
         }

@@ -50,8 +50,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="15"
-            android:background="@null"
+            android:background="@color/white"
             android:textSize="14sp"
+            android:hint="请输入修改的名称"
             android:textColor="#5b5b5b"/>
 
         <ImageView

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+import com.bumptech.glide.Glide;
 import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.activity.home.InformationActivity;
 import com.game.smartremoteapp.activity.home.RecordGameActivty;
@@ -22,7 +23,10 @@ import com.game.smartremoteapp.activity.home.SettingActivity;
 import com.game.smartremoteapp.activity.wechat.WeChatPayActivity;
 import com.game.smartremoteapp.adapter.MyCenterAdapter;
 import com.game.smartremoteapp.base.BaseFragment;
+import com.game.smartremoteapp.utils.UserUtils;
+import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.FillingCurrencyDialog;
+import com.game.smartremoteapp.view.GlideCircleTransform;
 import com.game.smartremoteapp.view.MyToast;
 import com.game.smartremoteapp.view.SpaceItemDecoration;
 
@@ -72,9 +76,8 @@ public class MyCenterFragment extends BaseFragment {
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        userName.setText("云梦一霸");
+        Glide.get(getContext()).clearMemory();
         userNumber.setText("累积抓中100次");
-
         initlist();
         initData();
         onClick();
@@ -102,7 +105,7 @@ public class MyCenterFragment extends BaseFragment {
                 swiperefresh.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
+                        getUserImageAndName();
                         initlist();
                         myCenterAdapter.notifyDataSetChanged();
                         swiperefresh.setRefreshing(false);
@@ -129,7 +132,31 @@ public class MyCenterFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.image_kefu, R.id.image_setting, R.id.user_image, R.id.user_filling})
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserImageAndName();
+    }
+
+    private void getUserImageAndName(){
+        if(!Utils.isEmpty(UserUtils.UserPhone)) {
+            if (!UserUtils.UserName.equals("")) {
+                userName.setText(UserUtils.UserName);
+            } else {
+                userName.setText(UserUtils.UserPhone);
+            }
+            Glide.with(getContext())
+                    .load(UserUtils.UserImage)
+                    .dontAnimate()
+                    .transform(new GlideCircleTransform(getContext()))
+                    .into(userImage);
+        }else {
+            userName.setText("请登录");
+            userImage.setImageResource(R.drawable.round);
+        }
+    }
+
+    @OnClick({R.id.image_kefu, R.id.image_setting, R.id.user_image, R.id.user_filling,R.id.user_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_kefu:
@@ -144,6 +171,9 @@ public class MyCenterFragment extends BaseFragment {
             case R.id.user_filling:
                 startActivity(new Intent(getContext(), SelectRechargeTypeActiivty.class));
 //                getMoney();
+                break;
+            case R.id.user_name:
+                //此处添加登录dialog
                 break;
             default:
                 break;
@@ -185,5 +215,8 @@ public class MyCenterFragment extends BaseFragment {
             getContext().startActivity(intent);
         }
     };
+
+
+
 
 }

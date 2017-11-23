@@ -13,9 +13,11 @@ public class UrlUtils {
 
     public static final String PHONE = "phone";
     public static final String SMSCODE = "code";
-    public static final String FACEIMAGE="faceimage";
+    public static final String FACEIMAGE="base64Image";
     public static final String NickName="nickname";
-
+    public static final String USERNAME="userName";
+    public static final String USEPAYMONEY="money";
+    public static final String USERPLAYNUM="gold";
 
     public static final String URL="http://47.100.15.18:8080";
 //    public static final String URL="http://106.75.142.42:8080/";
@@ -34,4 +36,18 @@ public class UrlUtils {
 
     //修改昵称
     public static final String UserNickNameURL="http;//47100.15.18:8080/faceImage";
+
+    //修改用户名  11/21 13：10
+    public static final String USERNAMEURL=URL+"/pooh-web/api/updateUserName";
+
+    //头像上传成功返回的http://106.75.142.42:8080/faceImage/15335756655.png
+    public static final String USERFACEIMAGEURL="http://47.100.15.18:8080/faceImage";
+
+    //充值接口
+    public static final String USERPAYURL=URL+"/pooh-web/pay/balance";
+
+    //消费接口
+    public static final String USERPLAYURL=URL+"/pooh-web/pay/costBalance";
+
+
 }

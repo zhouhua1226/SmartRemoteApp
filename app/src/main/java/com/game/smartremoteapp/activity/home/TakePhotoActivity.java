@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import com.game.smartremoteapp.R;
+import com.game.smartremoteapp.bean.AppUserBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.model.http.HttpManager;
 import com.game.smartremoteapp.model.http.RequestSubscriber;
 import com.game.smartremoteapp.utils.Base64;
 import com.game.smartremoteapp.utils.BitmapUtils;
+import com.game.smartremoteapp.utils.UrlUtils;
+import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
 import com.jph.takephoto.model.CropOptions;
 
@@ -77,7 +80,7 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
     @Override
     public void takeSuccess(String imagePath) {
         Utils.showLogE(TAG,imagePath);
-        String string="15335756655";
+        String string=UserUtils.UserPhone;
         String str = android.util.Base64.encodeToString(string.getBytes(), android.util.Base64.DEFAULT);
         Bitmap bitmap= BitmapUtils.compressImageFromFile(imagePath);
         base64=Base64.encode(BitmapUtils.compressBmpFromBmp(bitmap));
@@ -86,11 +89,11 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
 
 
     private void getFaceImage(String phone,String faceImage){
-        HttpManager.getInstance().getFaceImage(phone, faceImage, new RequestSubscriber<Result<LoginInfo>>() {
+        HttpManager.getInstance().getFaceImage(phone, faceImage, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
-            public void _onSuccess(Result result) {
+            public void _onSuccess(Result<AppUserBean> result) {
                 Utils.showLogE(TAG,result.getMsg());
-
+                UserUtils.UserImage= UrlUtils.USERFACEIMAGEURL+result.getData().getAppUser().getIMAGE_URL();
             }
 
             @Override

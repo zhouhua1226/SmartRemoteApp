@@ -1,8 +1,10 @@
 package com.game.smartremoteapp.model.http;
 
+import com.game.smartremoteapp.bean.AppUserBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.bean.Token;
+import com.game.smartremoteapp.bean.UserBean;
 import com.game.smartremoteapp.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -81,8 +83,8 @@ public class HttpManager {
     }
 
     //上传头像
-    public void getFaceImage(String phone, String faceImage, RequestSubscriber<Result<LoginInfo>> subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getFaceImage(phone,faceImage);
+    public void getFaceImage(String phone, String faceImage, RequestSubscriber<Result<AppUserBean>> subscriber){
+        Observable<Result<AppUserBean>> o= smartService.getFaceImage(phone,faceImage);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -90,9 +92,36 @@ public class HttpManager {
 
     }
 
-    //修改昵称UserNickNameURL
-    public void getNickName(String phone,String nickName,Subscriber<Result>subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getFaceImage(phone,nickName);
+//    //修改昵称UserNickNameURL
+//    public void getNickName(String phone,String nickName,Subscriber<Result>subscriber){
+//        Observable<Result<LoginInfo>> o= smartService.getFaceImage(phone,nickName);
+//        o.subscribeOn(Schedulers.newThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(subscriber);
+//    }
+
+    //修改用户名   11/21 13：15
+    public void getUserName(String phone,String userName,Subscriber<Result<AppUserBean>> subscriber){
+        Observable<Result<AppUserBean>> o= smartService.getUserName(phone,userName);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //充值   11/21 15：15
+    public void getUserPay(String phone,String money,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getUserPay(phone,money);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //消费   11/21 16：15
+    public void getUserPlayNum(String phone,String money,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getUserPlayNum(phone,money);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

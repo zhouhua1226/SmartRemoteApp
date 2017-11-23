@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.activity.wechat.WeChatPayActivity;
 import com.game.smartremoteapp.base.BaseActivity;
+import com.game.smartremoteapp.utils.UserUtils;
+import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.FillingCurrencyDialog;
 import com.game.smartremoteapp.view.MyToast;
 
@@ -41,8 +43,6 @@ public class SelectRechargeTypeActiivty extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        selectAccountTv.setText("15335756655");
-        selectMoneyTv.setText("1000");
 
     }
 
@@ -51,6 +51,24 @@ public class SelectRechargeTypeActiivty extends BaseActivity {
         ButterKnife.bind(this);
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserPhoneAndBalance();
+
+    }
+
+    private void getUserPhoneAndBalance(){
+        String userPhone=UserUtils.UserPhone;
+        String userBalance=UserUtils.UserBalance;
+        if(!Utils.isEmpty(userPhone)&&!Utils.isEmpty(userBalance)){
+            selectAccountTv.setText(userPhone);
+            selectMoneyTv.setText(userBalance);
+        }
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,6 +14,10 @@ public class UserUtils {
     public static final String SP_TAG_PHONE = "SP_TAG_PHONE";
 
     public static String UserNickName = "";
+    public static String UserPhone="";    //用户手机号
+    public static String UserName="";    //用户名
+    public static String UserImage="";    //用户头像
+    public static String UserBalance="";    //用户余额（游戏币）
 
     public static void setNettyInfo(String sessionId, String phone, String roomId) {
         UserInfo userInfo = new UserInfo();
