@@ -120,7 +120,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     //2017/11/18 11：10 加入振动器
     public Vibrator vibrator; // 震动器
-    public String camera_name;
+    private String camera_name;
+    private String dollName = "未知";
 
     @Override
     protected int getLayoutId() {
@@ -156,9 +157,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlCompl = new CtrlCompl(this, this);
         camera_name = getIntent().getStringExtra(Utils.TAG_CAMERA_NAME);
         ctrlCompl.startLoginPresent(camera_name);
-        String name = getIntent().getStringExtra(Utils.TAG_ROOM_NAME);
-        if (!Utils.isEmpty(name)) {
-            dollNameTv.setText(name);
+        dollName = getIntent().getStringExtra(Utils.TAG_ROOM_NAME);
+        if (!Utils.isEmpty(dollName)) {
+            dollNameTv.setText(dollName);
         }
         playerNameTv.setText(UserUtils.UserNickName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
@@ -276,6 +277,16 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     @Override
+    public void getRecordErrCode(int code) {
+        Utils.showLogE(TAG, "录制视频失败::::::" + code);
+    }
+
+    @Override
+    public void getRecordSuecss() {
+        Utils.showLogE(TAG, "录制视频完毕......");
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         if (mEZPlayer != null) {
@@ -323,8 +334,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 if ((EZstatus == EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
                         && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))) {
                     ctrlCompl.sendCmdCtrl(MoveType.START);
+                    ctrlCompl.startRecordVideo(UserUtils.UserNickName, dollName, mEZPlayer);
                     getWorkstation();
-
                 }
                 setVibratorTime(300,-1);
                 Log.e(TAG,"<<px="+(mRealPlaySv.getHeight()*16)/9+"<<dp="+Utils.px2dip(getApplicationContext(),(mRealPlaySv.getHeight()*16)/9));
@@ -460,6 +471,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     case R.id.catch_ll:
                         getStartstation();
                         ctrlCompl.stopTimeCounter();
+                        //TODO 5S后关闭录像功能
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ctrlCompl.stopRecordView(mEZPlayer);
+                            }
+                        }, 5000);
                         break;
                     default:
                         break;

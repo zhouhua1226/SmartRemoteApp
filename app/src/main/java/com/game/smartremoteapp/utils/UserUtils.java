@@ -1,5 +1,7 @@
 package com.game.smartremoteapp.utils;
 
+import android.os.Environment;
+
 import com.gatz.netty.AppClient;
 import com.gatz.netty.UserInfo;
 import com.gatz.netty.global.AppGlobal;
@@ -18,6 +20,12 @@ public class UserUtils {
     public static String UserName="";    //用户名
     public static String UserImage="";    //用户头像
     public static String UserBalance="";    //用户余额（游戏币）
+
+    public static final String RECODE_URL = Environment.getExternalStorageDirectory().getPath()
+            + "/SmartRemoteApp/";
+    public static final int RECODE_ERR_CODE_SDCARD_DISABLE = 201001;
+    public static final int RECODE_ERR_CODE_SDCARD_FAIL_FOR_MEMORY = 201002;
+    public static final int RECODE_ERR_CODE_EZPLAY_NULL = 201003;
 
     public static void setNettyInfo(String sessionId, String phone, String roomId) {
         UserInfo userInfo = new UserInfo();

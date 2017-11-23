@@ -11,4 +11,7 @@ public interface DeviceCallBack {
     void getErrCode(int errCode);
     void getClickTime(int time);
     void getClickFinish();
+    //视频回放区
+    void getVideoRecordErr(int errCode);
+    void getVideoSucess();
 }

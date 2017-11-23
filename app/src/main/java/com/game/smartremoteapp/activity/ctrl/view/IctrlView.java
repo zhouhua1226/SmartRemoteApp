@@ -16,4 +16,7 @@ public interface IctrlView {
     void getTimeFinish();
 
     void getUserInfos(List<String> list);
+
+    void getRecordErrCode(int code);
+    void getRecordSuecss();
 }
