@@ -1,8 +1,10 @@
 package com.game.smartremoteapp.model.http;
 
+import com.game.smartremoteapp.bean.AppUserBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.bean.Token;
+import com.game.smartremoteapp.bean.UserBean;
 import com.game.smartremoteapp.utils.UrlUtils;
 
 import java.io.File;
@@ -56,7 +58,7 @@ public interface SmartService {
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST(UrlUtils.FACEIMAGEURL)
-    Observable<Result> getFaceImage(
+    Observable<Result<AppUserBean>> getFaceImage(
             @Field(UrlUtils.PHONE) String phone,
             @Field(UrlUtils.FACEIMAGE) String base64Image
     );
@@ -64,11 +66,37 @@ public interface SmartService {
     //修改昵称
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
-    @POST(UrlUtils.UserNameURL)
+    @POST(UrlUtils.UserNickNameURL)
     Observable<Result> getNickName(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.Name) String name
-
-
+            @Field(UrlUtils.NickName) String nickname
     );
+
+    //修改用户名   11/21 13：15
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.USERNAMEURL)
+        Observable<Result<AppUserBean>> getUserName(
+            @Field(UrlUtils.PHONE) String phone,
+            @Field(UrlUtils.USERNAME) String userName
+    );
+
+    //充值   11/22 15：15
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.USERPAYURL)
+    Observable<Result<LoginInfo>> getUserPay(
+            @Field(UrlUtils.PHONE) String phone,
+            @Field(UrlUtils.USEPAYMONEY) String money
+    );
+
+    //消费   11/22 16：15
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.USERPLAYURL)
+    Observable<Result<LoginInfo>> getUserPlayNum(
+            @Field(UrlUtils.PHONE) String phone,
+            @Field(UrlUtils.USERPLAYNUM) String gold
+    );
+
 }

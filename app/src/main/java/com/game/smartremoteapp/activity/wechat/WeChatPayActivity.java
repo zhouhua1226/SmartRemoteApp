@@ -2,6 +2,8 @@ package com.game.smartremoteapp.activity.wechat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -9,6 +11,11 @@ import android.widget.TextView;
 
 import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.base.BaseActivity;
+import com.game.smartremoteapp.bean.LoginInfo;
+import com.game.smartremoteapp.bean.Result;
+import com.game.smartremoteapp.model.http.HttpManager;
+import com.game.smartremoteapp.model.http.RequestSubscriber;
+import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.view.MyToast;
 
 import butterknife.BindView;
@@ -25,6 +32,11 @@ public class WeChatPayActivity extends BaseActivity {
     TextView amountTv;
     @BindView(R.id.btn_ok)
     Button btnOk;
+    @BindView(R.id.wx_ye_tv)
+    TextView wxYeTv;
+    @BindView(R.id.wx_play_btn)
+    Button wxPlayBtn;
+    private String TAG = "WeChatPayActivity";
     private Intent intent;
     private String money;
 
@@ -36,9 +48,10 @@ public class WeChatPayActivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        intent=getIntent();
-        money=intent.getStringExtra("money");
+        intent = getIntent();
+        money = intent.getStringExtra("money");
         amountTv.setText(money);
+        wxYeTv.setText(UserUtils.UserBalance);
     }
 
     @Override
@@ -53,15 +66,57 @@ public class WeChatPayActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_back, R.id.btn_ok})
+    @OnClick({R.id.btn_back, R.id.btn_ok, R.id.wx_play_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 this.finish();
                 break;
             case R.id.btn_ok:
-                MyToast.getToast(this,money+"元").show();
+                MyToast.getToast(this, money + "元").show();
+                wxPayMoney(UserUtils.UserPhone, money);
+                break;
+            case R.id.wx_play_btn:
+                getPlayNum(UserUtils.UserPhone, money);
+                wxYeTv.setText(UserUtils.UserBalance);
                 break;
         }
     }
+
+    private void wxPayMoney(String phone, String money) {
+        String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
+        HttpManager.getInstance().getUserPay(phones, money, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> result) {
+                Log.e(TAG, "充值结果=" + result.getMsg());
+                UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
+                MyToast.getToast(getApplicationContext(), "充值成功！").show();
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+                MyToast.getToast(getApplicationContext(), "充值失败！").show();
+            }
+        });
+    }
+
+
+    private void getPlayNum(String phone, String number) {
+        String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
+        HttpManager.getInstance().getUserPlayNum(phones, number, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> result) {
+                Log.e(TAG, "消费结果=" + result.getMsg());
+                UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
+                MyToast.getToast(getApplicationContext(), "消费成功！").show();
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+                MyToast.getToast(getApplicationContext(), "消费失败！").show();
+            }
+        });
+    }
+
+
 }

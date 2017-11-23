@@ -25,6 +25,7 @@ import com.game.smartremoteapp.fragment.ZWWJFragment;
 import com.game.smartremoteapp.model.http.HttpManager;
 import com.game.smartremoteapp.model.http.RequestSubscriber;
 import com.game.smartremoteapp.utils.SPUtils;
+import com.game.smartremoteapp.utils.UrlUtils;
 import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.EmptyLayout;
@@ -154,8 +155,15 @@ public class MainActivity extends BaseActivity {
                 Utils.token = loginInfoResult.getData().getAccessToken();
                 EZOpenSDK.getInstance().setAccessToken(Utils.token);
                 dollLists = loginInfoResult.getData().getDollList();
-                UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getUSERNAME();
-                UserUtils.UserImage=loginInfoResult.getData().getAppUser().getIMAGE_URL();
+                //用户手机号
+                UserUtils.UserPhone=loginInfoResult.getData().getAppUser().getPHONE();
+                UserUtils.UserNickName=loginInfoResult.getData().getAppUser().getPHONE();
+                //用户名  11/22 13：25
+                UserUtils.UserName = loginInfoResult.getData().getAppUser().getUSERNAME();
+                //用户余额
+                UserUtils.UserBalance=loginInfoResult.getData().getAppUser().getBALANCE();
+                //用户头像  11/22 13：25
+                UserUtils.UserImage=UrlUtils.USERFACEIMAGEURL+loginInfoResult.getData().getAppUser().getIMAGE_URL();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
                 if (dollLists.size() == 0) {
                     zwwjFragment.showError();
@@ -208,9 +216,11 @@ public class MainActivity extends BaseActivity {
                         EZOpenSDK.getInstance().setAccessToken(Utils.token);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_LOGIN, true);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_PHONE, phone);
-//                        UserUtils.UserNickName = phone;
-                        UserUtils.UserNickName = result.getData().getAppUser().getUSERNAME();
-                        UserUtils.UserImage=result.getData().getAppUser().getIMAGE_URL();
+                        UserUtils.UserNickName = phone;
+                        UserUtils.UserPhone=phone;
+                        UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
+                        UserUtils.UserBalance=result.getData().getAppUser().getBALANCE();
+                        UserUtils.UserImage= UrlUtils.USERFACEIMAGEURL+result.getData().getAppUser().getIMAGE_URL();
                         zwwjFragment.setSessionId(result.getData().getSessionID());
                         if (dollLists.size() == 0) {
                             zwwjFragment.showError();

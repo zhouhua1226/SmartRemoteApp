@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.adapter.GameCurrencyAdapter;
 import com.game.smartremoteapp.base.BaseActivity;
+import com.game.smartremoteapp.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class GameCurrencyActivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        gameTv.setText("999");
+        gameTv.setText(UserUtils.UserBalance);
         initlist();
         gameCurrencyAdapter=new GameCurrencyAdapter(this,list);
         recyclerview.setAdapter(gameCurrencyAdapter);

@@ -27,6 +27,15 @@ public class UserBean implements Serializable {
     private String USERNAME;
     private String CREATETIME;
     private String IMAGE_URL;
+    private String BALANCE;
+
+    public String getBALANCE() {
+        return BALANCE;
+    }
+
+    public void setBALANCE(String BALANCE) {
+        this.BALANCE = BALANCE;
+    }
 
     public void setBZ(String BZ) {
         this.BZ = BZ;

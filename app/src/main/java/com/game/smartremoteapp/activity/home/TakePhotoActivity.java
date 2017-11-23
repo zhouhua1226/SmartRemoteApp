@@ -4,17 +4,19 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import com.game.smartremoteapp.R;
+import com.game.smartremoteapp.bean.AppUserBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.model.http.HttpManager;
 import com.game.smartremoteapp.model.http.RequestSubscriber;
 import com.game.smartremoteapp.utils.Base64;
 import com.game.smartremoteapp.utils.BitmapUtils;
+import com.game.smartremoteapp.utils.UrlUtils;
+import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
 import com.jph.takephoto.model.CropOptions;
 
@@ -78,21 +80,20 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
     @Override
     public void takeSuccess(String imagePath) {
         Utils.showLogE(TAG,imagePath);
-        String string="15335756655";
-        getFaceImage(string,imagePath);
+        String string=UserUtils.UserPhone;
+        String str = android.util.Base64.encodeToString(string.getBytes(), android.util.Base64.DEFAULT);
+        Bitmap bitmap= BitmapUtils.compressImageFromFile(imagePath);
+        base64=Base64.encode(BitmapUtils.compressBmpFromBmp(bitmap));
+        getFaceImage(str,base64);
     }
 
 
-    private void getFaceImage(String phone,String base64Image){
-        String stringphone=android.util.Base64.encodeToString(phone.getBytes(), android.util.Base64.DEFAULT);
-        Log.e("@@@@"+"#####",stringphone);
-        Bitmap bitmap= BitmapUtils.compressImageFromFile(base64Image);
-        String base64=Base64.encode(BitmapUtils.compressBmpFromBmp(bitmap));
-        HttpManager.getInstance().getFaceImage(stringphone, base64, new RequestSubscriber<Result>() {
+    private void getFaceImage(String phone,String faceImage){
+        HttpManager.getInstance().getFaceImage(phone, faceImage, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
-            public void _onSuccess(Result result) {
+            public void _onSuccess(Result<AppUserBean> result) {
                 Utils.showLogE(TAG,result.getMsg());
-
+                UserUtils.UserImage= UrlUtils.USERFACEIMAGEURL+result.getData().getAppUser().getIMAGE_URL();
             }
 
             @Override
@@ -102,8 +103,6 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
         });
 
     }
-
-
 
     private String getPhotoFileName() {
         Date date = new Date(System.currentTimeMillis());
