@@ -17,6 +17,7 @@
             android:layout_centerVertical="true"/>
 
         <TextView
+            android:id="@+id/rank_name"
             android:layout_toRightOf="@+id/rank_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,15 +28,19 @@
             android:layout_centerVertical="true"/>
 
         <TextView
+            android:id="@+id/rank_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="30个"
             android:textSize="15sp"
             android:textColor="#ffd7e7"
             android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
             android:layout_centerVertical="true"/>
         
         <TextView
+            android:visibility="gone"
             android:layout_width="60dp"
             android:layout_height="25dp"
             android:background="@drawable/center_item"

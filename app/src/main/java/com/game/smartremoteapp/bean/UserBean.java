@@ -29,6 +29,19 @@ public class UserBean implements Serializable {
     private String IMAGE_URL;
     private String BALANCE;
 
+    public String getDOLLTOTAL() {
+        return DOLLTOTAL;
+    }
+
+    public void setDOLLTOTAL(String DOLLTOTAL) {
+        this.DOLLTOTAL = DOLLTOTAL;
+    }
+
+    private String DOLLTOTAL;
+
+
+
+
     public String getBALANCE() {
         return BALANCE;
     }

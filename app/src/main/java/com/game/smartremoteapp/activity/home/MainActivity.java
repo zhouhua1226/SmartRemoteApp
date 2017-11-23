@@ -21,6 +21,7 @@ import com.game.smartremoteapp.bean.Token;
 import com.game.smartremoteapp.bean.ZwwRoomBean;
 import com.game.smartremoteapp.fragment.MyCenterFragment;
 import com.game.smartremoteapp.fragment.RankFragment;
+import com.game.smartremoteapp.fragment.RankFragmentTwo;
 import com.game.smartremoteapp.fragment.ZWWJFragment;
 import com.game.smartremoteapp.model.http.HttpManager;
 import com.game.smartremoteapp.model.http.RequestSubscriber;
@@ -76,7 +77,8 @@ public class MainActivity extends BaseActivity {
     private LoginDialog loginDialog;
 
     private MyCenterFragment myCenterFragment;//个人中心
-    private RankFragment rankFragment;//排行榜
+//    private RankFragment rankFragment;//排行榜
+    private RankFragmentTwo rankFragment;//排行榜
     private ZWWJFragment zwwjFragment;//抓娃娃
     private long mExitTime;
     private List<ZwwRoomBean> dollLists = new ArrayList<>();
@@ -284,7 +286,7 @@ public class MainActivity extends BaseActivity {
     private void showRankFg() {
         FragmentTransaction nowTransaction = getSupportFragmentManager().beginTransaction();
         if (rankFragment == null) {
-            rankFragment = new RankFragment();
+            rankFragment = new RankFragmentTwo();
         }
         nowTransaction.replace(R.id.main_center, rankFragment);
         nowTransaction.commitAllowingStateLoss();

@@ -83,7 +83,6 @@ public class MyCenterFragment extends BaseFragment {
         onClick();
     }
 
-
     private void onClick() {
         myCenterAdapter.setOnItemClickListener(new MyCenterAdapter.OnItemClickListener() {
             @Override

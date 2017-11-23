@@ -1,23 +1,19 @@
 package com.game.smartremoteapp.model.http;
 
 import com.game.smartremoteapp.bean.AppUserBean;
+import com.game.smartremoteapp.bean.ListRankBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.bean.Token;
-import com.game.smartremoteapp.bean.UserBean;
 import com.game.smartremoteapp.utils.UrlUtils;
-
-import java.io.File;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
-import rx.Observer;
 
 /**
  * Created by zhouh on 2017/9/8.
@@ -97,6 +93,21 @@ public interface SmartService {
     Observable<Result<LoginInfo>> getUserPlayNum(
             @Field(UrlUtils.PHONE) String phone,
             @Field(UrlUtils.USERPLAYNUM) String gold
+    );
+
+    //ListRank
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @GET(UrlUtils.LISTRANKURL)
+    Observable<Result<ListRankBean>> getListRank();
+
+    //视屏上传
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.UPLOADURL)
+    Observable<Result<LoginInfo>> getRegPlayBack(
+            @Field(UrlUtils.USERNAME1) String name,
+            @Field(UrlUtils.TIME) String time,
+            @Field(UrlUtils.DOLLNAME) String dollname
     );
 
 }

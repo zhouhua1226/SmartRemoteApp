@@ -1,5 +1,6 @@
 package com.game.smartremoteapp.activity.home;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.bean.AppUserBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
+import com.game.smartremoteapp.fragment.MyCenterFragment;
 import com.game.smartremoteapp.model.http.HttpManager;
 import com.game.smartremoteapp.model.http.RequestSubscriber;
 import com.game.smartremoteapp.utils.Base64;

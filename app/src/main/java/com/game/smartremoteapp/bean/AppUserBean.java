@@ -12,6 +12,8 @@ public class AppUserBean implements Serializable {
 
     private UserBean appUser;
 
+
+
     public UserBean getAppUser() {
         return appUser;
     }
@@ -19,4 +21,5 @@ public class AppUserBean implements Serializable {
     public void setAppUser(UserBean appUser) {
         this.appUser = appUser;
     }
+
 }

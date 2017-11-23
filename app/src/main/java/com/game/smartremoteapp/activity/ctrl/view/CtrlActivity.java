@@ -21,6 +21,10 @@ import com.game.smartremoteapp.activity.ctrl.presenter.CtrlCompl;
 import com.game.smartremoteapp.activity.wechat.WeChatPayActivity;
 import com.game.smartremoteapp.base.BaseActivity;
 import com.game.smartremoteapp.base.MyApplication;
+import com.game.smartremoteapp.bean.LoginInfo;
+import com.game.smartremoteapp.bean.Result;
+import com.game.smartremoteapp.model.http.HttpManager;
+import com.game.smartremoteapp.model.http.RequestSubscriber;
 import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.FillingCurrencyDialog;
@@ -290,6 +294,21 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @Override
     public void getRecordAttributetoNet(String time) {
         Utils.showLogE(TAG, "视频上传的时间::::" + time);
+
+        HttpManager.getInstance().getRegPlayBack(UserUtils.UserName,time,dollName, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> loginInfoResult) {
+                        Utils.showLogE(TAG+"我看看是什么",loginInfoResult.getMsg());
+
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+
+
     }
 
     @Override

@@ -1,20 +1,18 @@
 package com.game.smartremoteapp.model.http;
 
 import com.game.smartremoteapp.bean.AppUserBean;
+import com.game.smartremoteapp.bean.ListRankBean;
 import com.game.smartremoteapp.bean.LoginInfo;
 import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.bean.Token;
-import com.game.smartremoteapp.bean.UserBean;
 import com.game.smartremoteapp.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hwangjr.rxbus.annotation.Subscribe;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -122,6 +120,24 @@ public class HttpManager {
     //消费   11/21 16：15
     public void getUserPlayNum(String phone,String money,Subscriber<Result<LoginInfo>> subscriber){
         Observable<Result<LoginInfo>> o= smartService.getUserPlayNum(phone,money);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //ListRank
+    public void getListRank(Subscriber<Result<ListRankBean>> subscriber){
+        Observable<Result<ListRankBean>> o= smartService.getListRank();
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //视屏上传
+    public void getRegPlayBack(String username,String time,String dollname,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getRegPlayBack(username,time,dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

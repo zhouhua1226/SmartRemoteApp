@@ -16,8 +16,11 @@ public class UrlUtils {
     public static final String FACEIMAGE="base64Image";
     public static final String NickName="nickname";
     public static final String USERNAME="userName";
+    public static final String USERNAME1="username";
     public static final String USEPAYMONEY="money";
     public static final String USERPLAYNUM="gold";
+    public static final String DOLLNAME="dollname";
+    public static final String TIME="time";
 
     public static final String URL="http://47.100.15.18:8080";
 //    public static final String URL="http://106.75.142.42:8080/";
@@ -48,6 +51,13 @@ public class UrlUtils {
 
     //消费接口
     public static final String USERPLAYURL=URL+"/pooh-web/pay/costBalance";
+
+
+    //listRank
+    public static final String LISTRANKURL=URL+"/pooh-web/rank/rankList";
+
+    //视屏上传upload
+    public static final String UPLOADURL="http://47.100.15.18:8080/pooh-web/play/regPlayBack";
 
 
 }

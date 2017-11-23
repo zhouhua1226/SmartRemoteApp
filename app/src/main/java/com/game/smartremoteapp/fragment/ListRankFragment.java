@@ -37,14 +37,18 @@ public class ListRankFragment extends BaseFragment {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initlist();
-        listRankAdapter=new ListRankAdapter(getContext(),list);
-        listrankRecycrview.setAdapter(listRankAdapter);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-        listrankRecycrview.setLayoutManager(linearLayoutManager);
-        listrankRecycrview.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        initData();
         OnClick();
 
     }
+
+    private void initData() {
+//        listRankAdapter=new ListRankAdapter(getContext(),list);
+//        listrankRecycrview.setAdapter(listRankAdapter);
+//        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+//        listrankRecycrview.setLayoutManager(linearLayoutManager);
+//        listrankRecycrview.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+}
 
     private void initlist(){
         list= new ArrayList<String>();
@@ -57,14 +61,10 @@ public class ListRankFragment extends BaseFragment {
     public void OnClick(){
         listRankAdapter.setOnItemClickListener(new ListRankAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                MyToast.getToast(getContext(),"我要查看"+position).show();
+            public void onItemClick( int position) {
+//                MyToast.getToast(getContext(),"我要查看"+position).show();
             }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
-                MyToast.getToast(getContext(),"我要查看"+position).show();
-            }
         });
     }
 
