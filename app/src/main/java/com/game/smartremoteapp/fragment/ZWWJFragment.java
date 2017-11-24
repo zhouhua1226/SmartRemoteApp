@@ -55,13 +55,11 @@ public class ZWWJFragment extends BaseFragment {
 
     private void initData() {
         Utils.showLogE(TAG, "afterCreate:::::>>>>" + roomBeens.size());
+        dismissEmptyLayout();
         zwwAdapter = new ZWWAdapter(getActivity(), roomBeens);
         zwwRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
         zwwRecyclerview.addItemDecoration(new SpaceItemDecoration(15));
         zwwRecyclerview.setAdapter(zwwAdapter);
-        if (roomBeens.size() ==  0) {
-            showError();
-        }
         if (onClickReTryListener != null) {
             zwwEmptylayout.setOnClickReTryListener(onClickReTryListener);
         }

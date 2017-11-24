@@ -39,6 +39,8 @@ public class Utils {
     public static final String TAG_GATEWAY_SINGLE_CONNECT = "TAG_GATEWAY_SINGLE_CONNECT";
     public static final String TAG_GATEWAY_SINGLE_DISCONNECT = "TAG_GATEWAY_SINGLE_DISCONNECT";
 
+    public static final String TAG_DEVICE_FREE = "TAG_DEVICE_FREE";
+
     public static final String FREE  = "free";
     public static final String BUSY= "using";
 

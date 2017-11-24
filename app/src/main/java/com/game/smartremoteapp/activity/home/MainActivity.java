@@ -32,6 +32,7 @@ import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.EmptyLayout;
 import com.game.smartremoteapp.view.LoginDialog;
 import com.gatz.netty.AppClient;
+import com.gatz.netty.global.AppGlobal;
 import com.gatz.netty.utils.AppProperties;
 import com.gatz.netty.utils.NettyUtils;
 import com.hwangjr.rxbus.RxBus;
@@ -39,6 +40,7 @@ import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.GetStatusResponse;
+import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.videogo.openapi.EZOpenSDK;
 
 import java.util.ArrayList;
@@ -106,8 +108,8 @@ public class MainActivity extends BaseActivity {
             View MainView = getLayoutInflater().inflate(R.layout.activity_main, null);
             setContentView(MainView);
             initView();
-            initData();
             showZwwFg();
+            initData();
         }
     };
 
@@ -152,7 +154,7 @@ public class MainActivity extends BaseActivity {
         HttpManager.getInstance().getLoginWithoutCode(str, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
-                zwwjFragment.dismissEmptyLayout();
+                //zwwjFragment.dismissEmptyLayout();
                 Utils.showLogE(TAG, "logIn::::" + loginInfoResult.getMsg());
                 Utils.token = loginInfoResult.getData().getAccessToken();
                 EZOpenSDK.getInstance().setAccessToken(Utils.token);
@@ -167,9 +169,7 @@ public class MainActivity extends BaseActivity {
                 //用户头像  11/22 13：25
                 UserUtils.UserImage=UrlUtils.USERFACEIMAGEURL+loginInfoResult.getData().getAppUser().getIMAGE_URL();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
-                if (dollLists.size() == 0) {
-                    zwwjFragment.showError();
-                } else {
+                if (dollLists.size() != 0) {
                     zwwjFragment.notifyAdapter(dollLists);
                 }
                 getDeviceStates();
@@ -177,7 +177,9 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void _onError(Throwable e) {
-                zwwjFragment.showError();
+                if(zwwjFragment != null) {
+                    zwwjFragment.showError();
+                }
                 Utils.showLogE(TAG, "logIn::::" + e.getMessage());
             }
         });
@@ -432,26 +434,33 @@ public class MainActivity extends BaseActivity {
                 for (int k = 0; k < dollLists.size(); k++) {
                     ZwwRoomBean bean = dollLists.get(k);
                     if (bean.getDOLL_ID().equals(address)) {
-                        if (free) {
-                            bean.setDOLL_STATE("0");
-                        } else {
+                        if (!free) {
                             bean.setDOLL_STATE("1");
                         }
                         dollLists.set(k, bean);
                     }
                 }
-                if (free) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            zwwjFragment.notifyAdapter(dollLists);
-                        }
-                    }, Utils.CATCH_TIME_DELAY);
-                } else {
+                if (!free) {
                     zwwjFragment.notifyAdapter(dollLists);
                 }
             }
         }
+    }
+
+    @Subscribe(thread = EventThread.MAIN_THREAD,
+            tags = {@Tag(Utils.TAG_DEVICE_FREE)})
+    public void getDeviceFree(GatewayPoohStatusMessage message) {
+        String roomId = message.getRoomId();
+        Utils.showLogE(TAG, "这个设备free::::::" + roomId);
+        for (int k = 0; k < dollLists.size(); k++) {
+            ZwwRoomBean bean = dollLists.get(k);
+            if (bean.getDOLL_ID().equals(roomId)) {
+                bean.setDOLL_STATE("0");
+                dollLists.set(k, bean);
+                break;
+            }
+        }
+        zwwjFragment.notifyAdapter(dollLists);
     }
 
     //监控单个网关连接区

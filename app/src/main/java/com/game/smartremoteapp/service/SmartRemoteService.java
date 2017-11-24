@@ -16,6 +16,7 @@ import com.gatz.netty.observer.SuberInfo;
 import com.hwangjr.rxbus.RxBus;
 import com.iot.game.pooh.server.entity.json.GetStatusResponse;
 import com.iot.game.pooh.server.entity.json.MoveControlResponse;
+import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
 
@@ -116,6 +117,11 @@ public class SmartRemoteService extends Service {
             } else if (tag.equals(ConnectResultEvent.SINGLE_DISCONNECT)) {
                 String id_disconnect = (String) objs[0];
                 RxBus.get().post(Utils.TAG_GATEWAY_SINGLE_DISCONNECT, id_disconnect);
+            } else if (tag.equals(ConnectResultEvent.DEVICE_FREE)) {
+                GatewayPoohStatusMessage message = (GatewayPoohStatusMessage) objs[0];
+                RxBus.get().post(Utils.TAG_DEVICE_FREE, message);
+            } else if (tag.equals(ConnectResultEvent.DEVICE_ERR)) {
+                //TODO 设备故障
             }
         }
 

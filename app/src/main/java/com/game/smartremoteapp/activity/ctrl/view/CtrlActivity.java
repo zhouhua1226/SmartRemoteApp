@@ -32,6 +32,7 @@ import com.game.smartremoteapp.view.GifView;
 import com.game.smartremoteapp.view.MyToast;
 import com.game.smartremoteapp.view.TimeCircleProgressView;
 import com.game.smartremoteapp.view.VibratorView;
+import com.gatz.netty.global.AppGlobal;
 import com.gatz.netty.global.ConnectResultEvent;
 import com.gatz.netty.utils.NettyUtils;
 import com.hwangjr.rxbus.RxBus;
@@ -39,6 +40,7 @@ import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.MoveControlResponse;
+import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
 import com.iot.game.pooh.server.entity.json.enums.MoveType;
@@ -126,7 +128,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     public Vibrator vibrator; // 震动器
     private String camera_name;
     private String dollName = "未知";
-
+    private boolean isCurrentConnect = true;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_ctrl;
@@ -153,6 +155,12 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlFailIv.setVisibility(View.GONE);
         mRealPlaySh = mRealPlaySv.getHolder();
         mRealPlaySh.addCallback(this);
+        if (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_FAILURE)) {
+            ctrlStatusIv.setImageResource(R.drawable.point_red);
+            isCurrentConnect = false;
+        } else {
+            ctrlStatusIv.setImageResource(R.drawable.point_green);
+        }
         NettyUtils.pingRequest(); //判断连接
     }
 
@@ -298,7 +306,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         HttpManager.getInstance().getRegPlayBack(UserUtils.UserName,time,dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
-                        Utils.showLogE(TAG+"我看看是什么",loginInfoResult.getMsg());
+                        //Utils.showLogE(TAG+"我看看是什么",loginInfoResult.getMsg());
 
             }
 
@@ -357,7 +365,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             case R.id.startgame_ll:
                 //开始游戏按钮
                 if ((EZstatus == EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
-                        && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))) {
+                        && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))
+                        && (isCurrentConnect)) {
                     ctrlCompl.sendCmdCtrl(MoveType.START);
                     ctrlCompl.startRecordVideo(mEZPlayer);
                     getWorkstation();
@@ -439,6 +448,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 || (!Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))){
             return false;
         }
+        if (!isCurrentConnect) {
+            return false;
+        }
         int action = motionEvent.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -502,7 +514,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                             public void run() {
                                 ctrlCompl.stopRecordView(mEZPlayer);
                             }
-                        }, 5000);
+                        }, 7000);
                         break;
                     default:
                         break;
@@ -572,6 +584,42 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             Utils.showLogE(TAG, "TAG_CONNECT_SUCESS");
             ctrlStatusIv.setImageResource(R.drawable.point_green);
             NettyUtils.sendRoomInCmd(UserUtils.UserNickName);
+        }
+    }
+
+    //监控单个网关连接区
+    @Subscribe(thread = EventThread.MAIN_THREAD,
+            tags = {@Tag(Utils.TAG_GATEWAY_SINGLE_DISCONNECT)})
+    public void getSingleGatwayDisConnect(String id) {
+        Utils.showLogE(TAG, "getSingleGatwayDisConnect id" + id);
+        if (id.equals(AppGlobal.getInstance().getUserInfo().getRoomid())) {
+            ctrlStatusIv.setImageResource(R.drawable.point_red);
+            isCurrentConnect = false;
+        }
+    }
+    @Subscribe(thread = EventThread.MAIN_THREAD,
+            tags = {@Tag(Utils.TAG_GATEWAY_SINGLE_CONNECT)})
+    public void getSingleGatwayConnect(String id) {
+        Utils.showLogE(TAG, "getSingleGatwayConnect id" + id);
+        if (id.equals(AppGlobal.getInstance().getUserInfo().getRoomid())) {
+            ctrlStatusIv.setImageResource(R.drawable.point_green);
+            isCurrentConnect = true;
+        }
+    }
+
+    //设备故障
+    @Subscribe(thread = EventThread.MAIN_THREAD,
+            tags = {@Tag(Utils.TAG_DEVICE_FREE)})
+    public void getDeviceFree(GatewayPoohStatusMessage message) {
+        String roomId = message.getRoomId();
+        int number = message.getGifinumber();
+        Utils.showLogE(TAG, "getDeviceFree::::::" + roomId + "======" + number);
+        if (roomId.equals(AppGlobal.getInstance().getUserInfo().getRoomid())) {
+            if (number == 0) {
+
+            } else {
+
+            }
         }
     }
 
