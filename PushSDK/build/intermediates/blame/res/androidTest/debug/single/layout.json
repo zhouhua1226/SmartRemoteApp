@@ -1,10 +1,6 @@
 [
     {
-        "merged": "E:\\game_space\\myspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
-        "source": "E:\\game_space\\myspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
-    },
-    {
-        "merged": "D:\\com.hongxiu.wawaji.2.2\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
-        "source": "D:\\com.hongxiu.wawaji.2.2\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
+        "merged": "D:\\myspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\upush_notification.xml",
+        "source": "D:\\myspace\\SmartRemoteApp\\PushSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\upush_notification.xml"
     }
 ]

@@ -189,7 +189,7 @@ public class CtrlModel {
         if (ezPlayer.startLocalRecordWithFile(strRecordFile)) {
             Utils.showLogE(TAG, "保存的视频:::" + strRecordFile);
             isRecoding = true;
-            callBack.getVideoAttributetoNet(time);
+            callBack.getVideoAttributetoNet(time, strRecordFile);
         } else {
             if (isRecoding) {
                 stopRecordVideo(ezPlayer);

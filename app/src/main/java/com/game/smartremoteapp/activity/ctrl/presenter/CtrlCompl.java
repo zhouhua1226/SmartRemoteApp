@@ -54,8 +54,8 @@ public class CtrlCompl implements BasePresenter, ICtrlPresenter{
         }
 
         @Override
-        public void getVideoAttributetoNet(String time) {
-            ictrlView.getRecordAttributetoNet(time);
+        public void getVideoAttributetoNet(String time, String fileName) {
+            ictrlView.getRecordAttributetoNet(time, fileName);
         }
     };
 

@@ -46,9 +46,10 @@ public interface SmartService {
 
     //不需要验证码直接登录
     @Headers("Content-Type: application/x-www-form-urlencoded")
-    @GET(UrlUtils.LOGINWITHOUTCODE)
+    @FormUrlEncoded
+    @POST(UrlUtils.LOGINWITHOUTCODE)
     Observable<Result<LoginInfo>> getLoginWithOutCode(
-            @Query(UrlUtils.PHONE) String phone);
+            @Field(UrlUtils.PHONE) String phone);
 
     //头像上传
     @Headers("Content-Type: application/x-www-form-urlencoded")
@@ -105,7 +106,7 @@ public interface SmartService {
     @FormUrlEncoded
     @POST(UrlUtils.UPLOADURL)
     Observable<Result<LoginInfo>> getRegPlayBack(
-            @Field(UrlUtils.USERNAME1) String name,
+            @Field(UrlUtils.USERNAME) String name,
             @Field(UrlUtils.TIME) String time,
             @Field(UrlUtils.DOLLNAME) String dollname
     );

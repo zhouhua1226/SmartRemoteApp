@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\game_space\myspace\SmartRemoteApp\PushSDK\src\main\shaders"/></dataSet><dataSet config="debug"><source path="E:\game_space\myspace\SmartRemoteApp\PushSDK\build-types\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\myspace\SmartRemoteApp\PushSDK\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\myspace\SmartRemoteApp\PushSDK\build-types\debug\shaders"/></dataSet></merger>

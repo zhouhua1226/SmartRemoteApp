@@ -403,7 +403,7 @@ public class MainActivity extends BaseActivity {
         if (response instanceof GetStatusResponse) {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
             Utils.showLogE(TAG, "=====" + response.toString());
-            if ((getStatusResponse.getSeq() != -2) && (!Utils.isEmpty(getStatusResponse.getStatus()))) {
+            if ((getStatusResponse.getSeq() != -2)) {
                 String[] devices = getStatusResponse.getStatus().split(";");
                 for (int i = 0; i < devices.length; i++) {
                     String address = devices[i].substring(0, devices[i].indexOf("-"));
@@ -421,47 +421,48 @@ public class MainActivity extends BaseActivity {
                     }
                     zwwjFragment.notifyAdapter(dollLists);
                 }
-            } else {
-                if (getStatusResponse.getFree() == null) {
-                    return;
-                }
-                if (Utils.isEmpty(getStatusResponse.getRoomId())) {
-                    return;
-                }
-                //其他用户操作娃娃机了
-                boolean free = getStatusResponse.getFree();
-                String address = getStatusResponse.getRoomId();
-                for (int k = 0; k < dollLists.size(); k++) {
-                    ZwwRoomBean bean = dollLists.get(k);
-                    if (bean.getDOLL_ID().equals(address)) {
-                        if (!free) {
-                            bean.setDOLL_STATE("1");
-                        }
-                        dollLists.set(k, bean);
-                    }
-                }
-                if (!free) {
-                    zwwjFragment.notifyAdapter(dollLists);
-                }
             }
+//            else {
+//                if (getStatusResponse.getFree() == null) {
+//                    return;
+//                }
+//                if (Utils.isEmpty(getStatusResponse.getRoomId())) {
+//                    return;
+//                }
+//                //其他用户操作娃娃机了
+//                boolean free = getStatusResponse.getFree();
+//                String address = getStatusResponse.getRoomId();
+//                for (int k = 0; k < dollLists.size(); k++) {
+//                    ZwwRoomBean bean = dollLists.get(k);
+//                    if (bean.getDOLL_ID().equals(address)) {
+//                        if (!free) {
+//                            bean.setDOLL_STATE("1");
+//                        }
+//                        dollLists.set(k, bean);
+//                    }
+//                }
+//                if (!free) {
+//                    zwwjFragment.notifyAdapter(dollLists);
+//                }
+//            }
         }
     }
 
-    @Subscribe(thread = EventThread.MAIN_THREAD,
-            tags = {@Tag(Utils.TAG_DEVICE_FREE)})
-    public void getDeviceFree(GatewayPoohStatusMessage message) {
-        String roomId = message.getRoomId();
-        Utils.showLogE(TAG, "这个设备free::::::" + roomId);
-        for (int k = 0; k < dollLists.size(); k++) {
-            ZwwRoomBean bean = dollLists.get(k);
-            if (bean.getDOLL_ID().equals(roomId)) {
-                bean.setDOLL_STATE("0");
-                dollLists.set(k, bean);
-                break;
-            }
-        }
-        zwwjFragment.notifyAdapter(dollLists);
-    }
+//    @Subscribe(thread = EventThread.MAIN_THREAD,
+//            tags = {@Tag(Utils.TAG_DEVICE_FREE)})
+//    public void getDeviceFree(GatewayPoohStatusMessage message) {
+//        String roomId = message.getRoomId();
+//        Utils.showLogE(TAG, "这个设备free::::::" + roomId);
+//        for (int k = 0; k < dollLists.size(); k++) {
+//            ZwwRoomBean bean = dollLists.get(k);
+//            if (bean.getDOLL_ID().equals(roomId)) {
+//                bean.setDOLL_STATE("0");
+//                dollLists.set(k, bean);
+//                break;
+//            }
+//        }
+//        zwwjFragment.notifyAdapter(dollLists);
+//    }
 
     //监控单个网关连接区
     @Subscribe(thread = EventThread.MAIN_THREAD,

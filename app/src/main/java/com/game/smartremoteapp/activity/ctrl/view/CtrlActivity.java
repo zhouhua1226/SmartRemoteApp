@@ -129,6 +129,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private String camera_name;
     private String dollName = "未知";
     private boolean isCurrentConnect = true;
+    private String upTime;
+    private String upFileName;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_ctrl;
@@ -269,7 +271,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @Override
     public void getTimeFinish() {
         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
-        getStartstation();
+        //getStartstation();
         ctrlCompl.stopTimeCounter();
         timeCircleProgressView.setProgress(Utils.CATCH_TIME_OUT);
     }
@@ -300,13 +302,16 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     @Override
-    public void getRecordAttributetoNet(String time) {
-        Utils.showLogE(TAG, "视频上传的时间::::" + time);
+    public void getRecordAttributetoNet(String time, String fileName) {
+        Utils.showLogE(TAG, "视频上传的时间::::" + time + "=====" + fileName);
+        upTime = time;
+        upFileName = fileName;
+    }
 
+    private void updataTime(String time) {
         HttpManager.getInstance().getRegPlayBack(UserUtils.UserName,time,dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
-                        //Utils.showLogE(TAG+"我看看是什么",loginInfoResult.getMsg());
 
             }
 
@@ -315,8 +320,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
             }
         });
-
-
     }
 
     @Override
@@ -393,15 +396,19 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     private void getStartstation() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startgameLl.setVisibility(View.VISIBLE);
-                rechargeLl.setVisibility(View.VISIBLE);
-                catchLl.setVisibility(View.GONE);
-                operationRl.setVisibility(View.GONE);
-            }
-        }, Utils.CATCH_TIME_DELAY); //8s下爪  抵消掉下爪需要的时间
+        startgameLl.setVisibility(View.VISIBLE);
+        rechargeLl.setVisibility(View.VISIBLE);
+        catchLl.setVisibility(View.GONE);
+        operationRl.setVisibility(View.GONE);
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                startgameLl.setVisibility(View.VISIBLE);
+//                rechargeLl.setVisibility(View.VISIBLE);
+//                catchLl.setVisibility(View.GONE);
+//                operationRl.setVisibility(View.GONE);
+//            }
+//        }, Utils.CATCH_TIME_DELAY); //8s下爪  抵消掉下爪需要的时间
     }
 
     private void getMoney() {
@@ -506,15 +513,14 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         rightImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_right_n));
                         break;
                     case R.id.catch_ll:
-                        getStartstation();
                         ctrlCompl.stopTimeCounter();
                         //TODO 5S后关闭录像功能
-                        mHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                ctrlCompl.stopRecordView(mEZPlayer);
-                            }
-                        }, 7000);
+//                        mHandler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                ctrlCompl.stopRecordView(mEZPlayer);
+//                            }
+//                        }, 5000);
                         break;
                     default:
                         break;
@@ -539,14 +545,15 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             if ((moveControlResponse.getSeq() == -2) && (moveControlResponse.getMoveType()!=null)) {
                 if (moveControlResponse.getMoveType().name().equals(MoveType.START.name())) {
                     setStartMode(false);
-                } else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            setStartMode(true);
-                        }
-                    }, Utils.CATCH_TIME_DELAY);
                 }
+//                else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
+//                    mHandler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            setStartMode(true);
+//                        }
+//                    }, Utils.CATCH_TIME_DELAY);
+//                }
             }
         } else if (response instanceof String) {
             Utils.showLogE(TAG, "move faile....");
@@ -562,6 +569,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             AppInRoomResponse appInRoomResponse = (AppInRoomResponse) response;
             Utils.showLogE(TAG, "=====" + appInRoomResponse.toString());
             String allUsers = appInRoomResponse.getAllUserInRoom();
+            Boolean free = appInRoomResponse.getFree();
+            setStartMode(free);
             long seq = appInRoomResponse.getSeq();
             if ((seq != -2) && (!Utils.isEmpty(allUsers))) {
                 ctrlCompl.sendGetUserInfos(allUsers);
@@ -615,11 +624,21 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         int number = message.getGifinumber();
         Utils.showLogE(TAG, "getDeviceFree::::::" + roomId + "======" + number);
         if (roomId.equals(AppGlobal.getInstance().getUserInfo().getRoomid())) {
-            if (number == 0) {
-
-            } else {
-
+            getStartstation();
+            setStartMode(true);
+            if (Utils.isEmpty(upTime)) {
+                return;
             }
+            ctrlCompl.stopRecordView(mEZPlayer); //录制完毕
+            if (number != 0) {
+                //抓到娃娃  上传给后台
+                updataTime(upTime);
+            } else {
+                //删除本地视频
+                Utils.delFile(upFileName);
+            }
+            upTime = "";
+            upFileName = "";
         }
     }
 

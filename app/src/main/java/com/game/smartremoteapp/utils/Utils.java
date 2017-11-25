@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
 
 import com.gatz.netty.global.ConnectResultEvent;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -169,6 +170,14 @@ public class Utils {
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
         return m.find();
+    }
+
+    public static boolean delFile(String fileName){
+        File file = new File(fileName);
+        if(file.isFile()){
+            file.delete();
+        }
+       return file.exists();
     }
 
 }

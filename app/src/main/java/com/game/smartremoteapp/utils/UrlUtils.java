@@ -16,10 +16,9 @@ public class UrlUtils {
     public static final String FACEIMAGE="base64Image";
     public static final String NickName="nickname";
     public static final String USERNAME="userName";
-    public static final String USERNAME1="username";
     public static final String USEPAYMONEY="money";
     public static final String USERPLAYNUM="gold";
-    public static final String DOLLNAME="dollname";
+    public static final String DOLLNAME="dollName";
     public static final String TIME="time";
 
     public static final String URL="http://47.100.15.18:8080";

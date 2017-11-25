@@ -19,5 +19,5 @@ public interface IctrlView {
 
     void getRecordErrCode(int code);
     void getRecordSuecss();
-    void getRecordAttributetoNet(String time);
+    void getRecordAttributetoNet(String time, String name);
 }

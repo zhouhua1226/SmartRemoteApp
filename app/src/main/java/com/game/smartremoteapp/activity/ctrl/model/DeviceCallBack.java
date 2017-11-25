@@ -14,5 +14,5 @@ public interface DeviceCallBack {
     //视频回放区
     void getVideoRecordErr(int errCode);
     void getVideoSucess();
-    void getVideoAttributetoNet(String time);
+    void getVideoAttributetoNet(String time, String fileName);
 }
