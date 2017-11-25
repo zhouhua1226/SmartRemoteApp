@@ -197,6 +197,7 @@ public class CtrlModel {
         }
     }
 
+
     /**
      * 关闭视频录制
      * @param ezPlayer
