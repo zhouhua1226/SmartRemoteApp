@@ -419,7 +419,6 @@ public class MainActivity extends BaseActivity {
                             dollLists.set(j, bean);
                         }
                     }
-
                     zwwjFragment.notifyAdapter(dollLists);
                 }
             }
