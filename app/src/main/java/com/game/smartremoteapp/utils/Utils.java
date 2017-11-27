@@ -176,8 +176,10 @@ public class Utils {
 
     public static boolean delFile(String fileName){
         File file = new File(fileName);
-        if(file.isFile()){
-            file.delete();
+        if (file.exists()) {
+            if (file.isFile()) {
+                file.delete();
+            }
         }
        return file.exists();
     }

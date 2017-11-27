@@ -409,15 +409,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         rechargeLl.setVisibility(View.VISIBLE);
         catchLl.setVisibility(View.GONE);
         operationRl.setVisibility(View.GONE);
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                startgameLl.setVisibility(View.VISIBLE);
-//                rechargeLl.setVisibility(View.VISIBLE);
-//                catchLl.setVisibility(View.GONE);
-//                operationRl.setVisibility(View.GONE);
-//            }
-//        }, Utils.CATCH_TIME_DELAY); //8s下爪  抵消掉下爪需要的时间
     }
 
     private void getMoney() {
@@ -662,7 +653,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 updataTime(upTime);
             } else {
                 //删除本地视频
-                Utils.delFile(upFileName);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean d = Utils.delFile(upFileName);
+                        Utils.showLogE(TAG, "没抓住 删除视频....." + upFileName + d);
+                    }
+                }, 3000);  //3s后删除 保证录制完毕
             }
             upTime = "";
             upFileName = "";
