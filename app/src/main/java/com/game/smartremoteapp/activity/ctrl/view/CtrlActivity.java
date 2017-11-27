@@ -60,7 +60,7 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 
 /**
- * Created by zhouh on 2017/9/8.
+ * Created by zhouh on 2017/9/8. SomeCommits
  */
 public class CtrlActivity extends BaseActivity implements IctrlView,
         SurfaceHolder.Callback,
