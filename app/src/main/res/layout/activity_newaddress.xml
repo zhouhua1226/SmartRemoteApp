@@ -47,6 +47,7 @@
             android:layout_marginLeft="15dp"/>
 
         <EditText
+            android:id="@+id/newaddress_name_et"
             android:lines="1"
             android:layout_toRightOf="@+id/consignee_tv"
             android:layout_marginLeft="10dp"
@@ -82,6 +83,7 @@
             android:layout_marginLeft="15dp"/>
 
         <EditText
+            android:id="@+id/newaddress_phone_et"
             android:phoneNumber="true"
             android:maxLength="11"
             android:lines="1"
@@ -119,7 +121,7 @@
             android:layout_marginLeft="15dp"/>
 
         <EditText
-
+            android:id="@+id/newaddress_dq_et"
             android:layout_toRightOf="@+id/text_tv"
             android:layout_marginLeft="10dp"
             android:background="@null"
@@ -144,11 +146,12 @@
         android:layout_height="80dp"
         android:background="@color/white">
         <EditText
+            android:id="@+id/newaddress_detail_et"
             android:layout_marginTop="5dp"
             android:gravity="start"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="详细地址"
+            android:hint="详细地址：省(市).县(区).镇(街道).路.门牌号"
             android:textColorHint="#848484"
             android:textSize="12sp"
             android:textColor="#848484"

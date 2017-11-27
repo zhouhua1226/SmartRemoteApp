@@ -47,10 +47,11 @@
 
         <ImageView
             android:id="@+id/title_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:padding="2dp"
             android:background="@drawable/recordgame"
             android:src="@drawable/wawa"/>
 
@@ -111,6 +112,7 @@
             android:layout_marginLeft="15dp"/>
 
         <TextView
+            android:id="@+id/mydoll_num_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
@@ -145,6 +147,7 @@
             android:layout_marginLeft="15dp"/>
 
         <TextView
+            android:id="@+id/mydoll_id_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="665522"
@@ -179,6 +182,7 @@
             android:layout_marginLeft="15dp"/>
 
         <TextView
+            android:id="@+id/mydoll_state_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="寄存中"
@@ -213,6 +217,7 @@
             android:layout_marginLeft="15dp"/>
 
         <TextView
+            android:id="@+id/mydoll_exchangenum_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100"

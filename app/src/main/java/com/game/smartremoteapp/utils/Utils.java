@@ -180,4 +180,15 @@ public class Utils {
         return file.exists();
     }
 
+    public static String getTime(String times){
+        String year=times.substring(0,4);
+        String month=times.substring(4,6);
+        String day=times.substring(6,8);
+        String hour=times.substring(8,10);
+        String minte=times.substring(10,12);
+        String second=times.substring(12,14);
+        return year+"/"+month+"/"+day+"  "+hour+":"+minte+":"+second;
+    }
+
+
 }

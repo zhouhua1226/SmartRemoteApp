@@ -23,6 +23,11 @@ import com.game.smartremoteapp.activity.home.SettingActivity;
 import com.game.smartremoteapp.activity.wechat.WeChatPayActivity;
 import com.game.smartremoteapp.adapter.MyCenterAdapter;
 import com.game.smartremoteapp.base.BaseFragment;
+import com.game.smartremoteapp.bean.LoginInfo;
+import com.game.smartremoteapp.bean.Result;
+import com.game.smartremoteapp.bean.VideoBackBean;
+import com.game.smartremoteapp.model.http.HttpManager;
+import com.game.smartremoteapp.model.http.RequestSubscriber;
 import com.game.smartremoteapp.utils.UserUtils;
 import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.FillingCurrencyDialog;
@@ -67,6 +72,7 @@ public class MyCenterFragment extends BaseFragment {
     private FillingCurrencyDialog fillingCurrencyDialog;
     private MyCenterAdapter myCenterAdapter;
     private List<String> list;
+    private List<VideoBackBean> videoList=new ArrayList<>();
 
 
     @Override
@@ -77,7 +83,7 @@ public class MyCenterFragment extends BaseFragment {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         Glide.get(getContext()).clearMemory();
-        userNumber.setText("累积抓中100次");
+
         initlist();
         initData();
         onClick();
@@ -87,7 +93,11 @@ public class MyCenterFragment extends BaseFragment {
         myCenterAdapter.setOnItemClickListener(new MyCenterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), RecordGameActivty.class));
+                Intent intent=new Intent(getContext(), RecordGameActivty.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("record",videoList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override
@@ -116,7 +126,7 @@ public class MyCenterFragment extends BaseFragment {
     }
 
     private void initData() {
-        myCenterAdapter = new MyCenterAdapter(getContext(), list);
+        myCenterAdapter = new MyCenterAdapter(getContext(), videoList);
         mycenterRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mycenterRecyclerview.addItemDecoration(new SpaceItemDecoration(15));
         mycenterRecyclerview.setAdapter(myCenterAdapter);
@@ -135,6 +145,7 @@ public class MyCenterFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         getUserImageAndName();
+        getVideoBackList(userName.getText().toString());
     }
 
     private void getUserImageAndName(){
@@ -215,7 +226,27 @@ public class MyCenterFragment extends BaseFragment {
         }
     };
 
+    private void getVideoBackList(String userName) {
+        HttpManager.getInstance().getVideoBackList(userName, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> result) {
+                videoList= result.getData().getPlayback();
+                Utils.showLogE("视频列表", "list=" + result.getMsg()+"="+videoList.size());
+                userNumber.setText("累积抓中"+videoList.size()+"次");
+                if(videoList.size()!=0) {
+                    myCenterAdapter.notify(videoList);
+                }else {
+                    mycenterRecyclerview.setVisibility(View.GONE);
 
+                }
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+    }
 
 
 }

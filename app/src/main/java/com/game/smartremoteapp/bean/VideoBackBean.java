@@ -16,6 +16,33 @@ public class VideoBackBean implements Serializable{
     private String ID;
     private String CREATETIME;
     private String DOLL_URL;
+    private int DOLLTOTAL;
+    private int CONVERSIONGOLD;
+    private String POSTSTATE;
+
+    public int getDOLLTOTAL() {
+        return DOLLTOTAL;
+    }
+
+    public void setDOLLTOTAL(int DOLLTOTAL) {
+        this.DOLLTOTAL = DOLLTOTAL;
+    }
+
+    public int getCONVERSIONGOLD() {
+        return CONVERSIONGOLD;
+    }
+
+    public void setCONVERSIONGOLD(int CONVERSIONGOLD) {
+        this.CONVERSIONGOLD = CONVERSIONGOLD;
+    }
+
+    public String getPOSTSTATE() {
+        return POSTSTATE;
+    }
+
+    public void setPOSTSTATE(String POSTSTATE) {
+        this.POSTSTATE = POSTSTATE;
+    }
 
     public String getDOLLNAME() {
         return DOLLNAME;

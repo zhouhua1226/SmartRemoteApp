@@ -9,7 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.game.smartremoteapp.R;
+import com.game.smartremoteapp.bean.VideoBackBean;
+import com.game.smartremoteapp.bean.ZwwRoomBean;
+import com.game.smartremoteapp.utils.UrlUtils;
+import com.game.smartremoteapp.utils.Utils;
+import com.game.smartremoteapp.view.GlideCircleTransform;
 
 import java.util.List;
 
@@ -19,11 +25,11 @@ import java.util.List;
 public class MyCenterAdapter extends RecyclerView.Adapter<MyCenterAdapter.CenterViewHolder> {
 
     private Context mContext;
-    private List<String> mDatas;
+    private List<VideoBackBean> mDatas;
     private LayoutInflater mInflater;
     private OnItemClickListener mOnItemClickListener;
 
-    public MyCenterAdapter(Context context,List<String>datas){
+    public MyCenterAdapter(Context context,List<VideoBackBean>datas){
         this.mContext=context;
         this.mDatas=datas;
         mInflater=LayoutInflater.from(context);
@@ -52,6 +58,13 @@ public class MyCenterAdapter extends RecyclerView.Adapter<MyCenterAdapter.Center
     @Override
     public void onBindViewHolder(final CenterViewHolder holder, final int position) {
 
+        holder.name.setText(mDatas.get(position).getDOLLNAME());
+        holder.times.setText(Utils.getTime(mDatas.get(position).getCREATETIME()));
+        Glide.with(mContext)
+                .load(UrlUtils.PICTUREURL+mDatas.get(position).getDOLL_URL())
+                .dontAnimate()
+                .transform(new GlideCircleTransform(mContext))
+                .into(holder.imageview);
         if (mOnItemClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,6 +94,11 @@ public class MyCenterAdapter extends RecyclerView.Adapter<MyCenterAdapter.Center
             name= (TextView) itemView.findViewById(R.id.moppet_name_tv);
             times= (TextView) itemView.findViewById(R.id.mopper_time);
         }
+    }
+
+    public void notify(List<VideoBackBean> lists) {
+        this.mDatas = lists;
+        notifyDataSetChanged();
     }
 
 

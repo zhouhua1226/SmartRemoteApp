@@ -1,12 +1,16 @@
 package com.game.smartremoteapp.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.game.smartremoteapp.R;
 import com.game.smartremoteapp.base.BaseActivity;
+import com.game.smartremoteapp.utils.UserUtils;
+import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.MyToast;
 
 import butterknife.BindView;
@@ -21,6 +25,19 @@ public class NewAddressActivity extends BaseActivity {
     ImageButton imageBack;
     @BindView(R.id.preserve_button)
     Button preserveButton;
+    @BindView(R.id.newaddress_name_et)
+    EditText newaddressNameEt;
+    @BindView(R.id.newaddress_phone_et)
+    EditText newaddressPhoneEt;
+    @BindView(R.id.newaddress_dq_et)
+    EditText newaddressDqEt;
+    @BindView(R.id.newaddress_detail_et)
+    EditText newaddressDetailEt;
+
+    private String name="";
+    private String phone="";
+    private String address="";
+    private String information="";
 
     @Override
     protected int getLayoutId() {
@@ -30,12 +47,12 @@ public class NewAddressActivity extends BaseActivity {
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-
+        initView();
     }
 
     @Override
     protected void initView() {
-
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -45,6 +62,14 @@ public class NewAddressActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
+    private void initData(){
+        name=newaddressNameEt.getText().toString();
+        phone=newaddressPhoneEt.getText().toString();
+        address=newaddressDetailEt.getText().toString();
+    }
+
+
+
     @OnClick({R.id.image_back, R.id.preserve_button})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -52,7 +77,17 @@ public class NewAddressActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.preserve_button:
-                MyToast.getToast(this,"保存").show();
+                initData();
+                if(Utils.isEmpty(name)||Utils.isEmpty(phone)||Utils.isEmpty(address)){
+                    MyToast.getToast(this, "请将信息填写完整！").show();
+                }else {
+                    MyToast.getToast(this, "保存成功！").show();
+                    information=name+"  "+phone+"  "+address;
+                    UserUtils.UserAddress=information;
+                    finish();
+                }
+
+
                 break;
         }
     }

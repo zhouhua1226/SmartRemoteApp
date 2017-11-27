@@ -38,10 +38,11 @@
 
         <ImageView
             android:id="@+id/title_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:padding="2dp"
             android:background="@drawable/recordgame"
             android:src="@drawable/wawa"/>
 
@@ -82,13 +83,16 @@
         android:layout_height="60dp"
         android:background="@color/white">
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/information_tv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="新增收货地址"
-            android:textSize="14sp"
+            android:hint="新增收货地址"
+            android:textSize="13sp"
             android:textColor="#353535"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="50dp"
+            />
 
         <ImageButton
             android:layout_alignParentRight="true"
@@ -127,6 +131,7 @@
             android:layout_marginLeft="15dp"/>
 
         <EditText
+            android:id="@+id/remark_et"
             android:layout_toRightOf="@+id/text_tv"
             android:layout_marginLeft="10dp"
             android:background="@null"
