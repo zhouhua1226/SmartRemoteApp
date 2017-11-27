@@ -651,18 +651,19 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             if (number != 0) {
                 //抓到娃娃  上传给后台
                 updataTime(upTime);
+                upFileName = "";
             } else {
                 //删除本地视频
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         boolean d = Utils.delFile(upFileName);
-                        Utils.showLogE(TAG, "没抓住 删除视频....." + upFileName + d);
+                        Utils.showLogE(TAG, "没抓住 删除" + upFileName + "视频....." + d);
+                        upFileName = "";
                     }
-                }, 3000);  //3s后删除 保证录制完毕
+                }, 2000);  //4s后删除 保证录制完毕
             }
             upTime = "";
-            upFileName = "";
         }
     }
 
