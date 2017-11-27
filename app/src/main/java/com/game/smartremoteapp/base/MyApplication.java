@@ -27,6 +27,10 @@ public class MyApplication extends MultiDexApplication {
         videoCtrlSettings();
         startCoreService();
         getPushAgent();
+        setCrashHandler();
+    }
+
+    private void setCrashHandler() {
 
     }
 
