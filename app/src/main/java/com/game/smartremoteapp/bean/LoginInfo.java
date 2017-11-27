@@ -11,6 +11,16 @@ public class LoginInfo implements Serializable{
     private String sessionID;
     private UserBean appUser;
     private List<ZwwRoomBean> dollList;
+    private List<VideoBackBean> playback;
+
+    public List<VideoBackBean> getPlayback() {
+        return playback;
+    }
+
+    public void setPlayback(List<VideoBackBean> playback) {
+        this.playback = playback;
+    }
+
 
     public void setAppUser(UserBean appUser) {
         this.appUser = appUser;

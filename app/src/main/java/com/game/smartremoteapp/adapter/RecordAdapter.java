@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.game.smartremoteapp.R;
+import com.game.smartremoteapp.bean.VideoBackBean;
+import com.game.smartremoteapp.utils.UrlUtils;
+import com.game.smartremoteapp.view.GlideCircleTransform;
 
 import java.util.List;
 
@@ -18,13 +21,18 @@ import java.util.List;
  */
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHolder1> {
     private Context mContext;
-    private List<String> mDatas;
+    private List<VideoBackBean> mDatas;
     private LayoutInflater mInflater;
+    private OnItemClickListener mOnItemClickListener;
 
-    public RecordAdapter(Context context, List<String> datas){
+    public RecordAdapter(Context context, List<VideoBackBean> datas){
         this.mContext=context;
         this.mDatas=datas;
         mInflater=LayoutInflater.from(context);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
     @Override
@@ -35,11 +43,24 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder1 holder, int position) {
-        holder.name_tv.setText("可爱熊");
-        holder.times_tv.setText("2017/10/17 15:27");
+    public void onBindViewHolder(MyViewHolder1 holder, final int position) {
+        holder.name_tv.setText(mDatas.get(position).getDOLLNAME());
+        holder.times_tv.setText(getTime(mDatas.get(position).getCREATETIME()));
         holder.results_tv.setText("抓取成功");
-        Glide.with(mContext).load(R.drawable.wawa).into(holder.title_img);
+        Glide.with(mContext)
+                .load(UrlUtils.PICTUREURL+mDatas.get(position).getDOLL_URL())
+                .dontAnimate()
+                .transform(new GlideCircleTransform(mContext))
+                .into(holder.title_img);
+
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(position);
+                }
+            });
+        }
 
     }
 
@@ -60,6 +81,25 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
             times_tv= (TextView) itemView.findViewById(R.id.times_tv);
             results_tv= (TextView) itemView.findViewById(R.id.results_tv);
         }
+    }
+
+    public void setmOnItemClickListener(OnItemClickListener clickListener) {
+        this.mOnItemClickListener = clickListener;
+    }
+
+    public void notify(List<VideoBackBean> lists) {
+        this.mDatas = lists;
+        notifyDataSetChanged();
+    }
+
+    private String getTime(String times){
+        String year=times.substring(0,4);
+        String month=times.substring(4,6);
+        String day=times.substring(6,8);
+        String hour=times.substring(8,10);
+        String minte=times.substring(10,12);
+        String second=times.substring(12,14);
+        return year+"/"+month+"/"+day+"  "+hour+":"+minte+":"+second;
     }
 }
 

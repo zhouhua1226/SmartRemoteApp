@@ -60,9 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <SurfaceView
-                android:id="@+id/realplay_sv"
-                android:layout_width="450dp"
+            <VideoView
+                android:id="@+id/realplay_vv"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@android:color/transparent" />
@@ -71,7 +71,9 @@
                 android:id="@+id/player_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="#B3000000">
+                android:background="#B3000000"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:id="@+id/player_name_tv"
@@ -149,9 +151,10 @@
         android:id="@+id/ctrl_buttom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/crtl_bottom_height"
-       android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true">
 
         <RelativeLayout
+            android:id="@+id/ctrl_money_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="15dp"
@@ -192,6 +195,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/ctrl_startgame_bg_n"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
@@ -217,7 +221,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
 
             <ImageButton
                 android:id="@+id/recharge_button"
@@ -241,20 +247,10 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="70dp"
             android:layout_height="70dp">
-            <com.game.smartremoteapp.view.TimeCircleProgressView
-                android:id="@+id/ctrl_time_progress_view"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                zhouh:circleColor="@android:color/transparent"
-                zhouh:radius="28dp"
-                zhouh:progressBgColor="@android:color/white"
-                zhouh:progressColor="#bfece5"
-                zhouh:strokeWidth="5dp"
-                />
+
             <LinearLayout
                 android:layout_centerInParent="true"
                 android:layout_width="56dp"
@@ -273,7 +269,7 @@
 
         <!--操作按钮-->
         <RelativeLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/operation_rl"
             android:background="@drawable/ctrl_bg"
             android:layout_centerInParent="true"

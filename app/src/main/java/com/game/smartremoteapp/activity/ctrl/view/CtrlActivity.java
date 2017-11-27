@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -44,6 +45,7 @@ import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
 import com.iot.game.pooh.server.entity.json.enums.MoveType;
+import com.iot.game.pooh.server.entity.json.enums.ReturnCode;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZPlayer;
@@ -131,6 +133,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private boolean isCurrentConnect = true;
     private String upTime;
     private String upFileName;
+    private String money="50";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_ctrl;
@@ -141,7 +145,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         Utils.showLogE(TAG, "afterCreate");
         initView();
         initData();
-        coinTv.setText("1000");
+        coinTv.setText(UserUtils.UserBalance);
         setVibrator();   //初始化振动器
     }
 
@@ -367,14 +371,17 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 break;
             case R.id.startgame_ll:
                 //开始游戏按钮
-                if ((EZstatus == EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
-                        && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))
-                        && (isCurrentConnect)) {
-                    ctrlCompl.sendCmdCtrl(MoveType.START);
-                    ctrlCompl.startRecordVideo(mEZPlayer);
-                    getWorkstation();
+                if(Integer.parseInt(UserUtils.UserBalance)>=50) {
+                    if ((EZstatus == EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
+                            && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))
+                            && (isCurrentConnect)) {
+                        ctrlCompl.sendCmdCtrl(MoveType.START);
+                        getPlayNum(UserUtils.UserPhone, money);
+                    }
+                    setVibratorTime(300, -1);
+                }else {
+                    MyToast.getToast(getApplicationContext(),"余额不足，请充值！").show();
                 }
-                setVibratorTime(300,-1);
                 Log.e(TAG,"<<px="+(mRealPlaySv.getHeight()*16)/9+"<<dp="+Utils.px2dip(getApplicationContext(),(mRealPlaySv.getHeight()*16)/9));
                 break;
             case R.id.ctrl_fail_iv:
@@ -419,34 +426,34 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     private FillingCurrencyDialog.MyDialogClick myDialogClick =
             new FillingCurrencyDialog.MyDialogClick() {
-        @Override
-        public void getMoney10(String money) {
-            Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
-            intent.putExtra("money", money);
-            startActivity(intent);
-        }
+                @Override
+                public void getMoney10(String money) {
+                    Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
+                    intent.putExtra("money", money);
+                    startActivity(intent);
+                }
 
-        @Override
-        public void getMoney20(String money) {
-            Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
-            intent.putExtra("money", money);
-            startActivity(intent);
-        }
+                @Override
+                public void getMoney20(String money) {
+                    Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
+                    intent.putExtra("money", money);
+                    startActivity(intent);
+                }
 
-        @Override
-        public void getMoney50(String money) {
-            Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
-            intent.putExtra("money", money);
-            startActivity(intent);
-        }
+                @Override
+                public void getMoney50(String money) {
+                    Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
+                    intent.putExtra("money", money);
+                    startActivity(intent);
+                }
 
-        @Override
-        public void getMoney100(String money) {
-            Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
-            intent.putExtra("money", money);
-            startActivity(intent);
-        }
-    };
+                @Override
+                public void getMoney100(String money) {
+                    Intent intent = new Intent(CtrlActivity.this, WeChatPayActivity.class);
+                    intent.putExtra("money", money);
+                    startActivity(intent);
+                }
+            };
 
     //摇杆操作
     @OnTouch({R.id.front_image, R.id.back_image, R.id.left_image, R.id.right_image, R.id.catch_ll})
@@ -542,18 +549,23 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         if (response instanceof MoveControlResponse) {
             MoveControlResponse moveControlResponse = (MoveControlResponse) response;
             Utils.showLogE(TAG, moveControlResponse.toString());
-            if ((moveControlResponse.getSeq() == -2) && (moveControlResponse.getMoveType()!=null)) {
+            if ((moveControlResponse.getSeq() == -2)) {
+                if (moveControlResponse.getMoveType()==null) {
+                    return;
+                }
                 if (moveControlResponse.getMoveType().name().equals(MoveType.START.name())) {
                     setStartMode(false);
                 }
-//                else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
-//                    mHandler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            setStartMode(true);
-//                        }
-//                    }, Utils.CATCH_TIME_DELAY);
-//                }
+            } else {
+                if (moveControlResponse.getReturnCode() != ReturnCode.SUCCESS ) {
+                    return;
+                }
+                //本人点击start
+                if (moveControlResponse.getMoveType().name()
+                        .equals(MoveType.START.name())) {
+                    getWorkstation();
+                    ctrlCompl.startRecordVideo(mEZPlayer);
+                }
             }
         } else if (response instanceof String) {
             Utils.showLogE(TAG, "move faile....");
@@ -660,4 +672,22 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         }
         startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
     }
+
+    private void getPlayNum(String phone, String number) {
+        String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
+        HttpManager.getInstance().getUserPlayNum(phones, number, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> result) {
+                Log.e(TAG, "消费结果=" + result.getMsg());
+                UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
+                coinTv.setText(UserUtils.UserBalance);
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+                MyToast.getToast(getApplicationContext(), "扣费失败！").show();
+            }
+        });
+    }
+
 }

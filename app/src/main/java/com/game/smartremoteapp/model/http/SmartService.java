@@ -111,4 +111,12 @@ public interface SmartService {
             @Field(UrlUtils.DOLLNAME) String dollname
     );
 
+    //获取视频回放列表
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.VIDEOBACKURL)
+    Observable<Result<LoginInfo>> getVideoBackList(
+            @Field(UrlUtils.USERNAME) String name
+    );
+
 }

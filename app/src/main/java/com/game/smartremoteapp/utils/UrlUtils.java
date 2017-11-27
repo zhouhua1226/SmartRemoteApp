@@ -1,5 +1,7 @@
 package com.game.smartremoteapp.utils;
 
+import android.os.Environment;
+
 /**
  * Created by zhouh on 2017/9/8.
  */
@@ -57,6 +59,11 @@ public class UrlUtils {
 
     //视屏上传upload
     public static final String UPLOADURL="http://47.100.15.18:8080/pooh-web/play/regPlayBack";
+
+    //获取视频回放列表
+    public static final String VIDEOBACKURL="http://47.100.15.18:8080/pooh-web/play/getPlayRecord";
+
+
 
 
 }

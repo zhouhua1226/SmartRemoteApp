@@ -144,4 +144,13 @@ public class HttpManager {
                 .subscribe(subscriber);
     }
 
+    //获取视频回放列表
+    public void getVideoBackList(String userName,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getVideoBackList(userName);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
 }

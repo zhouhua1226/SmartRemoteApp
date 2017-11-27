@@ -20,6 +20,7 @@ public class UserUtils {
     public static String UserName="";    //用户名
     public static String UserImage="";    //用户头像
     public static String UserBalance="";    //用户余额（游戏币）
+    public static String ReVideoTime="";
 
     public static final String RECODE_URL = Environment.getExternalStorageDirectory().getPath()
             + "/SmartRemoteApp/";
