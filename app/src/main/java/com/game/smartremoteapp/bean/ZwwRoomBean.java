@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by zhouh on 2017/10/31.
  */
-public class ZwwRoomBean extends BaseRoom implements Serializable{
+public class ZwwRoomBean extends BaseRoom implements Serializable,Comparable<ZwwRoomBean>{
     private int DOLL_GOLD;
     private String ROOM_ID;
     private String DOLL_STATE;
@@ -59,5 +59,10 @@ public class ZwwRoomBean extends BaseRoom implements Serializable{
 
     public String getCAMERA_NAME_01() {
         return CAMERA_NAME_01;
+    }
+
+    @Override
+    public int compareTo(ZwwRoomBean o) {
+        return o.getDOLL_STATE().compareTo(this.getDOLL_STATE()) ;
     }
 }

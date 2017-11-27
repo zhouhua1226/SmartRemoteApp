@@ -61,6 +61,7 @@ public class InformationActivity extends BaseActivity {
                 break;
             case R.id.name_rl:
                 startActivity(new Intent(this,ChangNicknameAvtivity.class));
+                finish();
                 break;
         }
     }

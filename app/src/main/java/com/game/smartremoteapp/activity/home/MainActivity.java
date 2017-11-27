@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -20,7 +19,6 @@ import com.game.smartremoteapp.bean.Result;
 import com.game.smartremoteapp.bean.Token;
 import com.game.smartremoteapp.bean.ZwwRoomBean;
 import com.game.smartremoteapp.fragment.MyCenterFragment;
-import com.game.smartremoteapp.fragment.RankFragment;
 import com.game.smartremoteapp.fragment.RankFragmentTwo;
 import com.game.smartremoteapp.fragment.ZWWJFragment;
 import com.game.smartremoteapp.model.http.HttpManager;
@@ -32,7 +30,6 @@ import com.game.smartremoteapp.utils.Utils;
 import com.game.smartremoteapp.view.EmptyLayout;
 import com.game.smartremoteapp.view.LoginDialog;
 import com.gatz.netty.AppClient;
-import com.gatz.netty.global.AppGlobal;
 import com.gatz.netty.utils.AppProperties;
 import com.gatz.netty.utils.NettyUtils;
 import com.hwangjr.rxbus.RxBus;
@@ -40,14 +37,13 @@ import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.GetStatusResponse;
-import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.videogo.openapi.EZOpenSDK;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -165,14 +161,14 @@ public class MainActivity extends BaseActivity {
                 EZOpenSDK.getInstance().setAccessToken(Utils.token);
                 dollLists = loginInfoResult.getData().getDollList();
                 //用户手机号
-                UserUtils.UserPhone=loginInfoResult.getData().getAppUser().getPHONE();
-                UserUtils.UserNickName=loginInfoResult.getData().getAppUser().getPHONE();
+                UserUtils.UserPhone = loginInfoResult.getData().getAppUser().getPHONE();
+                UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getPHONE();
                 //用户名  11/22 13：25
                 UserUtils.UserName = loginInfoResult.getData().getAppUser().getUSERNAME();
                 //用户余额
-                UserUtils.UserBalance=loginInfoResult.getData().getAppUser().getBALANCE();
+                UserUtils.UserBalance = loginInfoResult.getData().getAppUser().getBALANCE();
                 //用户头像  11/22 13：25
-                UserUtils.UserImage=UrlUtils.USERFACEIMAGEURL+loginInfoResult.getData().getAppUser().getIMAGE_URL();
+                UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + loginInfoResult.getData().getAppUser().getIMAGE_URL();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
                 if (dollLists.size() != 0) {
                     zwwjFragment.notifyAdapter(dollLists);
@@ -183,7 +179,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void _onError(Throwable e) {
-                if(zwwjFragment != null) {
+                if (zwwjFragment != null) {
                     zwwjFragment.showError();
                 }
                 Utils.showLogE(TAG, "logIn::::" + e.getMessage());
@@ -227,10 +223,10 @@ public class MainActivity extends BaseActivity {
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_LOGIN, true);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_PHONE, phone);
                         UserUtils.UserNickName = phone;
-                        UserUtils.UserPhone=phone;
+                        UserUtils.UserPhone = phone;
                         UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
-                        UserUtils.UserBalance=result.getData().getAppUser().getBALANCE();
-                        UserUtils.UserImage= UrlUtils.USERFACEIMAGEURL+result.getData().getAppUser().getIMAGE_URL();
+                        UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
+                        UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + result.getData().getAppUser().getIMAGE_URL();
                         zwwjFragment.setSessionId(result.getData().getSessionID());
                         if (dollLists.size() == 0) {
                             zwwjFragment.showError();
@@ -435,6 +431,7 @@ public class MainActivity extends BaseActivity {
                     }
                     //TODO 按照规则重新排序
 
+                    Collections.sort(dollLists);
 
                     zwwjFragment.notifyAdapter(dollLists);
                 }

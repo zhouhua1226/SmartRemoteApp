@@ -51,7 +51,12 @@ public class ChangNicknameAvtivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        //nicknameEt.setText("云梦一霸");
+        if (!UserUtils.UserName.equals("")){
+            nicknameEt.setText(UserUtils.UserName);
+        }else {
+            nicknameEt.setText(UserUtils.UserPhone);
+        }
+
     }
 
     @Override
@@ -86,28 +91,14 @@ public class ChangNicknameAvtivity extends BaseActivity {
                 }else {
                     getUserName(ph, name);
                 }
+
                 break;
             case R.id.changen_image:
                     nicknameEt.setText("");
                 break;
+            default:break;
         }
     }
-
-//    public void getNickName(String phone,String nickname){
-//        HttpManager.getInstance().getNickName(phone, nickname, new RequestSubscriber<Result>() {
-//            @Override
-//            public void _onSuccess(Result result) {
-//                Utils.showLogE(TAG,result.getMsg());
-//            }
-//
-//            @Override
-//            public void _onError(Throwable e) {
-//                Utils.showLogE(TAG, "getNickName::::" + e.getMessage());
-//
-//            }
-//        });
-//
-//    }
 
     public void getUserName(String phone,String userName){
         String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
@@ -118,6 +109,7 @@ public class ChangNicknameAvtivity extends BaseActivity {
                 UserUtils.UserName=result.getData().getAppUser().getUSERNAME();
                 MyToast.getToast(ChangNicknameAvtivity.this,"修改成功！").show();
                 nicknameEt.setText("");
+                finish();
             }
 
             @Override
