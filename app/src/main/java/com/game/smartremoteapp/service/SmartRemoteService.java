@@ -19,6 +19,7 @@ import com.iot.game.pooh.server.entity.json.MoveControlResponse;
 import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
+import com.iot.game.pooh.server.entity.json.enums.PoohAbnormalStatus;
 
 
 import rx.Observable;
@@ -120,8 +121,12 @@ public class SmartRemoteService extends Service {
             } else if (tag.equals(ConnectResultEvent.DEVICE_FREE)) {
                 GatewayPoohStatusMessage message = (GatewayPoohStatusMessage) objs[0];
                 RxBus.get().post(Utils.TAG_DEVICE_FREE, message);
+            } else if (tag.equals(ConnectResultEvent.DEVICE_NO_DATA)) {
+                GatewayPoohStatusMessage message = (GatewayPoohStatusMessage) objs[0];
+                RxBus.get().post(Utils.TAG_DEVICE_ERR, message);
             } else if (tag.equals(ConnectResultEvent.DEVICE_ERR)) {
-                //TODO 设备故障
+                PoohAbnormalStatus abnormalStatus = (PoohAbnormalStatus) objs[0];
+                RxBus.get().post(Utils.TAG_DEVICE_ERR, abnormalStatus);
             }
         }
 

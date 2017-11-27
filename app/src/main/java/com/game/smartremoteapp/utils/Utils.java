@@ -41,6 +41,7 @@ public class Utils {
     public static final String TAG_GATEWAY_SINGLE_DISCONNECT = "TAG_GATEWAY_SINGLE_DISCONNECT";
 
     public static final String TAG_DEVICE_FREE = "TAG_DEVICE_FREE";
+    public static final String TAG_DEVICE_ERR = "TAG_DEVICE_ERR";
 
     public static final String FREE  = "free";
     public static final String BUSY= "using";
@@ -57,7 +58,8 @@ public class Utils {
     public static final String HTTP_OK = "success";
 
     public static final int CATCH_TIME_OUT = 20;
-    public static final long CATCH_TIME_DELAY = 10 * 1000;
+    public static final long GET_STATUS_DELAY_TIME = 3*60*1000;
+    public static final long GET_STATUS_PRE_TIME = 2*60*1000;
 
     public static void showLogE(String TAG, String msg) {
         if (D) {

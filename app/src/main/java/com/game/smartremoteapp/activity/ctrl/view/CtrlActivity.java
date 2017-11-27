@@ -45,6 +45,8 @@ import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
 import com.iot.game.pooh.server.entity.json.enums.MoveType;
+import com.iot.game.pooh.server.entity.json.enums.PoohAbnormalStatus;
+import com.iot.game.pooh.server.entity.json.enums.PoohNormalStatus;
 import com.iot.game.pooh.server.entity.json.enums.ReturnCode;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.videogo.openapi.EZConstants;
@@ -629,6 +631,19 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     //设备故障
+    @Subscribe(thread = EventThread.MAIN_THREAD, tags = {@Tag(Utils.TAG_DEVICE_ERR)})
+    public void getDeviceErr(Object object) {
+        if (object instanceof GatewayPoohStatusMessage) {
+            //TODO 主板没有返回数据
+            GatewayPoohStatusMessage message = (GatewayPoohStatusMessage) object;
+            Utils.showLogE(TAG, "主板没有返回数据" + message.toString());
+        } else if (object instanceof PoohAbnormalStatus) {
+            //TODO 主板报错
+            PoohAbnormalStatus status = (PoohAbnormalStatus) object;
+            Utils.showLogE(TAG, "主板报错 错误代码:::" + status.getValue());
+        }
+    }
+    //设备正常返回
     @Subscribe(thread = EventThread.MAIN_THREAD,
             tags = {@Tag(Utils.TAG_DEVICE_FREE)})
     public void getDeviceFree(GatewayPoohStatusMessage message) {

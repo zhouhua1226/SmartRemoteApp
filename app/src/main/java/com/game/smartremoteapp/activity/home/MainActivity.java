@@ -45,6 +45,8 @@ import com.videogo.openapi.EZOpenSDK;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,10 +78,12 @@ public class MainActivity extends BaseActivity {
     LinearLayout lvMainBottom;
     @BindView(R.id.main_center)
     FrameLayout mainCenter;
-    private LoginDialog loginDialog;
 
+
+    private LoginDialog loginDialog;
+    private Timer timer;
+    private TimerTask timerTask;
     private MyCenterFragment myCenterFragment;//个人中心
-//    private RankFragment rankFragment;//排行榜
     private RankFragmentTwo rankFragment;//排行榜
     private ZWWJFragment zwwjFragment;//抓娃娃
     private long mExitTime;
@@ -142,6 +146,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         Utils.isExit = true;
+        stopTimer();
         RxBus.get().unregister(this);
     }
 
@@ -173,6 +178,7 @@ public class MainActivity extends BaseActivity {
                     zwwjFragment.notifyAdapter(dollLists);
                 }
                 getDeviceStates();
+                startTimer();
             }
 
             @Override
@@ -232,6 +238,7 @@ public class MainActivity extends BaseActivity {
                             zwwjFragment.notifyAdapter(dollLists);
                         }
                         getDeviceStates();
+                        startTimer();
                         Utils.showLogE(TAG, "afterCreate:::::>>>>" + dollLists.size());
                     }
                 }
@@ -372,8 +379,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        startTimer();
         getDeviceStates();
         NettyUtils.pingRequest();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopTimer();
     }
 
     //监控网关区
@@ -419,50 +433,14 @@ public class MainActivity extends BaseActivity {
                             dollLists.set(j, bean);
                         }
                     }
+                    //TODO 按照规则重新排序
+
+
                     zwwjFragment.notifyAdapter(dollLists);
                 }
             }
-//            else {
-//                if (getStatusResponse.getFree() == null) {
-//                    return;
-//                }
-//                if (Utils.isEmpty(getStatusResponse.getRoomId())) {
-//                    return;
-//                }
-//                //其他用户操作娃娃机了
-//                boolean free = getStatusResponse.getFree();
-//                String address = getStatusResponse.getRoomId();
-//                for (int k = 0; k < dollLists.size(); k++) {
-//                    ZwwRoomBean bean = dollLists.get(k);
-//                    if (bean.getDOLL_ID().equals(address)) {
-//                        if (!free) {
-//                            bean.setDOLL_STATE("1");
-//                        }
-//                        dollLists.set(k, bean);
-//                    }
-//                }
-//                if (!free) {
-//                    zwwjFragment.notifyAdapter(dollLists);
-//                }
-//            }
         }
     }
-
-//    @Subscribe(thread = EventThread.MAIN_THREAD,
-//            tags = {@Tag(Utils.TAG_DEVICE_FREE)})
-//    public void getDeviceFree(GatewayPoohStatusMessage message) {
-//        String roomId = message.getRoomId();
-//        Utils.showLogE(TAG, "这个设备free::::::" + roomId);
-//        for (int k = 0; k < dollLists.size(); k++) {
-//            ZwwRoomBean bean = dollLists.get(k);
-//            if (bean.getDOLL_ID().equals(roomId)) {
-//                bean.setDOLL_STATE("0");
-//                dollLists.set(k, bean);
-//                break;
-//            }
-//        }
-//        zwwjFragment.notifyAdapter(dollLists);
-//    }
 
     //监控单个网关连接区
     @Subscribe(thread = EventThread.MAIN_THREAD,
@@ -475,5 +453,32 @@ public class MainActivity extends BaseActivity {
             tags = {@Tag(Utils.TAG_GATEWAY_SINGLE_CONNECT)})
     public void getSingleGatwayConnect(String id) {
         Utils.showLogE(TAG, "getSingleGatwayConnect id" + id);
+    }
+
+    private void startTimer() {
+        if (timer == null) {
+            timer = new Timer();
+            timerTask = new timeTask();
+            timer.schedule(timerTask, Utils.GET_STATUS_DELAY_TIME, Utils.GET_STATUS_PRE_TIME);
+        }
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+            timerTask.cancel();
+            timerTask = null;
+        }
+    }
+
+    //定时器区
+    class timeTask extends TimerTask {
+
+        @Override
+        public void run() {
+            Utils.showLogE(TAG, "timeTasktimeTask");
+            NettyUtils.sendGetDeviceStatesCmd();
+        }
     }
 }
