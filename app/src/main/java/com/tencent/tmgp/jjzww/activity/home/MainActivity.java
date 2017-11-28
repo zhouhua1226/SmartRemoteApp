@@ -411,19 +411,26 @@ public class MainActivity extends BaseActivity {
     public void getDeviceStates(Object response) {
         if (response instanceof GetStatusResponse) {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
-            Utils.showLogE(TAG, "=====" + response.toString());
+            Utils.showLogE(TAG, "=====" + getStatusResponse.getStatus());
             if ((getStatusResponse.getSeq() != -2)) {
                 String[] devices = getStatusResponse.getStatus().split(";");
                 for (int i = 0; i < devices.length; i++) {
-                    String address = devices[i].substring(0, devices[i].indexOf("-"));
-                    String stats = devices[i].substring(devices[i].indexOf("-") + 1);
+                    String[] status = devices[i].split("-");
+                    String address = status[0];
+                    String poohType = status[1];
+                    String stats = status[2];
                     for (int j = 0; j < dollLists.size(); j++) {
                         ZwwRoomBean bean = dollLists.get(j);
                         if (bean.getDOLL_ID().equals(address)) {
-                            if (stats.equals(Utils.FREE)) {
+                            if(!poohType.equals(Utils.OK)) {
+                                //设备异常了
                                 bean.setDOLL_STATE("0");
-                            } else if (stats.equals(Utils.BUSY)) {
-                                bean.setDOLL_STATE("1");
+                            } else {
+                                if (stats.equals(Utils.FREE)) {
+                                    bean.setDOLL_STATE("10");
+                                } else if (stats.equals(Utils.BUSY)) {
+                                    bean.setDOLL_STATE("11");
+                                }
                             }
                             dollLists.set(j, bean);
                         }
@@ -471,7 +478,6 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void run() {
-            Utils.showLogE(TAG, "timeTasktimeTask");
             NettyUtils.sendGetDeviceStatesCmd();
         }
     }

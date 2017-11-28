@@ -44,6 +44,7 @@ public class Utils {
 
     public static final String FREE  = "free";
     public static final String BUSY= "using";
+    public static final String OK = "正常";
 
     public static final String TAG_ROOM_NAME = "room_name";
     public static final String TAG_ROOM_STATUS = "status";

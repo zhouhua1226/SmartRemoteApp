@@ -50,11 +50,11 @@ public class ZWWAdapter extends RecyclerView.Adapter<ZWWAdapter.ZWWViewHolder> {
         holder.name.setText(bean.getDOLL_NAME());
         Glide.with(mContext).load(UrlUtils.PICTUREURL + bean.getDOLL_URL()).error(R.drawable.loading).into(holder.imageView);
         holder.itemView.setEnabled(true);
-        if (bean.getDOLL_STATE().equals("0")) {
+        if (bean.getDOLL_STATE().equals("10")) {
             holder.connectIv.setImageResource(R.drawable.green_point);
             holder.connectTv.setTextColor(mContext.getResources().getColor(R.color.green));
             holder.connectTv.setText(mContext.getString(R.string.free_text));
-        } else if (bean.getDOLL_STATE().equals("1")) {
+        } else if (bean.getDOLL_STATE().equals("11")) {
             holder.connectIv.setImageResource(R.drawable.red_point);
             holder.connectTv.setTextColor(mContext.getResources().getColor(R.color.redx));
             holder.connectTv.setText(mContext.getString(R.string.busy_text));
