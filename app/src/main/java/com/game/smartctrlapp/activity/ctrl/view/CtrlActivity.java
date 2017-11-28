@@ -116,6 +116,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     ImageView ctrlStatusIv;
     @BindView(R.id.ctrl_time_progress_view)
     TimeCircleProgressView timeCircleProgressView;
+    @BindView(R.id.ctrl_dollgold_tv)
+    TextView ctrlDollgoldTv;
 
     private static final String TAG = "CtrlActivity---";
     private SurfaceHolder mRealPlaySh;
@@ -134,7 +136,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private boolean isCurrentConnect = true;
     private String upTime;
     private String upFileName;
-    private String money="50";
+    private int money = 0;
 
     @Override
     protected int getLayoutId() {
@@ -177,9 +179,11 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         camera_name = getIntent().getStringExtra(Utils.TAG_CAMERA_NAME);
         ctrlCompl.startLoginPresent(camera_name);
         dollName = getIntent().getStringExtra(Utils.TAG_ROOM_NAME);
+        money = Integer.parseInt(getIntent().getStringExtra(Utils.TAG_DOLL_GOLD));
         if (!Utils.isEmpty(dollName)) {
             dollNameTv.setText(dollName);
         }
+        ctrlDollgoldTv.setText(money+"/次");
         playerNameTv.setText(UserUtils.UserNickName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
     }
@@ -257,7 +261,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         }
         mEZPlayer.setHandler(mHandler);
         mEZPlayer.setSurfaceHold(mRealPlaySh);
-        Utils.showLogE(TAG, "======" +  "mEZPlayer.startRealPlay();");
+        Utils.showLogE(TAG, "======" + "mEZPlayer.startRealPlay();");
         mEZPlayer.startRealPlay();
     }
 
@@ -286,7 +290,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         //当前房屋的人数
         userInfos = list;
         int counter = userInfos.size();
-        if(counter > 0) {
+        if (counter > 0) {
             playerCounterIv.setText(String.format(getString(R.string.player_counter_text), counter));
             if (counter == 1) {
                 playerSecondIv.setVisibility(View.INVISIBLE);
@@ -314,7 +318,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     private void updataTime(String time) {
-        HttpManager.getInstance().getRegPlayBack(UserUtils.UserName,time,dollName, new RequestSubscriber<Result<LoginInfo>>() {
+        HttpManager.getInstance().getRegPlayBack(UserUtils.UserName, time, dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
 
@@ -333,7 +337,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         if (mEZPlayer != null) {
             mEZPlayer.stopRealPlay();
         }
-        vibrator=null;   //销毁振动器
+        //vibrator = null;   //销毁振动器
     }
 
     @Override
@@ -355,7 +359,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     @OnClick({R.id.image_back, R.id.image_service, R.id.recharge_button, R.id.message_button,
-            R.id.startgame_ll,R.id.ctrl_fail_iv})
+            R.id.startgame_ll, R.id.ctrl_fail_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
@@ -372,18 +376,18 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 break;
             case R.id.startgame_ll:
                 //开始游戏按钮
-                if(Integer.parseInt(UserUtils.UserBalance)>=50) {
+                if (Integer.parseInt(UserUtils.UserBalance) >= money) {
                     if ((EZstatus == EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
                             && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))
                             && (isCurrentConnect)) {
                         ctrlCompl.sendCmdCtrl(MoveType.START);
-                        getPlayNum(UserUtils.UserPhone, money);
+                        coinTv.setText((Integer.parseInt(UserUtils.UserBalance)-money)+"");
                     }
                     setVibratorTime(300, -1);
-                }else {
-                    MyToast.getToast(getApplicationContext(),"余额不足，请充值！").show();
+                } else {
+                    MyToast.getToast(getApplicationContext(), "余额不足，请充值！").show();
                 }
-                Log.e(TAG,"<<px="+(mRealPlaySv.getHeight()*16)/9+"<<dp="+Utils.px2dip(getApplicationContext(),(mRealPlaySv.getHeight()*16)/9));
+                Log.e(TAG, "<<px=" + (mRealPlaySv.getHeight() * 16) / 9 + "<<dp=" + Utils.px2dip(getApplicationContext(), (mRealPlaySv.getHeight() * 16) / 9));
                 break;
             case R.id.ctrl_fail_iv:
                 ctrlFailIv.setVisibility(View.GONE);
@@ -451,7 +455,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @OnTouch({R.id.front_image, R.id.back_image, R.id.left_image, R.id.right_image, R.id.catch_ll})
     public boolean onTouchEvent(View view, MotionEvent motionEvent) {
         if ((EZstatus != EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS)
-                || (!Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))){
+                || (!Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))) {
             return false;
         }
         if (!isCurrentConnect) {
@@ -462,27 +466,27 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             case MotionEvent.ACTION_DOWN:
                 switch (view.getId()) {
                     case R.id.front_image:
-                        setVibratorTime(3000,1);
+                        setVibratorTime(3000, 1);
                         ctrlCompl.sendCmdCtrl(MoveType.FRONT);
                         topImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_top_s));
                         break;
                     case R.id.back_image:
-                        setVibratorTime(3000,1);
+                        setVibratorTime(3000, 1);
                         ctrlCompl.sendCmdCtrl(MoveType.BACK);
                         belowImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_below_s));
                         break;
                     case R.id.left_image:
-                        setVibratorTime(3000,1);
+                        setVibratorTime(3000, 1);
                         ctrlCompl.sendCmdCtrl(MoveType.LEFT);
                         leftImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_left_s));
                         break;
                     case R.id.right_image:
-                        setVibratorTime(3000,1);
+                        setVibratorTime(3000, 1);
                         ctrlCompl.sendCmdCtrl(MoveType.RIGHT);
                         rightImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_right_s));
                         break;
                     case R.id.catch_ll:
-                        setVibratorTime(300,-1);
+                        setVibratorTime(300, -1);
                         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
                         break;
                     default:
@@ -542,14 +546,14 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             MoveControlResponse moveControlResponse = (MoveControlResponse) response;
             Utils.showLogE(TAG, moveControlResponse.toString());
             if ((moveControlResponse.getSeq() == -2)) {
-                if (moveControlResponse.getMoveType()==null) {
+                if (moveControlResponse.getMoveType() == null) {
                     return;
                 }
                 if (moveControlResponse.getMoveType().name().equals(MoveType.START.name())) {
                     setStartMode(false);
                 }
             } else {
-                if (moveControlResponse.getReturnCode() != ReturnCode.SUCCESS ) {
+                if (moveControlResponse.getReturnCode() != ReturnCode.SUCCESS) {
                     return;
                 }
                 //本人点击start
@@ -610,6 +614,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             isCurrentConnect = false;
         }
     }
+
     @Subscribe(thread = EventThread.MAIN_THREAD,
             tags = {@Tag(Utils.TAG_GATEWAY_SINGLE_CONNECT)})
     public void getSingleGatwayConnect(String id) {
@@ -633,6 +638,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             Utils.showLogE(TAG, "主板报错 错误代码:::" + status.getValue());
         }
     }
+
     //设备正常返回
     @Subscribe(thread = EventThread.MAIN_THREAD,
             tags = {@Tag(Utils.TAG_DEVICE_FREE)})
@@ -647,6 +653,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 return;
             }
             ctrlCompl.stopRecordView(mEZPlayer); //录制完毕
+            getPlayNum(UserUtils.UserPhone, String.valueOf(money));   //扣款
             if (number != 0) {
                 //抓到娃娃  上传给后台
                 updataTime(upTime);
@@ -667,13 +674,14 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     //初始化振动器   2017/11/18 11:11
-    private void setVibrator(){
+    private void setVibrator() {
         vibrator = VibratorView.getVibrator(getApplicationContext());
     }
+
     //设置震动时间
-    private void setVibratorTime(long time,int replay){
+    private void setVibratorTime(long time, int replay) {
         if (null != vibrator)
-            vibrator.vibrate(new long[]{0,time,0,0},replay);
+            vibrator.vibrate(new long[]{0, time, 0, 0}, replay);
     }
 
     private void setStartMode(boolean isFree) {
@@ -692,7 +700,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             public void _onSuccess(Result<LoginInfo> result) {
                 Log.e(TAG, "消费结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
-                coinTv.setText(UserUtils.UserBalance);
+
             }
 
             @Override
@@ -702,4 +710,10 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         });
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

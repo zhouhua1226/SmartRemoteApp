@@ -108,16 +108,17 @@ public class ZWWJFragment extends BaseFragment {
                         }
                         enterNext(roomBeens.get(position).getDOLL_NAME(),
                                 roomBeens.get(position).getCAMERA_NAME_01(),
-                                room_status);
+                                room_status, String.valueOf(roomBeens.get(position).getDOLL_GOLD()));
                     }
                 }
             };
 
-    private void enterNext(String name, String camera, boolean status) {
+    private void enterNext(String name, String camera, boolean status,String gold) {
         Intent intent = new Intent(getActivity(), CtrlActivity.class);
         intent.putExtra(Utils.TAG_ROOM_NAME, name);
         intent.putExtra(Utils.TAG_CAMERA_NAME, camera);
         intent.putExtra(Utils.TAG_ROOM_STATUS, status);
+        intent.putExtra(Utils.TAG_DOLL_GOLD,gold);
         startActivity(intent);
     }
 }

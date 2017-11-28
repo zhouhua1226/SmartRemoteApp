@@ -70,7 +70,7 @@ public class ConsignmentActivity extends BaseActivity {
         if(!Utils.isEmpty(UserUtils.UserAddress)) {
             informationTv.setText(UserUtils.UserAddress);
         }else {
-            informationTv.setText("");
+            informationTv.setText("新增收货地址");
         }
         Glide.with(this)
                 .load(UrlUtils.PICTUREURL+videoBackBean.getDOLL_URL())
