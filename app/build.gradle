@@ -7,7 +7,7 @@ android {
     buildToolsVersion '25.0.2'
 
     defaultConfig {
-        applicationId "com.game.smartremoteapp"
+        applicationId "com.game.smartctrlapp"
         minSdkVersion 17
         targetSdkVersion 22  //后期完善加入6.0
         versionCode 1

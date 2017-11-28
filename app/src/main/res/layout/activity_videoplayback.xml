@@ -130,7 +130,7 @@
             </RelativeLayout>
         </FrameLayout>
 
-        <com.game.smartremoteapp.view.GifView
+        <com.game.smartctrlapp.view.GifView
             android:id="@+id/ctrl_gif_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

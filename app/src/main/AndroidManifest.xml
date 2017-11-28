@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.game.smartremoteapp">
+    package="com.game.smartctrlapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -20,14 +20,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".base.MyApplication"
+        android:name="com.game.smartctrlapp.base.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.home.MainActivity"
+            android:name="com.game.smartctrlapp.activity.home.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -43,7 +43,7 @@
             android:screenOrientation="portrait" />
 
         <receiver
-            android:name=".receiver.EzvizBroadcastReceiver"
+            android:name="com.game.smartctrlapp.receiver.EzvizBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.videogo.action.ADD_DEVICE_SUCCESS_ACTION" />
@@ -69,115 +69,115 @@
         </meta-data>
         <!--=============================友盟相关=============================================-->
         <activity
-            android:name=".activity.ctrl.view.CtrlActivity"
+            android:name="com.game.smartctrlapp.activity.ctrl.view.CtrlActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:resizeableActivity ="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.InformationActivity"
+            android:name="com.game.smartctrlapp.activity.home.InformationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.SettingActivity"
+            android:name="com.game.smartctrlapp.activity.home.SettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.GameCurrencyActivity"
+            android:name="com.game.smartctrlapp.activity.home.GameCurrencyActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.RecordActivity"
+            android:name="com.game.smartctrlapp.activity.home.RecordActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.FeedBackActivity"
+            android:name="com.game.smartctrlapp.activity.home.FeedBackActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.LnvitationCodeActivity"
+            android:name="com.game.smartctrlapp.activity.home.LnvitationCodeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.AboutUsActivity"
+            android:name="com.game.smartctrlapp.activity.home.AboutUsActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.ChangNicknameAvtivity"
+            android:name="com.game.smartctrlapp.activity.home.ChangNicknameAvtivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.TakePhotoActivity"
+            android:name="com.game.smartctrlapp.activity.home.TakePhotoActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/activitystyle" />
         <activity
-            android:name=".activity.wechat.WeChatPayActivity"
+            android:name="com.game.smartctrlapp.activity.wechat.WeChatPayActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <service
-            android:name=".service.SmartRemoteService"
+            android:name="com.game.smartctrlapp.service.SmartRemoteService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".activity.home.RecordGameActivty"
+            android:name="com.game.smartctrlapp.activity.home.RecordGameActivty"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.RecordGameTwoActivity"
+            android:name="com.game.smartctrlapp.activity.home.RecordGameTwoActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.ConsignmentActivity"
+            android:name="com.game.smartctrlapp.activity.home.ConsignmentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.home.NewAddressActivity"
+            android:name="com.game.smartctrlapp.activity.home.NewAddressActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".activity.home.CtrlTextActivity"
+        <activity android:name="com.game.smartctrlapp.activity.home.CtrlTextActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             />
 
-        <activity android:name=".activity.home.SelectRechargeTypeActiivty"
+        <activity android:name="com.game.smartctrlapp.activity.home.SelectRechargeTypeActiivty"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
-        <activity android:name=".activity.home.VideoPlayBackActivity"
+        <activity android:name="com.game.smartctrlapp.activity.home.VideoPlayBackActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="standard"
             android:screenOrientation="portrait"
