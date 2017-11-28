@@ -81,7 +81,7 @@
         android:layout_height="1dp"
         android:background="#dcdcdc" />
 
-    <com.game.smartctrlapp.view.EmptyLayout
+    <com.tencent.tmgp.jjzww.view.EmptyLayout
         android:id="@+id/zww_emptylayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -94,7 +94,7 @@
             android:scrollbars="none">
         </android.support.v7.widget.RecyclerView>
 
-    </com.game.smartctrlapp.view.EmptyLayout>
+    </com.tencent.tmgp.jjzww.view.EmptyLayout>
 
 
 
