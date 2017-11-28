@@ -118,4 +118,12 @@ public interface SmartService {
             @Field(UrlUtils.USERNAME) String name
     );
 
+    //获取房间用户头像
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.CTRLUSERIMAGE)
+    Observable<Result<AppUserBean>> getCtrlUserImage(
+            @Field(UrlUtils.PHONE) String phone
+    );
+
 }

@@ -1,6 +1,8 @@
 package com.tencent.tmgp.jjzww.activity.ctrl.view;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,15 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.activity.ctrl.presenter.CtrlCompl;
 import com.tencent.tmgp.jjzww.activity.wechat.WeChatPayActivity;
 import com.tencent.tmgp.jjzww.base.BaseActivity;
 import com.tencent.tmgp.jjzww.base.MyApplication;
+import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.model.http.HttpManager;
 import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
+import com.tencent.tmgp.jjzww.utils.UrlUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.FillingCurrencyDialog;
@@ -137,6 +142,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private String upTime;
     private String upFileName;
     private int money = 0;
+    private String allUserName;
 
     @Override
     protected int getLayoutId() {
@@ -150,6 +156,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         initData();
         coinTv.setText(UserUtils.UserBalance);
         setVibrator();   //初始化振动器
+//        getCtrlUserImage(allUserName);
     }
 
     @Override
@@ -288,16 +295,36 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @Override
     public void getUserInfos(List<String> list) {
         //当前房屋的人数
+        getCtrlUserImage(allUserName);
         userInfos = list;
         int counter = userInfos.size();
         if (counter > 0) {
             playerCounterIv.setText(String.format(getString(R.string.player_counter_text), counter));
             if (counter == 1) {
                 playerSecondIv.setVisibility(View.INVISIBLE);
+                Glide.with(this).load(UserUtils.UserImage).asBitmap().into(playerMainIv);
             } else {
                 playerSecondIv.setVisibility(View.VISIBLE);
+                Glide.with(this).load(UserUtils.UserImage1).asBitmap().into(playerSecondIv);
             }
         }
+    }
+
+    public void getCtrlUserImage(String phone){
+        String str = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
+        HttpManager.getInstance().getCtrlUserImage(str, new RequestSubscriber<Result<AppUserBean>>() {
+            @Override
+            public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
+
+                UserUtils.UserImage1= UrlUtils.USERFACEIMAGEURL+appUserBeanResult.getData().getAppUser().getIMAGE_URL();
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+
     }
 
     @Override
@@ -577,6 +604,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             AppInRoomResponse appInRoomResponse = (AppInRoomResponse) response;
             Utils.showLogE(TAG, "=====" + appInRoomResponse.toString());
             String allUsers = appInRoomResponse.getAllUserInRoom();
+            allUserName=appInRoomResponse.getUserName();
+            Log.e("看看是什么",appInRoomResponse.getUserName());
             Boolean free = appInRoomResponse.getFree();
             setStartMode(free);
             long seq = appInRoomResponse.getSeq();

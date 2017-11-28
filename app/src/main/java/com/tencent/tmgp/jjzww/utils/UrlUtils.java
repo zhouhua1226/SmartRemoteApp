@@ -61,7 +61,7 @@ public class UrlUtils {
     //获取视频回放列表
     public static final String VIDEOBACKURL="http://47.100.15.18:8080/pooh-web/play/getPlayRecord";
 
-
-
+    //获取房间用户头像
+    public static final String CTRLUSERIMAGE="http://47.100.15.18:8080/pooh-web/api/getUser";
 
 }

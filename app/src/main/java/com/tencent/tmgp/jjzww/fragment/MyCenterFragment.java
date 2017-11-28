@@ -81,7 +81,7 @@ public class MyCenterFragment extends BaseFragment {
     protected void afterCreate(Bundle savedInstanceState) {
         Glide.get(getContext()).clearMemory();
 
-        initlist();
+//        initlist();
         initData();
         onClick();
     }
@@ -112,7 +112,7 @@ public class MyCenterFragment extends BaseFragment {
                     @Override
                     public void run() {
                         getUserImageAndName();
-                        initlist();
+//                        initlist();
                         myCenterAdapter.notifyDataSetChanged();
                         swiperefresh.setRefreshing(false);
                     }
@@ -131,12 +131,12 @@ public class MyCenterFragment extends BaseFragment {
 
     }
 
-    private void initlist() {
-        list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(i + "");
-        }
-    }
+//    private void initlist() {
+//        list = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            list.add(i + "");
+//        }
+//    }
 
     @Override
     public void onResume() {

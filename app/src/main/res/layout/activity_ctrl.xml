@@ -149,7 +149,7 @@
         android:id="@+id/ctrl_buttom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/crtl_bottom_height"
-       android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"

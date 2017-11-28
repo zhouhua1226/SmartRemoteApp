@@ -132,6 +132,7 @@ public class MainActivity extends BaseActivity {
                 logIn(ph, false);
             }
         } else {
+            loginDialog.setCanceledOnTouchOutside(false);
             loginDialog.show();
         }
     }
