@@ -151,7 +151,7 @@ public class CtrlModel {
     }
 
     public void sendCmdOutRoom() {
-        NettyUtils.sendRoomOutCmd(UserUtils.UserNickName);
+        NettyUtils.sendRoomOutCmd();
     }
 
     public void sendTimeStart() {

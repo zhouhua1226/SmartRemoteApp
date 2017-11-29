@@ -15,7 +15,7 @@ public class UserUtils {
     public static final String SP_TAG_LOGIN = "SP_TAG_LOGIN";
     public static final String SP_TAG_PHONE = "SP_TAG_PHONE";
 
-    public static String UserNickName = "";
+    //public static String UserNickName = "";
     public static String UserPhone="";    //用户手机号
     public static String UserName="";    //用户名
     public static String UserImage="";    //用户头像
@@ -46,7 +46,7 @@ public class UserUtils {
             public void run() {
                 while (true) {
                     if (NettyUtils.socketTag) {
-                        AppClient.getInstance().doConnect(UserNickName);
+                        AppClient.getInstance().doConnect(UserPhone);
                         break;
                     }
                     if (Utils.isExit) {

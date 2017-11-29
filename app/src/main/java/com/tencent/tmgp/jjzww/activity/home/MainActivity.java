@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity {
                 dollLists = loginInfoResult.getData().getDollList();
                 //用户手机号
                 UserUtils.UserPhone = loginInfoResult.getData().getAppUser().getPHONE();
-                UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getPHONE();
+                //UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getPHONE();
                 //用户名  11/22 13：25
                 UserUtils.UserName = loginInfoResult.getData().getAppUser().getUSERNAME();
                 //用户余额
@@ -222,7 +222,6 @@ public class MainActivity extends BaseActivity {
                         EZOpenSDK.getInstance().setAccessToken(Utils.token);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_LOGIN, true);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_PHONE, phone);
-                        UserUtils.UserNickName = phone;
                         UserUtils.UserPhone = phone;
                         UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
                         UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();

@@ -132,7 +132,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private FillingCurrencyDialog fillingCurrencyDialog;
 
     private int EZstatus;
-    private List<String> userInfos = new ArrayList<>();  //房屋内用户信息
+    private List<String> userInfos = new ArrayList<>();  //房屋内用户电话信息
 
     //2017/11/18 11：10 加入振动器
     public Vibrator vibrator; // 震动器
@@ -142,7 +142,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private String upTime;
     private String upFileName;
     private int money = 0;
-    private String allUserName;
 
     @Override
     protected int getLayoutId() {
@@ -156,15 +155,14 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         initData();
         coinTv.setText(UserUtils.UserBalance);
         setVibrator();   //初始化振动器
-//        getCtrlUserImage(allUserName);
     }
 
     @Override
     protected void initView() {
         ButterKnife.bind(this);
         RxBus.get().register(this);
-        Utils.showLogE(TAG, "=====" + UserUtils.UserNickName);
-        NettyUtils.sendRoomInCmd(UserUtils.UserNickName);
+        Utils.showLogE(TAG, "=====" + UserUtils.UserPhone);
+        NettyUtils.sendRoomInCmd();
         ctrlGifView.setVisibility(View.VISIBLE);
         ctrlGifView.setEnabled(false);
         ctrlGifView.setMovieResource(R.raw.ctrl_video_loading);
@@ -191,7 +189,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             dollNameTv.setText(dollName);
         }
         ctrlDollgoldTv.setText(money+"/次");
-        playerNameTv.setText(UserUtils.UserNickName);
+        playerNameTv.setText(UserUtils.UserName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
     }
 
@@ -287,7 +285,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @Override
     public void getTimeFinish() {
         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
-        //getStartstation();
         ctrlCompl.stopTimeCounter();
         timeCircleProgressView.setProgress(Utils.CATCH_TIME_OUT);
     }
@@ -295,17 +292,23 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @Override
     public void getUserInfos(List<String> list) {
         //当前房屋的人数
-        getCtrlUserImage(allUserName);
         userInfos = list;
         int counter = userInfos.size();
         if (counter > 0) {
             playerCounterIv.setText(String.format(getString(R.string.player_counter_text), counter));
+            Glide.with(this).load(UserUtils.UserImage).asBitmap().into(playerMainIv);
             if (counter == 1) {
                 playerSecondIv.setVisibility(View.INVISIBLE);
-                Glide.with(this).load(UserUtils.UserImage).asBitmap().into(playerMainIv);
             } else {
+                //显示另外一个人
+                for(int i=0; i<counter; i++) {
+                    if (!userInfos.get(i).equals(UserUtils.UserPhone)) {
+                        getCtrlUserImage(userInfos.get(i));
+                        break;
+                    }
+                }
+                 //显示第二个人
                 playerSecondIv.setVisibility(View.VISIBLE);
-                Glide.with(this).load(UserUtils.UserImage1).asBitmap().into(playerSecondIv);
             }
         }
     }
@@ -315,8 +318,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         HttpManager.getInstance().getCtrlUserImage(str, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
-
                 UserUtils.UserImage1= UrlUtils.USERFACEIMAGEURL+appUserBeanResult.getData().getAppUser().getIMAGE_URL();
+                Glide.with(getApplicationContext()).load(UserUtils.UserImage1)
+                        .asBitmap().into(playerSecondIv);
             }
 
             @Override
@@ -324,7 +328,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
             }
         });
-
     }
 
     @Override
@@ -544,13 +547,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         break;
                     case R.id.catch_ll:
                         ctrlCompl.stopTimeCounter();
-                        //TODO 5S后关闭录像功能
-//                        mHandler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                ctrlCompl.stopRecordView(mEZPlayer);
-//                            }
-//                        }, 5000);
                         break;
                     default:
                         break;
@@ -604,12 +600,11 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             AppInRoomResponse appInRoomResponse = (AppInRoomResponse) response;
             Utils.showLogE(TAG, "=====" + appInRoomResponse.toString());
             String allUsers = appInRoomResponse.getAllUserInRoom();
-            allUserName=appInRoomResponse.getUserName();
-            Log.e("看看是什么",appInRoomResponse.getUserName());
             Boolean free = appInRoomResponse.getFree();
             setStartMode(free);
             long seq = appInRoomResponse.getSeq();
             if ((seq != -2) && (!Utils.isEmpty(allUsers))) {
+                //TODO  我本人进来了
                 ctrlCompl.sendGetUserInfos(allUsers);
             } else {
                 userInfos.add(appInRoomResponse.getNickName());
@@ -629,7 +624,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         } else if (state.equals(Utils.TAG_CONNECT_SUCESS)) {
             Utils.showLogE(TAG, "TAG_CONNECT_SUCESS");
             ctrlStatusIv.setImageResource(R.drawable.point_green);
-            NettyUtils.sendRoomInCmd(UserUtils.UserNickName);
+            NettyUtils.sendRoomInCmd();
         }
     }
 
@@ -685,7 +680,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             getPlayNum(UserUtils.UserPhone, String.valueOf(money));   //扣款
             if (number != 0) {
                 //抓到娃娃  上传给后台
-                updataTime(upTime);
                 upFileName = "";
             } else {
                 //删除本地视频
@@ -698,6 +692,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     }
                 }, 2000);  //4s后删除 保证录制完毕
             }
+            updataTime(upTime);
             upTime = "";
         }
     }
@@ -729,7 +724,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             public void _onSuccess(Result<LoginInfo> result) {
                 Log.e(TAG, "消费结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
-
             }
 
             @Override
@@ -737,12 +731,5 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 MyToast.getToast(getApplicationContext(), "扣费失败！").show();
             }
         });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }
