@@ -107,7 +107,7 @@
                             android:id="@+id/user_number"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            tools:text="累积抓中0次"
+                            android:text="累积抓中0次"
                             android:textColor="@color/white"
                             android:layout_marginRight="20dp"
                             android:textSize="15sp"/>
@@ -130,6 +130,18 @@
             <!--</LinearLayout>-->
 
             </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+
+            <TextView
+                android:id="@+id/mycenter_none_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="暂无抓取成功记录！"
+                android:textColor="@color/gray"
+                android:layout_marginTop="200dp"
+                android:paddingTop="30dp"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                />
 
 
             </FrameLayout>

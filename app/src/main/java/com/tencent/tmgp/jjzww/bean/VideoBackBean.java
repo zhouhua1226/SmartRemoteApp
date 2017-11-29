@@ -19,6 +19,15 @@ public class VideoBackBean implements Serializable{
     private int DOLLTOTAL;
     private int CONVERSIONGOLD;
     private String POSTSTATE;
+    private String COUNT;
+
+    public String getCOUNT() {
+        return COUNT;
+    }
+
+    public void setCOUNT(String COUNT) {
+        this.COUNT = COUNT;
+    }
 
     public int getDOLLTOTAL() {
         return DOLLTOTAL;

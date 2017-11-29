@@ -2,6 +2,7 @@ package com.tencent.tmgp.jjzww.activity.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -70,13 +71,12 @@ public class RecordGameActivty extends BaseActivity {
         videoBackBean=(VideoBackBean) getIntent().getExtras().getSerializable("record");
         nameTv.setText(videoBackBean.getDOLLNAME());
         timesTv.setText(Utils.getTime(videoBackBean.getCREATETIME()));
-        mydollNumTv.setText(videoBackBean.getDOLLTOTAL()+"");
+        //mydollNumTv.setText(videoBackBean.getCOUNT()+"");
+        //mydollExchangenumTv.setText(videoBackBean.getCONVERSIONGOLD()*(Integer.parseInt(videoBackBean.getCOUNT()))+"");
+        mydollNumTv.setText("1");
+        mydollExchangenumTv.setText(videoBackBean.getCONVERSIONGOLD()+"");
         mydollIdTv.setText(videoBackBean.getID());
-        if(videoBackBean.getCONVERSIONGOLD()==0){
-            mydollExchangenumTv.setText("100");
-        }else {
-            mydollExchangenumTv.setText(videoBackBean.getCONVERSIONGOLD()+"");
-        }
+
         if (videoBackBean.getPOSTSTATE().equals("0")){
             mydollStateTv.setText("寄存中");
         }else {

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -66,11 +69,14 @@ public class MyCenterFragment extends BaseFragment {
     RecyclerViewHeader header;
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
+    @BindView(R.id.mycenter_none_tv)
+    TextView mycenterNoneTv;
+    Unbinder unbinder1;
     private FillingCurrencyDialog fillingCurrencyDialog;
     private MyCenterAdapter myCenterAdapter;
     private List<String> list;
-    private List<VideoBackBean> videoList=new ArrayList<>();
-
+    private List<VideoBackBean> videoList = new ArrayList<>();
+    private List<VideoBackBean> videoReList = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -90,9 +96,9 @@ public class MyCenterFragment extends BaseFragment {
         myCenterAdapter.setOnItemClickListener(new MyCenterAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), RecordGameActivty.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("record",videoList.get(position));
+                Intent intent = new Intent(getContext(), RecordGameActivty.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("record", videoList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -145,8 +151,8 @@ public class MyCenterFragment extends BaseFragment {
         getVideoBackList(userName.getText().toString());
     }
 
-    private void getUserImageAndName(){
-        if(!Utils.isEmpty(UserUtils.UserPhone)) {
+    private void getUserImageAndName() {
+        if (!Utils.isEmpty(UserUtils.UserPhone)) {
             if (!UserUtils.UserName.equals("")) {
                 userName.setText(UserUtils.UserName);
             } else {
@@ -157,13 +163,13 @@ public class MyCenterFragment extends BaseFragment {
                     .dontAnimate()
                     .transform(new GlideCircleTransform(getContext()))
                     .into(userImage);
-        }else {
+        } else {
             userName.setText("请登录");
             userImage.setImageResource(R.drawable.round);
         }
     }
 
-    @OnClick({R.id.image_kefu, R.id.image_setting, R.id.user_image, R.id.user_filling,R.id.user_name})
+    @OnClick({R.id.image_kefu, R.id.image_setting, R.id.user_image, R.id.user_filling, R.id.user_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_kefu:
@@ -227,14 +233,17 @@ public class MyCenterFragment extends BaseFragment {
         HttpManager.getInstance().getVideoBackList(userName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> result) {
-                videoList= result.getData().getPlayback();
-                Utils.showLogE("视频列表", "list=" + result.getMsg()+"="+videoList.size());
-                userNumber.setText("累积抓中"+videoList.size()+"次");
-                if(videoList.size()!=0) {
+                videoList = result.getData().getPlayback();
+                videoReList = result.getData().getDollCount();
+                Utils.showLogE("视频列表", "list=" + result.getMsg() + "=" + videoList.size());
+                userNumber.setText("累积抓中" + videoList.get(0).getDOLLTOTAL() + "次");
+                if (videoList.size() != 0) {
+                    //myCenterAdapter.notify(getCatchNum(removeDuplicate(videoList),videoReList));
                     myCenterAdapter.notify(videoList);
-                }else {
+                } else {
+                    Utils.showLogE("个人中心", "暂无数据");
                     mycenterRecyclerview.setVisibility(View.GONE);
-
+                    mycenterNoneTv.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -245,5 +254,47 @@ public class MyCenterFragment extends BaseFragment {
         });
     }
 
+    //记录数据重组   11/28 17:55
+    private List<VideoBackBean> getCatchNum(List<VideoBackBean> list, List<VideoBackBean> reList) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getDOLLNAME().equals(reList.get(i).getDOLLNAME())) {
+                list.get(i).setCOUNT(reList.get(i).getCOUNT());
+            } else {
+                for (int j = 0; j < reList.size(); j++) {
+                    if (reList.get(j).getDOLLNAME().equals(list.get(i).getDOLLNAME())) {
+                        list.get(i).setCOUNT(reList.get(j).getCOUNT());
+                    }
+                }
+            }
+        }
+        return list;
+    }
 
+    //记录重复赛选
+    public List<VideoBackBean> removeDuplicate(List<VideoBackBean> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getDOLLNAME().equals(list.get(i).getDOLLNAME())) {
+                    list.remove(j);
+                }
+            }
+        }
+
+        return list;
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder1.unbind();
+    }
 }

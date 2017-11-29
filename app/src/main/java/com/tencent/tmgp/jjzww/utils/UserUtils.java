@@ -21,9 +21,9 @@ public class UserUtils {
     public static String UserImage="";    //用户头像
     public static String UserImage1="";    //用户头像
     public static String UserBalance="";    //用户余额（游戏币）
-    public static String ReVideoTime="";
+    public static String UserCatchNum="";   //用户累积抓住次数
     public static String UserAddress="";
-    public static String DOLLGOLD="";
+    public static String DOllGold="";
 
     public static final String RECODE_URL = Environment.getExternalStorageDirectory().getPath()
             + "/SmartRemoteApp/";

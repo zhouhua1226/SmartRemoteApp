@@ -12,6 +12,15 @@ public class LoginInfo implements Serializable{
     private UserBean appUser;
     private List<ZwwRoomBean> dollList;
     private List<VideoBackBean> playback;
+    private List<VideoBackBean> dollCount;
+
+    public List<VideoBackBean> getDollCount() {
+        return dollCount;
+    }
+
+    public void setDollCount(List<VideoBackBean> dollCount) {
+        this.dollCount = dollCount;
+    }
 
     public List<VideoBackBean> getPlayback() {
         return playback;

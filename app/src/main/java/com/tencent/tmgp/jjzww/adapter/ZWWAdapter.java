@@ -46,7 +46,8 @@ public class ZWWAdapter extends RecyclerView.Adapter<ZWWAdapter.ZWWViewHolder> {
     @Override
     public void onBindViewHolder(ZWWViewHolder holder, final int position) {
         ZwwRoomBean bean = mDatas.get(position);
-        holder.money.setText(String.format(mContext.getString(R.string.money_temp), bean.getDOLL_GOLD()));
+        //holder.money.setText(String.format(mContext.getString(R.string.money_temp), bean.getDOLL_GOLD()));
+        holder.money.setText(bean.getDOLL_GOLD()+"/次");
         holder.name.setText(bean.getDOLL_NAME());
         Glide.with(mContext).load(UrlUtils.PICTUREURL + bean.getDOLL_URL()).error(R.drawable.loading).into(holder.imageView);
         holder.itemView.setEnabled(true);
