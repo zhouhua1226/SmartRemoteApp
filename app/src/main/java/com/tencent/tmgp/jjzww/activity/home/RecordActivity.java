@@ -101,7 +101,7 @@ public class RecordActivity extends BaseActivity {
             @Override
             public void _onSuccess(Result<LoginInfo> result) {
                 listVideo = result.getData().getPlayback();
-                Utils.showLogE("视频列表", "list=" + result.getMsg()+"="+listVideo.size());
+                Utils.showLogE("video记录列表", "result=" + result.getMsg()+"="+listVideo.size());
                 if(listVideo.size()!=0) {
                     recordAdapter.notify(listVideo);
                 }else {

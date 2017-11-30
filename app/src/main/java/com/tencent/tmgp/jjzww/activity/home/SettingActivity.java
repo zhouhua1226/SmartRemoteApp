@@ -1,11 +1,13 @@
 package com.tencent.tmgp.jjzww.activity.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.base.BaseActivity;
 import com.tencent.tmgp.jjzww.utils.SPUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
+import com.tencent.tmgp.jjzww.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +42,13 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout gywmRl;
     @BindView(R.id.bt_out)
     Button btOut;
+    @BindView(R.id.vibrator_control_layout)
+    RelativeLayout vibratorControlLayout;
+    @BindView(R.id.vibrator_control_imag)
+    ImageView vibratorControlImag;
+
+    private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected int getLayoutId() {
@@ -48,8 +58,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-
-
+        setIsVibrator();
     }
 
     @Override
@@ -64,41 +73,70 @@ public class SettingActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.image_back, R.id.image_kf, R.id.money_rl, R.id.record_rl, R.id.invitation_rl, R.id.feedback_rl, R.id.gywm_rl, R.id.bt_out})
+    @OnClick({R.id.image_back, R.id.image_kf, R.id.money_rl, R.id.record_rl, R.id.invitation_rl, R.id.feedback_rl, R.id.gywm_rl, R.id.bt_out,R.id.vibrator_control_layout,R.id.vibrator_control_imag})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
                 finish();
                 break;
             case R.id.image_kf:
-                Toast.makeText(this,"我是客服",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "我是客服", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.money_rl:
                 //我的游戏币
-                startActivity(new Intent(this,GameCurrencyActivity.class));
+                startActivity(new Intent(this, GameCurrencyActivity.class));
                 break;
             case R.id.record_rl:
                 //我的主娃娃记录
-                startActivity(new Intent(this,RecordActivity.class));
+                startActivity(new Intent(this, RecordActivity.class));
                 break;
             case R.id.invitation_rl:
                 //邀请码
-                startActivity(new Intent(this,LnvitationCodeActivity.class));
+                startActivity(new Intent(this, LnvitationCodeActivity.class));
                 break;
             case R.id.feedback_rl:
                 //问题反馈
-                startActivity(new Intent(this,FeedBackActivity.class));
+                startActivity(new Intent(this, FeedBackActivity.class));
                 break;
             case R.id.gywm_rl:
                 //关于我们
-                startActivity(new Intent(this,AboutUsActivity.class));
+                startActivity(new Intent(this, AboutUsActivity.class));
                 break;
             case R.id.bt_out:
-                Toast.makeText(this,"退出登录",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "退出登录", Toast.LENGTH_SHORT).show();
                 SPUtils.remove(this, UserUtils.SP_TAG_LOGIN);
-                UserUtils.UserPhone="";
-                Log.e("<<<<<<<<<<","退出成功！");
+                UserUtils.UserPhone = "";
+                Log.e("<<<<<<<<<<", "退出成功！");
                 break;
+            case R.id.vibrator_control_layout:
+            case R.id.vibrator_control_imag:
+                Utils.isVibrator = !Utils.isVibrator;
+                editor.putBoolean("isVibrator", Utils.isVibrator);
+                editor.commit();
+                setBtnText(vibratorControlImag, Utils.isVibrator);
+                break;
+
         }
     }
+
+    private void setIsVibrator(){
+        settings = getSharedPreferences("app_user", 0);
+        editor = settings.edit();
+        if (settings.contains("isVibrator")) {
+            Utils.isVibrator = settings.getBoolean("isVibrator", true);
+        }
+        if (!Utils.isVibrator)
+            vibratorControlImag.setSelected(false);
+        else
+            vibratorControlImag.setSelected(true);
+
+    }
+
+    private void setBtnText(ImageView btn, boolean isOpen) {
+        if (isOpen)
+            btn.setSelected(true);
+        else
+            btn.setSelected(false);
+    }
+
 }

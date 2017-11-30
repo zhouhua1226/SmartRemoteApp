@@ -1,6 +1,7 @@
 package com.tencent.tmgp.jjzww.activity.ctrl.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -136,6 +137,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     //2017/11/18 11：10 加入振动器
     public Vibrator vibrator; // 震动器
+    private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
     private String camera_name;
     private String dollName = "未知";
     private boolean isCurrentConnect = true;
@@ -191,6 +194,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlDollgoldTv.setText(money+"/次");
         playerNameTv.setText(UserUtils.UserName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
+        settings = getSharedPreferences("app_user", 0);// 获取SharedPreference对象
+        editor = settings.edit();// 获取编辑对象
     }
 
     @Override

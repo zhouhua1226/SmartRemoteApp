@@ -235,7 +235,7 @@ public class MyCenterFragment extends BaseFragment {
             public void _onSuccess(Result<LoginInfo> result) {
                 videoList = result.getData().getPlayback();
                 videoReList = result.getData().getDollCount();
-                Utils.showLogE("视频列表", "list=" + result.getMsg() + "=" + videoList.size());
+                Utils.showLogE("mycenter记录列表", "result=" + result.getMsg() + "=" + videoList.size());
                 userNumber.setText("累积抓中" + videoList.get(0).getDOLLTOTAL() + "次");
                 if (videoList.size() != 0) {
                     //myCenterAdapter.notify(getCatchNum(removeDuplicate(videoList),videoReList));
