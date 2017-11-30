@@ -307,7 +307,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             } else {
                 //显示另外一个人
                 for(int i=0; i<counter; i++) {
-                    if (!userInfos.get(i).equals(UserUtils.UserPhone)) {
+                    if (!userInfos.get(i).equals(UserUtils.UserName)) {
                         getCtrlUserImage(userInfos.get(i));
                         break;
                     }
@@ -604,7 +604,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         } else if (response instanceof AppInRoomResponse) {
             AppInRoomResponse appInRoomResponse = (AppInRoomResponse) response;
             Utils.showLogE(TAG, "=====" + appInRoomResponse.toString());
-            String allUsers = appInRoomResponse.getAllUserInRoom();
+            String allUsers = appInRoomResponse.getAllUserInRoom(); //返回的昵称
             Boolean free = appInRoomResponse.getFree();
             setStartMode(free);
             long seq = appInRoomResponse.getSeq();

@@ -55,8 +55,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'com.hwangjr.rxbus:rxbus:1.0.3'
     compile 'com.android.support:design:25.3.1'
-//    compile 'com.jph.takephoto:takephoto_library:4.0.3'
-
+    //    compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile 'com.jph.takephoto:takephoto_library:2.0.4'
     //Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -68,9 +67,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.2'
     compile 'com.google.guava:guava:14.0.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
     compile project(':PushSDK')
-
     compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
     compile 'com.makeramen:roundedimageview:2.2.1'
 }
