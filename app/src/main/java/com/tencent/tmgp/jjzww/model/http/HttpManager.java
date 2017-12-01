@@ -119,8 +119,8 @@ public class HttpManager {
     }
 
     //消费   11/21 16：15
-    public void getUserPlayNum(String phone,String money,String userName,String dollName,Subscriber<Result<LoginInfo>> subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getUserPlayNum(phone,money,userName,dollName);
+    public void getUserPlayNum(String phone,String money,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getUserPlayNum(phone,money);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -164,18 +164,36 @@ public class HttpManager {
     }
 
     //下注
-    public void getBets(String userID,Integer wager,String guessKey,Integer playBackId,
+    public void getBets(String userId,int wager,String guessKey,int playBackId,
                         String dollID,Subscriber<Result<AppUserBean>> subscriber){
-        Observable<Result<AppUserBean>> o= smartService.getBets(userID,wager,guessKey,playBackId,dollID);
+        Observable<Result<AppUserBean>> o= smartService.getBets(userId,wager,guessKey,playBackId,dollID);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 
-
+    //跑马灯
     public void getUserList(Subscriber<Result<LoginInfo>> subscriber){
         Observable<Result<LoginInfo>> o= smartService.getUserList();
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //游戏场次
+    public void getPlayId(String dollname,Subscriber<Result<LoginInfo>>subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getPlayId(dollname);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //开始游戏创建场次
+    public void  getCreatPlayList(String userName,String dollname,Subscriber<Result<LoginInfo>>subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getCreatPlayList(userName,dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

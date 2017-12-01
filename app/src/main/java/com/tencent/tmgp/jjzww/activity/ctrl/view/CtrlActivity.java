@@ -171,7 +171,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private int money = 0;
     private String state = "";
     private QuizInstrictionDialog quizInstrictionDialog;
-    private String id;
+    private String dollId;
 
 
     @Override
@@ -216,13 +216,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlCompl.startLoginPresent(camera_name);
         dollName = getIntent().getStringExtra(Utils.TAG_ROOM_NAME);
         money = Integer.parseInt(getIntent().getStringExtra(Utils.TAG_DOLL_GOLD));
-        id=getIntent().getStringExtra(Utils.TAG_DOLL_Id);
-        Log.e(TAG,"哈哈哈哈哈哈"+id);
+        dollId = getIntent().getStringExtra(Utils.TAG_DOLL_Id);
+
         if (!Utils.isEmpty(dollName)) {
             dollNameTv.setText(dollName);
         }
         ctrlDollgoldTv.setText(money + "/次");
-        ctrlDollgoldTv1.setText(money+"/次");//下注金额
+        ctrlDollgoldTv1.setText(money + "/次");//下注金额
         playerNameTv.setText(UserUtils.UserName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
 
@@ -336,7 +336,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 playerSecondIv.setVisibility(View.INVISIBLE);
             } else {
                 //显示另外一个人
-                for(int i=0; i<counter; i++) {
+                for (int i = 0; i < counter; i++) {
                     if (!userInfos.get(i).equals(UserUtils.UserName)) {
                         getCtrlUserImage(userInfos.get(i));
                         break;
@@ -346,9 +346,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 playerSecondIv.setVisibility(View.VISIBLE);
             }
         }
-        if (counter>1){
+        if (counter > 1) {
             ctrlQuizLayout.setEnabled(true);
-        }else {
+        } else {
             ctrlQuizLayout.setEnabled(false);
         }
     }
@@ -430,7 +430,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     @OnClick({R.id.image_back, R.id.recharge_button,
-            R.id.startgame_ll, R.id.ctrl_fail_iv,R.id.ctrl_quiz_layout, R.id.ctrl_instruction_image, R.id.ctrl_betting_winning, R.id.ctrl_betting_fail,
+            R.id.startgame_ll, R.id.ctrl_fail_iv, R.id.ctrl_quiz_layout, R.id.ctrl_instruction_image, R.id.ctrl_betting_winning, R.id.ctrl_betting_fail,
             R.id.ctrl_confirm_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -448,9 +448,10 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                             && (isCurrentConnect)) {
                         ctrlCompl.sendCmdCtrl(MoveType.START);
                         coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
-//                        getPlayNum(UserUtils.UserPhone, String.valueOf(money), UserUtils.UserName, dollName);   //扣款
+                        getCreatPlayList(UserUtils.UserName,dollName);//开始游戏分发场次
                     }
                     setVibratorTime(300, -1);
+                    rechargeButton.setVisibility(View.GONE);
                 } else {
                     MyToast.getToast(getApplicationContext(), "余额不足，请充值！").show();
                 }
@@ -462,12 +463,15 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 ctrlCompl.startLoginPresent(camera_name);
                 break;
             case R.id.ctrl_quiz_layout:
+                //竞猜
                 ctrlButtomLayout.setVisibility(View.GONE);
                 ctrlBetingLayout.setVisibility(View.VISIBLE);
+                getPlayId(dollName);//给围观群众分发id
+
                 break;
             case R.id.ctrl_instruction_image:
                 //说明
-                quizInstrictionDialog=new QuizInstrictionDialog(this,R.style.easy_dialog_style);
+                quizInstrictionDialog = new QuizInstrictionDialog(this, R.style.easy_dialog_style);
                 quizInstrictionDialog.show();
                 break;
 
@@ -482,8 +486,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 //不中
                 break;
             case R.id.ctrl_confirm_layout:
-                //确认按钮
-//                getBets(UserUtils.UserName,Integer.valueOf(money).intValue(),"1",UserUtils.id,id);
+                //下注
+                getBets(UserUtils.USER_ID, Integer.valueOf(money).intValue(), "1", UserUtils.PlayBackId, dollId);
+
                 break;
             default:
                 break;
@@ -729,6 +734,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @Subscribe(thread = EventThread.MAIN_THREAD,
             tags = {@Tag(Utils.TAG_DEVICE_FREE)})
     public void getDeviceFree(GatewayPoohStatusMessage message) {
+        rechargeButton.setVisibility(View.VISIBLE);
         String roomId = message.getRoomId();
         int number = message.getGifinumber();
         Utils.showLogE(TAG, "getDeviceFree::::::" + roomId + "======" + number);
@@ -739,7 +745,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 return;
             }
             ctrlCompl.stopRecordView(mEZPlayer); //录制完毕
-            getPlayNum(UserUtils.UserPhone, String.valueOf(money), UserUtils.UserName, dollName);   //扣款
+            getPlayNum(UserUtils.UserPhone, String.valueOf(money));   //扣款
             if (number != 0) {
                 //抓到娃娃  上传给后台
                 upFileName = "";
@@ -757,7 +763,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     }
                 }, 2000);  //4s后删除 保证录制完毕
             }
-
+            updataTime(upTime, state);
+            upTime = "";
 
         }
     }
@@ -782,16 +789,17 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
     }
 
-    private void getPlayNum(String phone, String number, String userName, String dollName) {
+    //消费接口
+    private void getPlayNum(String phone, String number) {
         String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
-        HttpManager.getInstance().getUserPlayNum(phones, number, userName, dollName, new RequestSubscriber<Result<LoginInfo>>() {
+        HttpManager.getInstance().getUserPlayNum(phones, number, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> result) {
                 Log.e(TAG, "消费结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
-                UserUtils.id=result.getData().getPlayBack().getID();
-                updataTime(upTime, state);
-                upTime = "";
+
+//                updataTime(upTime, state);
+//                upTime = "";
             }
 
             @Override
@@ -802,8 +810,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     //下注接口
-    private void getBets(String userID,Integer wager,String guessKey,Integer playBackId,
-                         String dollID){
+    private void getBets(String userID, Integer wager, String guessKey, Integer playBackId,
+                         String dollID) {
         HttpManager.getInstance().getBets(userID, wager, guessKey, playBackId, dollID, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
@@ -817,7 +825,38 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         });
     }
 
+    //围观群众获取游戏场次
+    private void getPlayId(String dollName) {
+        HttpManager.getInstance().getPlayId(dollName, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> loginInfoResult) {
+               UserUtils.PlayBackId= loginInfoResult.getData().getPlayBack().getID();//游戏场次id
 
+
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+
+    }
+    //开始游戏分发场次
+    private void getCreatPlayList(String userName,String dollName){
+        HttpManager.getInstance().getCreatPlayList(userName, dollName, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> loginInfoResult) {
+                UserUtils.id = loginInfoResult.getData().getPlayBack().getID();
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+
+    }
 
 
     @Override

@@ -11,26 +11,26 @@ public class UrlUtils {
     public static final String APPKEY = "appKey";
     public static final String APPSECRET = "appSecret";
 
-    public static final String ID ="id";
+    public static final String ID = "id";
     public static final String PHONE = "phone";
     public static final String SMSCODE = "code";
-    public static final String FACEIMAGE="base64Image";
-    public static final String NickName="nickname";
-    public static final String USERNAME="userName";
-    public static final String USEPAYMONEY="money";
-    public static final String USERPLAYNUM="gold";
-    public static final String DOLLNAME="dollName";
-    public static final String TIME="time";
-    public static final String STATE="state";
+    public static final String FACEIMAGE = "base64Image";
+    public static final String NickName = "nickname";
+    public static final String USERNAME = "userName";
+    public static final String USEPAYMONEY = "money";
+    public static final String USERPLAYNUM = "gold";
+    public static final String DOLLNAME = "dollName";
+    public static final String TIME = "time";
+    public static final String STATE = "state";
 
-    public static final String USERID="userID";
-    public static final String WAGER="wager";
-    public static final String GUESSKEY="guessKey";
-    public static final String PLAYBACK="playBackId";
-    public static final String DOLLID="dollID";
+    public static final String USERID = "userId";
+    public static final String WAGER = "wager";
+    public static final String GUESSKEY = "guessKey";
+    public static final String PLAYBACK = "playBackId";
+    public static final String DOLLID = "dollId";
 
 
-    public static final String URL="http://47.100.15.18:8080";
+    public static final String URL = "http://47.100.15.18:8080";
 //    public static final String URL="http://106.75.142.42:8080/";
 
     //getSmsCode
@@ -40,44 +40,54 @@ public class UrlUtils {
     //login without code
     public static final String LOGINWITHOUTCODE = "http://47.100.15.18:8080/pooh-web/sms/getDoll";
     //完整的URL：http://106.75.142.42:8080/pooh-web/uploadFiles/DollImage/A002201710310002.jpg
-    public static final String PICTUREURL="http://47.100.15.18:8080/pooh-web/uploadFiles/DollImage";
+    public static final String PICTUREURL = "http://47.100.15.18:8080/pooh-web/uploadFiles/DollImage";
 
     //头像上传http://47.100.15.18:8080/pooh-web/api/updateUser
-    public static final String FACEIMAGEURL="http://47.100.15.18:8080/pooh-web/api/updateUser";
+    public static final String FACEIMAGEURL = "http://47.100.15.18:8080/pooh-web/api/updateUser";
 
     //修改昵称
-    public static final String UserNickNameURL="http;//47100.15.18:8080/faceImage";
+    public static final String UserNickNameURL = "http;//47100.15.18:8080/faceImage";
 
     //修改用户名  11/21 13：10
-    public static final String USERNAMEURL=URL+"/pooh-web/api/updateUserName";
+    public static final String USERNAMEURL = URL + "/pooh-web/api/updateUserName";
 
     //头像上传成功返回的http://106.75.142.42:8080/faceImage/15335756655.png
-    public static final String USERFACEIMAGEURL="http://47.100.15.18:8080/faceImage";
+    public static final String USERFACEIMAGEURL = "http://47.100.15.18:8080/faceImage";
 
     //充值接口
-    public static final String USERPAYURL=URL+"/pooh-web/pay/balance";
+    public static final String USERPAYURL = URL + "/pooh-web/pay/balance";
 
     //消费接口
-    public static final String USERPLAYURL=URL+"/pooh-web/pay/costBalance";
+    public static final String USERPLAYURL = URL + "/pooh-web/pay/costBalance";
 
 
     //listRank
-    public static final String LISTRANKURL=URL+"/pooh-web/rank/rankList";
+    public static final String LISTRANKURL = URL + "/pooh-web/rank/rankList";
 
     //视屏上传upload
-    public static final String UPLOADURL="http://47.100.15.18:8080/pooh-web/play/regPlayBack";
+    public static final String UPLOADURL = "http://47.100.15.18:8080/pooh-web/play/regPlayBack";
 
     //获取视频回放列表
-    public static final String VIDEOBACKURL="http://47.100.15.18:8080/pooh-web/play/getPlayRecord";
+    public static final String VIDEOBACKURL = "http://47.100.15.18:8080/pooh-web/play/getPlayRecord";
 
     //获取房间用户头像
-    public static final String CTRLUSERIMAGE="http://47.100.15.18:8080/pooh-web/api/getUser";
+    public static final String CTRLUSERIMAGE = "http://47.100.15.18:8080/pooh-web/api/getUser";
 
-    //下注接口
-    public static final String BETSURL="http://47.100.15.18:8080/pooh-web/pay/bets";
 
     //跑马灯l
 
-    public static final String getUserList="http://47.100.15.18:8080/pooh-web/play/getUserList";
+    public static final String getUserList = "http://47.100.15.18:8080/pooh-web/play/getUserList";
+
+
+    //下注接口
+    public static final String BETSURL = "http://47.100.15.18:8080/pooh-web/app/bets";
+
+    //围观群众分发游戏场次
+
+    public static final String PLAYIDURL = "http://47.100.15.18:8080/pooh-web/app/getPlayId";
+
+    //开始游戏分发场次
+    public static final String CREATPLAYLISTURL = "http://47.100.15.18:8080/pooh-web/pay/creatPlayList";
+
 
 }
