@@ -413,7 +413,10 @@ public class MainActivity extends BaseActivity {
     public void getDeviceStates(Object response) {
         if (response instanceof GetStatusResponse) {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
-            Utils.showLogE(TAG, "=====" + getStatusResponse.getStatus());
+            Utils.showLogE(TAG, "getStatusResponse=====" + getStatusResponse.getStatus());
+            if (Utils.isEmpty(getStatusResponse.getStatus())) {
+                return;
+            }
             if ((getStatusResponse.getSeq() != -2)) {
                 if (Utils.isEmpty(getStatusResponse.getStatus())) {
                     return;
