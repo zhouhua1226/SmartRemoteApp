@@ -94,9 +94,8 @@ public interface SmartService {
     @POST(UrlUtils.USERPLAYURL)
     Observable<Result<LoginInfo>> getUserPlayNum(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.USERPLAYNUM) String gold,
-            @Field(UrlUtils.USERNAME) String userName,
-            @Field(UrlUtils.DOLLNAME) String dollName
+            @Field(UrlUtils.USERPLAYNUM) String gold
+
     );
 
     //ListRank
@@ -137,7 +136,7 @@ public interface SmartService {
     //下注
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
-    @POST(UrlUtils.CTRLUSERIMAGE)
+    @POST(UrlUtils.BETSURL)
     Observable<Result<AppUserBean>> getBets(
             @Field(UrlUtils.USERID) String userID,
             @Field(UrlUtils.WAGER) Integer wager,
@@ -150,4 +149,22 @@ public interface SmartService {
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @GET(UrlUtils.getUserList)
     Observable<Result<LoginInfo>> getUserList();
+
+    //开始游戏分发场次
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.CREATPLAYLISTURL)
+    Observable<Result<LoginInfo>> getCreatPlayList(
+            @Field(UrlUtils.USERNAME) String userName,
+            @Field(UrlUtils.DOLLNAME) String dollName
+    );
+
+    //围观群众分发场次
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.PLAYIDURL)
+    Observable<Result<LoginInfo>> getPlayId(
+            @Field(UrlUtils.DOLLNAME) String dollName
+    );
+
 }
