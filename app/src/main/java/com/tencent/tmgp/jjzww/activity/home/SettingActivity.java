@@ -1,5 +1,6 @@
 package com.tencent.tmgp.jjzww.activity.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.tencent.tmgp.jjzww.utils.SPUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.MyToast;
+import com.tencent.tmgp.jjzww.view.SelectLoginDialog;
 import com.tencent.tmgp.jjzww.view.UpdateDialog;
 
 import butterknife.BindView;
@@ -56,6 +58,7 @@ public class SettingActivity extends BaseActivity {
 
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
+    private Context context=SettingActivity.this;
 
     @Override
     protected int getLayoutId() {
@@ -131,19 +134,46 @@ public class SettingActivity extends BaseActivity {
                 setBtnText(vibratorControlImag, Utils.isVibrator);
                 break;
             case R.id.setting_update_layout:
-                UpdateDialog updateDialog=new UpdateDialog(this,R.style.easy_dialog_style);
-                updateDialog.setCancelable(false);
-                updateDialog.show();
-                updateDialog.setDialogResultListener(new UpdateDialog.DialogResultListener() {
-                    @Override
-                    public void getResult(int resultCode) {
-                        if (1 == resultCode) {// 确定
-                            MyToast.getToast(getApplicationContext(),"正在下载新版apk!").show();
-                        }else {
+                MyToast.getToast(getApplicationContext(),"当前为最新版!").show();
+//                UpdateDialog updateDialog=new UpdateDialog(this,R.style.easy_dialog_style);
+//                updateDialog.setCancelable(false);
+//                updateDialog.show();
+//                updateDialog.setDialogResultListener(new UpdateDialog.DialogResultListener() {
+//                    @Override
+//                    public void getResult(int resultCode) {
+//                        if (1 == resultCode) {// 确定
+//                            MyToast.getToast(getApplicationContext(),"正在下载新版apk!").show();
+//                        }else {
+//
+//                        }
+//                    }
+//                });
+//                SelectLoginDialog selectLoginDialog=new SelectLoginDialog(this,R.style.easy_dialog_style);
+//                selectLoginDialog.setCancelable(false);
+//                selectLoginDialog.show();
+//                selectLoginDialog.setDialogResultListener(new SelectLoginDialog.DialogResultListener() {
+//                    @Override
+//                    public void getResult(int resultCode) {
+//                        switch (resultCode){
+//                            case 0:
+//                                MyToast.getToast(context,"QQ登录").show();
+//                                break;
+//                            case 1:
+//                                MyToast.getToast(context,"微信登录").show();
+//                                break;
+//                            case 2:
+//                                MyToast.getToast(context,"其它登录").show();
+//                                break;
+//                            case 3:
+//                                MyToast.getToast(context,"游客登录").show();
+//                                break;
+//                            case 4:
+//                                MyToast.getToast(context,"取消登录").show();
+//                                break;
+//                        }
+//                    }
+//                });
 
-                        }
-                    }
-                });
                 break;
 
         }

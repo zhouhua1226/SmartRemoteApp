@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.activity.ctrl.view.CtrlActivity;
+import com.tencent.tmgp.jjzww.activity.home.MainActivity;
 import com.tencent.tmgp.jjzww.adapter.ZWWAdapter;
 import com.tencent.tmgp.jjzww.base.BaseFragment;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
@@ -56,7 +57,6 @@ public class ZWWJFragment extends BaseFragment {
     private String sessionId;
     private String phone;
     private EmptyLayout.OnClickReTryListener onClickReTryListener;
-
     private List<String> list1=new ArrayList<>();
     private List<VideoBackBean> playBackBeanList=new ArrayList<>();
 
@@ -70,14 +70,15 @@ public class ZWWJFragment extends BaseFragment {
         initData();
         onClick();
         getUserList();
-//        initText();
 
     }
 
-    private void initText() {
-        rollingTv.setmTexts(list1);
+    private void initText(List<String> listRun) {
+        if(listRun.size()>0)
+            rollingTv.setFocusable(true);
+        rollingTv.setmTexts(listRun);
         rollingTv.setFrontColor(getResources().getColor(R.color.zww_broadcast_text));
-//        rollingTv.setBackColor(getResources().getColor(R.color.white));
+        rollingTv.setBackColor(getResources().getColor(R.color.run_text_bg));
         rollingTv.setmDuration(1000);
         rollingTv.setmInterval(1000);
     }
@@ -90,11 +91,11 @@ public class ZWWJFragment extends BaseFragment {
                 Log.e("跑马灯","list0="+playBackBeanList.size()+playBackBeanList.get(0).getDOLLNAME());
                 for(int i=0;i<playBackBeanList.size();i++){
                     String s="恭喜"+playBackBeanList.get(i).getUSERNAME()+"用户抓中一个"+playBackBeanList.get(i).getDOLLNAME();
+                    Log.e("跑马灯","item="+s);
                     list1.add(s);
                 }
                 Log.e("跑马灯","list1="+list1.size());
-                initText();
-                //rollingTv.setmTexts(list1);
+                initText(list1);
             }
 
             @Override
@@ -180,18 +181,16 @@ public class ZWWJFragment extends BaseFragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getUserList();
+    }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        if(list1.size()>0)
-//        initText();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        if(list1.size()>0)
-//        initText();
-//    }
+
 }

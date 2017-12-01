@@ -19,6 +19,7 @@
     <color name="redx">#ea6387</color>
     <color name="update_dialog_bg">#ffffff</color>
     <color name="zww_broadcast_text">#ff9700</color>
-
+    <color name="login_lolor_bg">#f16081</color>
+    <color name="run_text_bg">#efefef</color>
 
 </resources>

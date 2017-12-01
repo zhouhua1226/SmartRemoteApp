@@ -1,9 +1,11 @@
 package com.tencent.tmgp.jjzww.activity.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -17,6 +19,7 @@ import com.tencent.tmgp.jjzww.base.BaseActivity;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.Token;
+import com.tencent.tmgp.jjzww.bean.VideoBackBean;
 import com.tencent.tmgp.jjzww.bean.ZwwRoomBean;
 import com.tencent.tmgp.jjzww.fragment.MyCenterFragment;
 import com.tencent.tmgp.jjzww.fragment.RankFragmentTwo;
@@ -74,7 +77,6 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_center)
     FrameLayout mainCenter;
 
-
     private LoginDialog loginDialog;
     private Timer timer;
     private TimerTask timerTask;
@@ -84,6 +86,9 @@ public class MainActivity extends BaseActivity {
     private long mExitTime;
     private List<ZwwRoomBean> dollLists = new ArrayList<>();
     private String ph;
+    private List<VideoBackBean> playBackBeanList=new ArrayList<>();
+    private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected int getLayoutId() {
@@ -94,6 +99,9 @@ public class MainActivity extends BaseActivity {
     protected void afterCreate(Bundle savedInstanceState) {
         Utils.showLogE(TAG, "afterCreate");
         initWelcome();
+        settings = getSharedPreferences("app_user", 0);// 获取SharedPreference对象
+        editor = settings.edit();// 获取编辑对象。
+        editor.putBoolean("isVibrator",true);
     }
 
     private void initWelcome() {
@@ -489,4 +497,7 @@ public class MainActivity extends BaseActivity {
             NettyUtils.sendGetDeviceStatesCmd();
         }
     }
+
+
+
 }

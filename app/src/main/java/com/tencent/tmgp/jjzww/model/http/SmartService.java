@@ -148,6 +148,6 @@ public interface SmartService {
 
         //跑马灯
     @Headers("Content-Type: application/x-www-form-urlencoded")
-    @POST(UrlUtils.getUserList)
+    @GET(UrlUtils.getUserList)
     Observable<Result<LoginInfo>> getUserList();
 }

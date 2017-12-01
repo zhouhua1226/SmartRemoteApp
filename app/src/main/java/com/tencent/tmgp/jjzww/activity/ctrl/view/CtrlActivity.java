@@ -225,8 +225,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlDollgoldTv1.setText(money+"/次");//下注金额
         playerNameTv.setText(UserUtils.UserName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
-        settings = getSharedPreferences("app_user", 0);// 获取SharedPreference对象
-        editor = settings.edit();// 获取编辑对象
+
     }
 
     @Override
