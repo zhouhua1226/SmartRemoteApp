@@ -6,6 +6,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class WeChatPayActivity extends BaseActivity {
     @BindView(R.id.btn_back)
     ImageButton btnBack;
     @BindView(R.id.amount_tv)
-    TextView amountTv;
+    EditText amountTv;
     @BindView(R.id.btn_ok)
     Button btnOk;
     @BindView(R.id.wx_ye_tv)
@@ -38,7 +39,7 @@ public class WeChatPayActivity extends BaseActivity {
     Button wxPlayBtn;
     private String TAG = "WeChatPayActivity";
     private Intent intent;
-    private String money;
+    private String moneyzf;
 
     @Override
     protected int getLayoutId() {
@@ -49,8 +50,8 @@ public class WeChatPayActivity extends BaseActivity {
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
         intent = getIntent();
-        money = intent.getStringExtra("money");
-        amountTv.setText(money);
+        moneyzf = intent.getStringExtra("money");
+        amountTv.setText(moneyzf);
         wxYeTv.setText(UserUtils.UserBalance);
     }
 
@@ -73,11 +74,12 @@ public class WeChatPayActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.btn_ok:
-                MyToast.getToast(this, money + "元").show();
-                wxPayMoney(UserUtils.UserPhone, money);
+                moneyzf=amountTv.getText().toString();
+                //MyToast.getToast(this, moneyzf + "元").show();
+                wxPayMoney(UserUtils.UserPhone, moneyzf);
                 break;
             case R.id.wx_play_btn:
-                getPlayNum(UserUtils.UserPhone, money);
+                getPlayNum(UserUtils.UserPhone, moneyzf);
                 wxYeTv.setText(UserUtils.UserBalance);
                 break;
         }
@@ -90,7 +92,7 @@ public class WeChatPayActivity extends BaseActivity {
             public void _onSuccess(Result<LoginInfo> result) {
                 Log.e(TAG, "充值结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
-                MyToast.getToast(getApplicationContext(), "充值成功！").show();
+                MyToast.getToast(getApplicationContext(), moneyzf+"充值成功！").show();
             }
 
             @Override

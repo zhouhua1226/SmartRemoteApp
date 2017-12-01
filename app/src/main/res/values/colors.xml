@@ -14,7 +14,10 @@
     <color name="main_red">#e3393c</color>
     <color name="main_gray">#57515d</color>
     <color name="select_pop_gv_bg">#e4e4e4</color>
-
+    <color name="update_sure_color">#007aff</color>
     <color name="green">#6dc9b8</color>
     <color name="redx">#ea6387</color>
+    <color name="update_dialog_bg">#ffffff</color>
+
+
 </resources>

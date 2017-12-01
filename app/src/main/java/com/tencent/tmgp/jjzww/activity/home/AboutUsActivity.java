@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.base.BaseActivity;
+import com.tencent.tmgp.jjzww.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,10 +37,14 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        tvAboutPhoneName.setText("【第一抓娃娃】客服热线: 400-821-5561");
-        tvAboutVersion.setText("当前版本:"+"1.0.0");
-        tvAboutCompany.setText("版权所有:"+"上海炎亿网络科技有限公司");
-        tvAboutWebsite.setText("http://www.111WAWA.com");
+        tvAboutPhoneName.setText("【"+getResources().getString(R.string.app_name)+"】客服热线: "+getResources().getString(R.string.service_phone));
+        try {
+            tvAboutVersion.setText("当前版本:"+ Utils.getAppCodeOrName(getApplicationContext(),1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tvAboutCompany.setText("版权所有:"+getResources().getString(R.string.company_name));
+        tvAboutWebsite.setText(getResources().getString(R.string.company_web));
 
     }
 

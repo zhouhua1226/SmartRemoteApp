@@ -5,6 +5,8 @@
 package com.tencent.tmgp.jjzww.utils;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
@@ -180,6 +182,10 @@ public class Utils {
         return file.exists();
     }
 
+    /**
+     * 时间拆分
+     * 2017/11/30  15：55
+     */
     public static String getTime(String times){
         String year=times.substring(0,4);
         String month=times.substring(4,6);
@@ -190,5 +196,24 @@ public class Utils {
         return year+"/"+month+"/"+day+"  "+hour+":"+minte+":"+second;
     }
 
+
+    /**
+     * 获取版本信息
+     * 2017/11/30  15：55
+     * i=0 获取版本号，i=1 获取版本名
+     */
+    public static String getAppCodeOrName(Context context,int i) throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        String version="";
+        if(i==0){
+            version=packInfo.versionCode+"";
+        }else {
+            version = packInfo.versionName;
+        }
+        return version;
+    }
 
 }

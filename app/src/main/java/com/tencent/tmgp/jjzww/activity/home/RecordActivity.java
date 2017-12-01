@@ -103,6 +103,7 @@ public class RecordActivity extends BaseActivity {
                 listVideo = result.getData().getPlayback();
                 Utils.showLogE("video记录列表", "result=" + result.getMsg()+"="+listVideo.size());
                 if(listVideo.size()!=0) {
+                    cecordFailTv.setVisibility(View.GONE);
                     recordAdapter.notify(listVideo);
                 }else {
                     recodeRecyclerview.setVisibility(View.GONE);

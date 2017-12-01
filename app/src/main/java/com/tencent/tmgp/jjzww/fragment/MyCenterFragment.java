@@ -238,6 +238,7 @@ public class MyCenterFragment extends BaseFragment {
                 Utils.showLogE("mycenter记录列表", "result=" + result.getMsg() + "=" + videoList.size());
                 userNumber.setText("累积抓中" + videoList.get(0).getDOLLTOTAL() + "次");
                 if (videoList.size() != 0) {
+                    mycenterNoneTv.setVisibility(View.GONE);
                     //myCenterAdapter.notify(getCatchNum(removeDuplicate(videoList),videoReList));
                     myCenterAdapter.notify(videoList);
                 } else {

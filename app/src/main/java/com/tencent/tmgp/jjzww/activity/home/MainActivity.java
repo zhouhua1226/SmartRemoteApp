@@ -413,6 +413,9 @@ public class MainActivity extends BaseActivity {
             GetStatusResponse getStatusResponse = (GetStatusResponse) response;
             Utils.showLogE(TAG, "=====" + getStatusResponse.getStatus());
             if ((getStatusResponse.getSeq() != -2)) {
+                if (Utils.isEmpty(getStatusResponse.getStatus())) {
+                    return;
+                }
                 String[] devices = getStatusResponse.getStatus().split(";");
                 for (int i = 0; i < devices.length; i++) {
                     String[] status = devices[i].split("-");

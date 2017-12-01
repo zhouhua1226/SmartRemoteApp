@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.tmgp.jjzww.R;
@@ -16,6 +17,8 @@ import com.tencent.tmgp.jjzww.base.BaseActivity;
 import com.tencent.tmgp.jjzww.utils.SPUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
+import com.tencent.tmgp.jjzww.view.MyToast;
+import com.tencent.tmgp.jjzww.view.UpdateDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +49,10 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout vibratorControlLayout;
     @BindView(R.id.vibrator_control_imag)
     ImageView vibratorControlImag;
+    @BindView(R.id.setting_update_tv)
+    TextView settingUpdateTv;
+    @BindView(R.id.setting_update_layout)
+    RelativeLayout settingUpdateLayout;
 
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
@@ -59,6 +66,11 @@ public class SettingActivity extends BaseActivity {
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
         setIsVibrator();
+        try {
+            settingUpdateTv.setText("当前版本："+Utils.getAppCodeOrName(this,1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -73,7 +85,10 @@ public class SettingActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.image_back, R.id.image_kf, R.id.money_rl, R.id.record_rl, R.id.invitation_rl, R.id.feedback_rl, R.id.gywm_rl, R.id.bt_out,R.id.vibrator_control_layout,R.id.vibrator_control_imag})
+    @OnClick({R.id.image_back, R.id.image_kf, R.id.money_rl,
+              R.id.record_rl, R.id.invitation_rl, R.id.feedback_rl,
+              R.id.gywm_rl, R.id.bt_out, R.id.vibrator_control_layout,
+              R.id.vibrator_control_imag,R.id.setting_update_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
@@ -115,11 +130,26 @@ public class SettingActivity extends BaseActivity {
                 editor.commit();
                 setBtnText(vibratorControlImag, Utils.isVibrator);
                 break;
+            case R.id.setting_update_layout:
+                UpdateDialog updateDialog=new UpdateDialog(this,R.style.easy_dialog_style);
+                updateDialog.setCancelable(false);
+                updateDialog.show();
+                updateDialog.setDialogResultListener(new UpdateDialog.DialogResultListener() {
+                    @Override
+                    public void getResult(int resultCode) {
+                        if (1 == resultCode) {// 确定
+                            MyToast.getToast(getApplicationContext(),"正在下载新版apk!").show();
+                        }else {
+
+                        }
+                    }
+                });
+                break;
 
         }
     }
 
-    private void setIsVibrator(){
+    private void setIsVibrator() {
         settings = getSharedPreferences("app_user", 0);
         editor = settings.edit();
         if (settings.contains("isVibrator")) {
