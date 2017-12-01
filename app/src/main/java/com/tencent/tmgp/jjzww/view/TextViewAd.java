@@ -111,6 +111,11 @@ public class TextViewAd extends TextView {
     }
 
     @Override
+    public boolean isFocused() {
+        return true;
+    }
+
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Log.i(TAG, "onSizeChanged: " + h);

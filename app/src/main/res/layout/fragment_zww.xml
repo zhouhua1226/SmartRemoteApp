@@ -12,19 +12,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
+        android:layout_height="40dp"
+        android:background="#efefef"
         android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:background="@drawable/zww_broadcast_image1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"/>
 
         <com.tencent.tmgp.jjzww.view.TextViewAd
             android:id="@+id/rolling_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="12sp"
-            android:text="11111222333"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:text=""
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:background="@color/white"
+            android:background="#efefef"
 
             />
 

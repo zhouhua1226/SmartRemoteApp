@@ -11,6 +11,7 @@ public class UrlUtils {
     public static final String APPKEY = "appKey";
     public static final String APPSECRET = "appSecret";
 
+    public static final String ID ="id";
     public static final String PHONE = "phone";
     public static final String SMSCODE = "code";
     public static final String FACEIMAGE="base64Image";
@@ -20,6 +21,14 @@ public class UrlUtils {
     public static final String USERPLAYNUM="gold";
     public static final String DOLLNAME="dollName";
     public static final String TIME="time";
+    public static final String STATE="state";
+
+    public static final String USERID="userID";
+    public static final String WAGER="wager";
+    public static final String GUESSKEY="guessKey";
+    public static final String PLAYBACK="playBackId";
+    public static final String DOLLID="dollID";
+
 
     public static final String URL="http://47.100.15.18:8080";
 //    public static final String URL="http://106.75.142.42:8080/";
@@ -63,5 +72,12 @@ public class UrlUtils {
 
     //获取房间用户头像
     public static final String CTRLUSERIMAGE="http://47.100.15.18:8080/pooh-web/api/getUser";
+
+    //下注接口
+    public static final String BETSURL="http://47.100.15.18:8080/pooh-web/pay/bets";
+
+    //跑马灯l
+
+    public static final String getUserList="http://47.100.15.18:8080/pooh-web/play/getUserList";
 
 }

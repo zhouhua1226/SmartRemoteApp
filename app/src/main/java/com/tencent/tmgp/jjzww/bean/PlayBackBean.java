@@ -3,31 +3,19 @@ package com.tencent.tmgp.jjzww.bean;
 import java.io.Serializable;
 
 /**
- * Created by yincong on 2017/11/25 12:35
- * 修改人：
- * 修改时间：
- * 类描述：
+ * Created by hongxiu on 2017/11/30.
  */
-public class VideoBackBean implements Serializable{
-
+public class PlayBackBean implements Serializable {
+    private int DOLLTOTAL;
+    private String POSTSTATE;
     private String DOLLNAME;
     private String STATE;
     private String USERNAME;
+    private String COUNT;
     private int ID;
+    private int CONVERSIONGOLD;
     private String CREATETIME;
     private String DOLL_URL;
-    private int DOLLTOTAL;
-    private int CONVERSIONGOLD;
-    private String POSTSTATE;
-    private String COUNT;
-
-    public String getCOUNT() {
-        return COUNT;
-    }
-
-    public void setCOUNT(String COUNT) {
-        this.COUNT = COUNT;
-    }
 
     public int getDOLLTOTAL() {
         return DOLLTOTAL;
@@ -35,14 +23,6 @@ public class VideoBackBean implements Serializable{
 
     public void setDOLLTOTAL(int DOLLTOTAL) {
         this.DOLLTOTAL = DOLLTOTAL;
-    }
-
-    public int getCONVERSIONGOLD() {
-        return CONVERSIONGOLD;
-    }
-
-    public void setCONVERSIONGOLD(int CONVERSIONGOLD) {
-        this.CONVERSIONGOLD = CONVERSIONGOLD;
     }
 
     public String getPOSTSTATE() {
@@ -77,12 +57,28 @@ public class VideoBackBean implements Serializable{
         this.USERNAME = USERNAME;
     }
 
+    public String getCOUNT() {
+        return COUNT;
+    }
+
+    public void setCOUNT(String COUNT) {
+        this.COUNT = COUNT;
+    }
+
     public int getID() {
         return ID;
     }
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getCONVERSIONGOLD() {
+        return CONVERSIONGOLD;
+    }
+
+    public void setCONVERSIONGOLD(int CONVERSIONGOLD) {
+        this.CONVERSIONGOLD = CONVERSIONGOLD;
     }
 
     public String getCREATETIME() {
@@ -100,4 +96,7 @@ public class VideoBackBean implements Serializable{
     public void setDOLL_URL(String DOLL_URL) {
         this.DOLL_URL = DOLL_URL;
     }
+
+
+
 }

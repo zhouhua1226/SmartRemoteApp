@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gatz.netty.global.AppGlobal;
+import com.gatz.netty.global.ConnectResultEvent;
+import com.gatz.netty.utils.NettyUtils;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
+import com.hwangjr.rxbus.annotation.Tag;
+import com.hwangjr.rxbus.thread.EventThread;
+import com.iot.game.pooh.server.entity.json.MoveControlResponse;
+import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
+import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
+import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
+import com.iot.game.pooh.server.entity.json.enums.MoveType;
+import com.iot.game.pooh.server.entity.json.enums.PoohAbnormalStatus;
+import com.iot.game.pooh.server.entity.json.enums.ReturnCode;
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.activity.ctrl.presenter.CtrlCompl;
 import com.tencent.tmgp.jjzww.activity.wechat.WeChatPayActivity;
@@ -36,24 +51,11 @@ import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.FillingCurrencyDialog;
 import com.tencent.tmgp.jjzww.view.GifView;
+import com.tencent.tmgp.jjzww.view.GlideCircleTransform;
 import com.tencent.tmgp.jjzww.view.MyToast;
+import com.tencent.tmgp.jjzww.view.QuizInstrictionDialog;
 import com.tencent.tmgp.jjzww.view.TimeCircleProgressView;
 import com.tencent.tmgp.jjzww.view.VibratorView;
-import com.gatz.netty.global.AppGlobal;
-import com.gatz.netty.global.ConnectResultEvent;
-import com.gatz.netty.utils.NettyUtils;
-import com.hwangjr.rxbus.RxBus;
-import com.hwangjr.rxbus.annotation.Subscribe;
-import com.hwangjr.rxbus.annotation.Tag;
-import com.hwangjr.rxbus.thread.EventThread;
-import com.iot.game.pooh.server.entity.json.MoveControlResponse;
-import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
-import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
-import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
-import com.iot.game.pooh.server.entity.json.enums.MoveType;
-import com.iot.game.pooh.server.entity.json.enums.PoohAbnormalStatus;
-import com.iot.game.pooh.server.entity.json.enums.ReturnCode;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZPlayer;
 import com.videogo.openapi.bean.EZCameraInfo;
@@ -80,18 +82,18 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     ImageView ctrlFailIv;
     @BindView(R.id.image_back)
     ImageButton imageBack;
-    @BindView(R.id.image_service)
-    ImageButton imageService;
+    //    @BindView(R.id.image_service)
+//    ImageButton imageService;
     @BindView(R.id.money_image)
     ImageView moneyImage;
-    @BindView(R.id.game_tv)
-    TextView gameTv;
+    //    @BindView(R.id.game_tv)
+//    TextView gameTv;
     @BindView(R.id.coin_tv)
     TextView coinTv;
     @BindView(R.id.recharge_button)
     ImageButton rechargeButton;
-    @BindView(R.id.message_button)
-    ImageButton messageButton;
+    //    @BindView(R.id.message_button)
+//    ImageButton messageButton;
     @BindView(R.id.front_image)
     ImageView topImage;
     @BindView(R.id.back_image)
@@ -113,9 +115,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     @BindView(R.id.player_counter_tv)
     TextView playerCounterIv;
     @BindView(R.id.player2_iv)
-    RoundedImageView playerSecondIv;
+    ImageView playerSecondIv;
     @BindView(R.id.main_player_iv)
-    RoundedImageView playerMainIv;
+    ImageView playerMainIv;
     @BindView(R.id.player_name_tv)
     TextView playerNameTv;
     @BindView(R.id.ctrl_status_iv)
@@ -126,6 +128,28 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     TextView ctrlDollgoldTv;
 
     private static final String TAG = "CtrlActivity---";
+    @BindView(R.id.ctrl_quiz_layout)
+    RelativeLayout ctrlQuizLayout;
+    @BindView(R.id.ctrl_instruction_image)
+    ImageView ctrlInstructionImage;
+    @BindView(R.id.ctrl_buttom_layout)
+    RelativeLayout ctrlButtomLayout;
+    @BindView(R.id.ctrl_betting_number_one)
+    TextView ctrlBettingNumberOne;
+    @BindView(R.id.ctrl_betting_number_two)
+    TextView ctrlBettingNumberTwo;
+    @BindView(R.id.ctrl_betting_number_layout)
+    LinearLayout ctrlBettingNumberLayout;
+    @BindView(R.id.ctrl_betting_winning)
+    Button ctrlBettingWinning;
+    @BindView(R.id.ctrl_betting_fail)
+    Button ctrlBettingFail;
+    @BindView(R.id.ctrl_dollgold_tv1)
+    TextView ctrlDollgoldTv1;
+    @BindView(R.id.ctrl_confirm_layout)
+    LinearLayout ctrlConfirmLayout;
+    @BindView(R.id.ctrl_beting_layout)
+    RelativeLayout ctrlBetingLayout;
     private SurfaceHolder mRealPlaySh;
     private CtrlCompl ctrlCompl;
     private EZPlayer mEZPlayer = null;
@@ -145,6 +169,10 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private String upTime;
     private String upFileName;
     private int money = 0;
+    private String state = "";
+    private QuizInstrictionDialog quizInstrictionDialog;
+    private String id;
+
 
     @Override
     protected int getLayoutId() {
@@ -188,10 +216,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlCompl.startLoginPresent(camera_name);
         dollName = getIntent().getStringExtra(Utils.TAG_ROOM_NAME);
         money = Integer.parseInt(getIntent().getStringExtra(Utils.TAG_DOLL_GOLD));
+        id=getIntent().getStringExtra(Utils.TAG_DOLL_Id);
+        Log.e(TAG,"哈哈哈哈哈哈"+id);
         if (!Utils.isEmpty(dollName)) {
             dollNameTv.setText(dollName);
         }
-        ctrlDollgoldTv.setText(money+"/次");
+        ctrlDollgoldTv.setText(money + "/次");
+        ctrlDollgoldTv1.setText(money+"/次");//下注金额
         playerNameTv.setText(UserUtils.UserName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
         settings = getSharedPreferences("app_user", 0);// 获取SharedPreference对象
@@ -301,7 +332,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         int counter = userInfos.size();
         if (counter > 0) {
             playerCounterIv.setText(String.format(getString(R.string.player_counter_text), counter));
-            Glide.with(this).load(UserUtils.UserImage).asBitmap().into(playerMainIv);
+            Glide.with(this).load(UserUtils.UserImage).asBitmap().transform(new GlideCircleTransform(this)).into(playerMainIv);
             if (counter == 1) {
                 playerSecondIv.setVisibility(View.INVISIBLE);
             } else {
@@ -312,20 +343,25 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         break;
                     }
                 }
-                 //显示第二个人
+                //显示第二个人
                 playerSecondIv.setVisibility(View.VISIBLE);
             }
         }
+        if (counter>1){
+            ctrlQuizLayout.setEnabled(true);
+        }else {
+            ctrlQuizLayout.setEnabled(false);
+        }
     }
 
-    public void getCtrlUserImage(String phone){
+    public void getCtrlUserImage(String phone) {
         String str = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
         HttpManager.getInstance().getCtrlUserImage(str, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
-                UserUtils.UserImage1= UrlUtils.USERFACEIMAGEURL+appUserBeanResult.getData().getAppUser().getIMAGE_URL();
+                UserUtils.UserImage1 = UrlUtils.USERFACEIMAGEURL + appUserBeanResult.getData().getAppUser().getIMAGE_URL();
                 Glide.with(getApplicationContext()).load(UserUtils.UserImage1)
-                        .asBitmap().into(playerSecondIv);
+                        .asBitmap().transform(new GlideCircleTransform(CtrlActivity.this)).into(playerSecondIv);
             }
 
             @Override
@@ -352,8 +388,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         upFileName = fileName;
     }
 
-    private void updataTime(String time) {
-        HttpManager.getInstance().getRegPlayBack(UserUtils.UserName, time, dollName, new RequestSubscriber<Result<LoginInfo>>() {
+    private void updataTime(String time, String state) {
+
+        HttpManager.getInstance().getRegPlayBack(UserUtils.id, time, UserUtils.UserName, state, dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
 
@@ -393,21 +430,16 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         finish();
     }
 
-    @OnClick({R.id.image_back, R.id.image_service, R.id.recharge_button, R.id.message_button,
-            R.id.startgame_ll, R.id.ctrl_fail_iv})
+    @OnClick({R.id.image_back, R.id.recharge_button,
+            R.id.startgame_ll, R.id.ctrl_fail_iv,R.id.ctrl_quiz_layout, R.id.ctrl_instruction_image, R.id.ctrl_betting_winning, R.id.ctrl_betting_fail,
+            R.id.ctrl_confirm_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
                 finish();
                 break;
-            case R.id.image_service:
-                MyToast.getToast(this, "我是客服").show();
-                break;
             case R.id.recharge_button:
                 getMoney();
-                break;
-            case R.id.message_button:
-                MyToast.getToast(this, "我要发送弹幕了").show();
                 break;
             case R.id.startgame_ll:
                 //开始游戏按钮
@@ -416,7 +448,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                             && (Utils.connectStatus.equals(ConnectResultEvent.CONNECT_SUCCESS))
                             && (isCurrentConnect)) {
                         ctrlCompl.sendCmdCtrl(MoveType.START);
-                        coinTv.setText((Integer.parseInt(UserUtils.UserBalance)-money)+"");
+                        coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
+//                        getPlayNum(UserUtils.UserPhone, String.valueOf(money), UserUtils.UserName, dollName);   //扣款
                     }
                     setVibratorTime(300, -1);
                 } else {
@@ -429,10 +462,35 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 ctrlGifView.setVisibility(View.VISIBLE);
                 ctrlCompl.startLoginPresent(camera_name);
                 break;
+            case R.id.ctrl_quiz_layout:
+                ctrlButtomLayout.setVisibility(View.GONE);
+                ctrlBetingLayout.setVisibility(View.VISIBLE);
+                break;
+            case R.id.ctrl_instruction_image:
+                //说明
+                quizInstrictionDialog=new QuizInstrictionDialog(this,R.style.easy_dialog_style);
+                quizInstrictionDialog.show();
+                break;
+
+            case R.id.ctrl_betting_winning:
+
+                ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
+                //中
+                break;
+            case R.id.ctrl_betting_fail:
+
+                ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
+                //不中
+                break;
+            case R.id.ctrl_confirm_layout:
+                //确认按钮
+//                getBets(UserUtils.UserName,Integer.valueOf(money).intValue(),"1",UserUtils.id,id);
+                break;
             default:
                 break;
         }
     }
+
 
     private void getWorkstation() {
         startgameLl.setVisibility(View.GONE);
@@ -682,23 +740,26 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 return;
             }
             ctrlCompl.stopRecordView(mEZPlayer); //录制完毕
-            getPlayNum(UserUtils.UserPhone, String.valueOf(money));   //扣款
+            getPlayNum(UserUtils.UserPhone, String.valueOf(money), UserUtils.UserName, dollName);   //扣款
             if (number != 0) {
                 //抓到娃娃  上传给后台
                 upFileName = "";
+                state = "1";
             } else {
                 //删除本地视频
+                state = "0";
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         boolean d = Utils.delFile(upFileName);
                         Utils.showLogE(TAG, "没抓住 删除" + upFileName + "视频....." + d);
                         upFileName = "";
+
                     }
                 }, 2000);  //4s后删除 保证录制完毕
             }
-            updataTime(upTime);
-            upTime = "";
+
+
         }
     }
 
@@ -722,13 +783,16 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
     }
 
-    private void getPlayNum(String phone, String number) {
+    private void getPlayNum(String phone, String number, String userName, String dollName) {
         String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
-        HttpManager.getInstance().getUserPlayNum(phones, number, new RequestSubscriber<Result<LoginInfo>>() {
+        HttpManager.getInstance().getUserPlayNum(phones, number, userName, dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> result) {
                 Log.e(TAG, "消费结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
+                UserUtils.id=result.getData().getPlayBack().getID();
+                updataTime(upTime, state);
+                upTime = "";
             }
 
             @Override
@@ -737,4 +801,31 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             }
         });
     }
+
+    //下注接口
+    private void getBets(String userID,Integer wager,String guessKey,Integer playBackId,
+                         String dollID){
+        HttpManager.getInstance().getBets(userID, wager, guessKey, playBackId, dollID, new RequestSubscriber<Result<AppUserBean>>() {
+            @Override
+            public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
+
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+    }
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
 }

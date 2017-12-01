@@ -169,6 +169,7 @@ public class MainActivity extends BaseActivity {
                 UserUtils.UserBalance = loginInfoResult.getData().getAppUser().getBALANCE();
                 //用户头像  11/22 13：25
                 UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + loginInfoResult.getData().getAppUser().getIMAGE_URL();
+                UserUtils.DOLL_ID=loginInfoResult.getData().getAppUser().getDOLL_ID();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
                 if (dollLists.size() != 0) {
                     zwwjFragment.notifyAdapter(dollLists);
@@ -226,6 +227,7 @@ public class MainActivity extends BaseActivity {
                         UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
                         UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
                         UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + result.getData().getAppUser().getIMAGE_URL();
+                        UserUtils.DOLL_ID=result.getData().getAppUser().getDOLL_ID();
                         zwwjFragment.setSessionId(result.getData().getSessionID());
                         if (dollLists.size() == 0) {
                             zwwjFragment.showError();

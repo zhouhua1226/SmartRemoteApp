@@ -75,7 +75,7 @@ public class RecordGameActivty extends BaseActivity {
         //mydollExchangenumTv.setText(videoBackBean.getCONVERSIONGOLD()*(Integer.parseInt(videoBackBean.getCOUNT()))+"");
         mydollNumTv.setText("1");
         mydollExchangenumTv.setText(videoBackBean.getCONVERSIONGOLD()+"");
-        mydollIdTv.setText(videoBackBean.getID());
+        mydollIdTv.setText(videoBackBean.getID()+"");
 
         if (videoBackBean.getPOSTSTATE().equals("0")){
             mydollStateTv.setText("寄存中");

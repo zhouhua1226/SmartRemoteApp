@@ -3,6 +3,7 @@ package com.tencent.tmgp.jjzww.model.http;
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
+import com.tencent.tmgp.jjzww.bean.PlayBackBean;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.Token;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
@@ -12,6 +13,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -92,7 +94,9 @@ public interface SmartService {
     @POST(UrlUtils.USERPLAYURL)
     Observable<Result<LoginInfo>> getUserPlayNum(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.USERPLAYNUM) String gold
+            @Field(UrlUtils.USERPLAYNUM) String gold,
+            @Field(UrlUtils.USERNAME) String userName,
+            @Field(UrlUtils.DOLLNAME) String dollName
     );
 
     //ListRank
@@ -105,9 +109,13 @@ public interface SmartService {
     @FormUrlEncoded
     @POST(UrlUtils.UPLOADURL)
     Observable<Result<LoginInfo>> getRegPlayBack(
-            @Field(UrlUtils.USERNAME) String name,
+            @Field(UrlUtils.ID) int id,
             @Field(UrlUtils.TIME) String time,
+            @Field(UrlUtils.USERNAME) String userName,
+            @Field(UrlUtils.STATE) String state,
             @Field(UrlUtils.DOLLNAME) String dollname
+
+
     );
 
     //获取视频回放列表
@@ -126,4 +134,20 @@ public interface SmartService {
             @Field(UrlUtils.PHONE) String phone
     );
 
+    //下注
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.CTRLUSERIMAGE)
+    Observable<Result<AppUserBean>> getBets(
+            @Field(UrlUtils.USERID) String userID,
+            @Field(UrlUtils.WAGER) Integer wager,
+            @Field(UrlUtils.GUESSKEY) String guessKey,
+            @Field(UrlUtils.PLAYBACK) Integer playBackId,
+            @Field(UrlUtils.DOLLID) String dollID
+    );
+
+        //跑马灯
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @POST(UrlUtils.getUserList)
+    Observable<Result<LoginInfo>> getUserList();
 }

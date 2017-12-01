@@ -13,6 +13,36 @@ public class LoginInfo implements Serializable{
     private List<ZwwRoomBean> dollList;
     private List<VideoBackBean> playback;
     private List<VideoBackBean> dollCount;
+    private BetsBackBean betsBackBean;
+    private PlayBackBean playBack;
+
+    public List<PlayBackBean> getPlayBackBeen() {
+        return playBackBeen;
+    }
+
+    public void setPlayBackBeen(List<PlayBackBean> playBackBeen) {
+        this.playBackBeen = playBackBeen;
+    }
+
+    private List<PlayBackBean> playBackBeen;
+
+    public PlayBackBean getPlayBack() {
+        return playBack;
+    }
+
+    public void setPlayBack(PlayBackBean playBack) {
+        this.playBack = playBack;
+    }
+
+    public BetsBackBean getBetsBackBean() {
+        return betsBackBean;
+    }
+
+    public void setBetsBackBean(BetsBackBean betsBackBean) {
+        this.betsBackBean = betsBackBean;
+    }
+
+
 
     public List<VideoBackBean> getDollCount() {
         return dollCount;

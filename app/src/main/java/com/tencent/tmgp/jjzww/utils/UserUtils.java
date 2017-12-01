@@ -24,6 +24,9 @@ public class UserUtils {
     public static String UserCatchNum="";   //用户累积抓住次数
     public static String UserAddress="";
     public static String DOllGold="";
+    public static String USER_ID="";
+    public static String DOLL_ID="";
+    public static int id;
 
     public static final String RECODE_URL = Environment.getExternalStorageDirectory().getPath()
             + "/SmartRemoteApp/";

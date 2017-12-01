@@ -12,8 +12,6 @@ public class AppUserBean implements Serializable {
 
     private UserBean appUser;
 
-
-
     public UserBean getAppUser() {
         return appUser;
     }

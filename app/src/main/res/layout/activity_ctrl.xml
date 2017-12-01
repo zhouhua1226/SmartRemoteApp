@@ -91,29 +91,34 @@
                     android:layout_width="9dp"
                     android:layout_height="9dp" />
 
-                <com.makeramen.roundedimageview.RoundedImageView
+                <ImageView
                     android:id="@+id/player2_iv"
                     android:layout_width="33dp"
                     android:layout_height="33dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ctrl_default_user_bg"
-                    app:riv_border_color="@color/red"
-                    app:riv_border_width="4dp"
-                    app:riv_oval="true" />
+                    android:src="@drawable/ctrl_default_user_bg" />
+                <!--app:riv_border_color="@color/red"-->
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/main_player_iv"
+                <!--<com.makeramen.roundedimageview.RoundedImageView-->
+                    <!--android:id="@+id/main_player_iv"-->
+                    <!--android:layout_width="33dp"-->
+                    <!--android:layout_height="33dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginEnd="5dp"-->
+                    <!--android:layout_toStartOf="@+id/player2_iv"-->
+                    <!--android:src="@drawable/ctrl_default_user_bg"-->
+                    <!--app:riv_border_width="4dp"-->
+                    <!--app:riv_oval="true" />-->
+                <ImageView
                     android:layout_width="33dp"
                     android:layout_height="33dp"
+                    android:id="@+id/main_player_iv"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="5dp"
                     android:layout_toStartOf="@+id/player2_iv"
-                    android:src="@drawable/ctrl_default_user_bg"
-                    app:riv_border_color="@color/red"
-                    app:riv_border_width="4dp"
-                    app:riv_oval="true" />
+                    android:src="@drawable/ctrl_default_user_bg" />
 
                 <TextView
                     android:text="@string/player_counter_text"
@@ -146,43 +151,50 @@
 
 
     <RelativeLayout
+        android:visibility="visible"
         android:id="@+id/ctrl_buttom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/crtl_bottom_height"
         android:layout_alignParentBottom="true">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:id="@+id/ctrl_quiz_layout"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
-            android:gravity="center">
+            android:background="@drawable/fillingcurrency_dialog"
+            android:gravity="center"
+            >
 
             <ImageView
                 android:id="@+id/money_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/money" />
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/ctrl_betting_image" />
 
             <TextView
-                android:id="@+id/game_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/money_image"
-                android:text="游戏币"
-                android:textColor="#353535"
+                android:text="竞猜"
+                android:layout_marginLeft="7dp"
+                android:gravity="center"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/coin_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/game_tv"
-                android:layout_toRightOf="@+id/money_image"
-                android:text="9999"
-                android:textColor="#fb7299"
-                android:textSize="15sp" />
+
         </RelativeLayout>
+        <ImageView
+            android:id="@+id/ctrl_instruction_image"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/ctrl_betting_instruction"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ctrl_quiz_layout"
+            android:layout_marginLeft="5dp"/>
+
 
         <!--开始按钮-->
         <LinearLayout
@@ -213,27 +225,25 @@
         <!--充值按钮和弹幕发送按钮-->
         <LinearLayout
             android:id="@+id/recharge_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="75dp"
+            android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
-            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:background="@drawable/recordgame"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/recharge_button"
+            <TextView
+                android:id="@+id/coin_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffcad3"
-                android:src="@drawable/recharge" />
+                android:layout_toRightOf="@+id/money_image"
+                android:text="9999"
+                android:layout_gravity="center|left"
+                android:layout_marginLeft="5dp"
+                android:textColor="#fb7299"
+                android:textSize="15sp" />
 
-            <ImageButton
-                android:id="@+id/message_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="#ffcad3"
-                android:src="@drawable/message" />
         </LinearLayout>
 
         <!--下爪子按钮-->
@@ -312,5 +322,124 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/recharge_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffcad3"
+            android:src="@drawable/ctrl_betting_add"
+            android:layout_alignTop="@+id/recharge_ll"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"/>
+
+
     </RelativeLayout>
+
+
+    //投注
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/ctrl_beting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/crtl_bottom_height"
+        android:layout_alignParentBottom="true"
+        >
+
+        <LinearLayout
+            android:id="@+id/ctrl_betting_number_layout"
+            android:layout_width="89dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/ctrl_betting"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/ctrl_betting_number_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="30人"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/ctrl_betting_number_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="30人"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/ctrl_betting_winning"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/ctrl_betting_number_layout"
+            android:background="@drawable/ctrl_betting_item_win"
+            android:text="中"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/ctrl_betting_fail"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ctrl_betting_winning"
+            android:background="@drawable/ctrl_betting_item_win"
+            android:text="不中"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
+        <!--开始按钮-->
+        <LinearLayout
+            android:id="@+id/ctrl_confirm_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/ctrl_betting_determine"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/ctrl_dollgold_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50币/次"
+                android:textColor="#ffe41f"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
 </RelativeLayout>

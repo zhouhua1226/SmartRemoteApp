@@ -18,6 +18,7 @@
     <color name="green">#6dc9b8</color>
     <color name="redx">#ea6387</color>
     <color name="update_dialog_bg">#ffffff</color>
+    <color name="zww_broadcast_text">#ff9700</color>
 
 
 </resources>

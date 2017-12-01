@@ -38,6 +38,7 @@ public class Utils {
     public static final String TAG_ROOM_IN = "TAG_ROOM_IN";
     public static final String TAG_ROOM_OUT = "TAG_ROOM_OUT";
 
+
     public static final String TAG_GATEWAY_SINGLE_CONNECT = "TAG_GATEWAY_SINGLE_CONNECT";
     public static final String TAG_GATEWAY_SINGLE_DISCONNECT = "TAG_GATEWAY_SINGLE_DISCONNECT";
 
@@ -52,6 +53,7 @@ public class Utils {
     public static final String TAG_ROOM_STATUS = "status";
     public static final String TAG_CAMERA_NAME = "camera_name";
     public static final String TAG_DOLL_GOLD="doll_gold";
+    public static final String TAG_DOLL_Id="doll_id";
     public static boolean isExit = false;
 
     public static String token = "";

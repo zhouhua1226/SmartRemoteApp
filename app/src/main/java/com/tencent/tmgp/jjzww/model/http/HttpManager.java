@@ -3,6 +3,7 @@ package com.tencent.tmgp.jjzww.model.http;
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
+import com.tencent.tmgp.jjzww.bean.PlayBackBean;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.Token;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
@@ -118,8 +119,8 @@ public class HttpManager {
     }
 
     //消费   11/21 16：15
-    public void getUserPlayNum(String phone,String money,Subscriber<Result<LoginInfo>> subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getUserPlayNum(phone,money);
+    public void getUserPlayNum(String phone,String money,String userName,String dollName,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getUserPlayNum(phone,money,userName,dollName);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -136,8 +137,8 @@ public class HttpManager {
     }
 
     //视屏上传
-    public void getRegPlayBack(String username,String time,String dollname,Subscriber<Result<LoginInfo>> subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getRegPlayBack(username,time,dollname);
+    public void getRegPlayBack(int id,String time,String username,String state,String dollname,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getRegPlayBack(id,time,username,state,dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -156,6 +157,25 @@ public class HttpManager {
     //获取房间用户头像
     public void getCtrlUserImage(String phone,Subscriber<Result<AppUserBean>> subscriber){
         Observable<Result<AppUserBean>> o= smartService.getCtrlUserImage(phone);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //下注
+    public void getBets(String userID,Integer wager,String guessKey,Integer playBackId,
+                        String dollID,Subscriber<Result<AppUserBean>> subscriber){
+        Observable<Result<AppUserBean>> o= smartService.getBets(userID,wager,guessKey,playBackId,dollID);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public void getUserList(Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getUserList();
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -79,7 +79,7 @@ public class WeChatPayActivity extends BaseActivity {
                 wxPayMoney(UserUtils.UserPhone, moneyzf);
                 break;
             case R.id.wx_play_btn:
-                getPlayNum(UserUtils.UserPhone, moneyzf);
+//                getPlayNum(UserUtils.UserPhone, moneyzf);
                 wxYeTv.setText(UserUtils.UserBalance);
                 break;
         }
@@ -102,23 +102,23 @@ public class WeChatPayActivity extends BaseActivity {
         });
     }
 
-
-    private void getPlayNum(String phone, String number) {
-        String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
-        HttpManager.getInstance().getUserPlayNum(phones, number, new RequestSubscriber<Result<LoginInfo>>() {
-            @Override
-            public void _onSuccess(Result<LoginInfo> result) {
-                Log.e(TAG, "消费结果=" + result.getMsg());
-                UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
-                MyToast.getToast(getApplicationContext(), "消费成功！").show();
-            }
-
-            @Override
-            public void _onError(Throwable e) {
-                MyToast.getToast(getApplicationContext(), "消费失败！").show();
-            }
-        });
-    }
+//
+//    private void getPlayNum(String phone, String number) {
+//        String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
+//        HttpManager.getInstance().getUserPlayNum(phones, number, new RequestSubscriber<Result<LoginInfo>>() {
+//            @Override
+//            public void _onSuccess(Result<LoginInfo> result) {
+//                Log.e(TAG, "消费结果=" + result.getMsg());
+//                UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
+//                MyToast.getToast(getApplicationContext(), "消费成功！").show();
+//            }
+//
+//            @Override
+//            public void _onError(Throwable e) {
+//                MyToast.getToast(getApplicationContext(), "消费失败！").show();
+//            }
+//        });
+//    }
 
 
 }
