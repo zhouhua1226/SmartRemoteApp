@@ -2,8 +2,6 @@ package com.tencent.tmgp.jjzww.activity.ctrl.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -84,8 +82,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     ImageButton imageBack;
     //    @BindView(R.id.image_service)
 //    ImageButton imageService;
-    @BindView(R.id.money_image)
-    ImageView moneyImage;
+//    @BindView(R.id.money_image)
+//    ImageView moneyImage;
     //    @BindView(R.id.game_tv)
 //    TextView gameTv;
     @BindView(R.id.coin_tv)
@@ -150,6 +148,16 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     LinearLayout ctrlConfirmLayout;
     @BindView(R.id.ctrl_beting_layout)
     RelativeLayout ctrlBetingLayout;
+    @BindView(R.id.player_layout)
+    RelativeLayout playerLayout;
+    @BindView(R.id.realplay_rl)
+    RelativeLayout realplayRl;
+    @BindView(R.id.money_image)
+    ImageView moneyImage;
+    @BindView(R.id.ctrl_betting_back_button)
+    Button ctrlBettingBackButton;
+//    @BindView(R.id.ctrl_betting_back_button)
+//    Button ctrlBettingBackButton;
     private SurfaceHolder mRealPlaySh;
     private CtrlCompl ctrlCompl;
     private EZPlayer mEZPlayer = null;
@@ -172,6 +180,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private String state = "";
     private QuizInstrictionDialog quizInstrictionDialog;
     private String dollId;
+    private String zt="";
 
 
     @Override
@@ -225,6 +234,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         ctrlDollgoldTv1.setText(money + "/次");//下注金额
         playerNameTv.setText(UserUtils.UserName);
         setStartMode(getIntent().getBooleanExtra(Utils.TAG_ROOM_STATUS, true));
+        ctrlQuizLayout.setEnabled(false);
 
     }
 
@@ -346,11 +356,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 playerSecondIv.setVisibility(View.VISIBLE);
             }
         }
-        if (counter > 1) {
-            ctrlQuizLayout.setEnabled(true);
-        } else {
-            ctrlQuizLayout.setEnabled(false);
-        }
+
+
     }
 
     public void getCtrlUserImage(String phone) {
@@ -431,7 +438,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     @OnClick({R.id.image_back, R.id.recharge_button,
             R.id.startgame_ll, R.id.ctrl_fail_iv, R.id.ctrl_quiz_layout, R.id.ctrl_instruction_image, R.id.ctrl_betting_winning, R.id.ctrl_betting_fail,
-            R.id.ctrl_confirm_layout})
+            R.id.ctrl_confirm_layout,R.id.ctrl_betting_back_button})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
@@ -448,13 +455,15 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                             && (isCurrentConnect)) {
                         ctrlCompl.sendCmdCtrl(MoveType.START);
                         coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
-                        getCreatPlayList(UserUtils.UserName,dollName);//开始游戏分发场次
+                        getCreatPlayList(UserUtils.UserName, dollName);//开始游戏分发场次
                     }
                     setVibratorTime(300, -1);
                     rechargeButton.setVisibility(View.GONE);
                 } else {
                     MyToast.getToast(getApplicationContext(), "余额不足，请充值！").show();
                 }
+
+
                 Log.e(TAG, "<<px=" + (mRealPlaySv.getHeight() * 16) / 9 + "<<dp=" + Utils.px2dip(getApplicationContext(), (mRealPlaySv.getHeight() * 16) / 9));
                 break;
             case R.id.ctrl_fail_iv:
@@ -476,18 +485,36 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 break;
 
             case R.id.ctrl_betting_winning:
-
-                ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
+                    zt="1";
+                    ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
+                    ctrlBettingFail.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
+//                ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
                 //中
                 break;
             case R.id.ctrl_betting_fail:
+                    zt="0";
+                    ctrlBettingFail.setBackgroundResource(R.drawable.ctrl_betting_item);
+                    ctrlBettingWinning.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
 
-                ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
+//                ctrlBettingWinning.setBackgroundResource(R.drawable.ctrl_betting_item);
                 //不中
                 break;
             case R.id.ctrl_confirm_layout:
                 //下注
-                getBets(UserUtils.USER_ID, Integer.valueOf(money).intValue(), "1", UserUtils.PlayBackId, dollId);
+                if(zt.equals("1")||zt.equals("0")) {
+                    getBets(UserUtils.USER_ID, Integer.valueOf(money).intValue(), zt, UserUtils.PlayBackId, dollId);
+                    ctrlButtomLayout.setVisibility(View.VISIBLE);
+                    ctrlBetingLayout.setVisibility(View.GONE);
+
+                }else {
+                    MyToast.getToast(getApplicationContext(),"请下注！").show();
+                }
+
+                break;
+            case R.id.ctrl_betting_back_button:
+                Log.e(TAG,"ririririiriri");
+                ctrlBetingLayout.setVisibility(View.GONE);
+                ctrlButtomLayout.setVisibility(View.VISIBLE);
 
                 break;
             default:
@@ -787,6 +814,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             return;
         }
         startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
+        if (userInfos.size() > 1) {
+            ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcurrency_dialog);
+            ctrlQuizLayout.setEnabled(true);
+        } else {
+            ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
+            ctrlQuizLayout.setEnabled(false);
+        }
     }
 
     //消费接口
@@ -798,8 +832,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 Log.e(TAG, "消费结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
 
-//                updataTime(upTime, state);
-//                upTime = "";
             }
 
             @Override
@@ -830,7 +862,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         HttpManager.getInstance().getPlayId(dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
-               UserUtils.PlayBackId= loginInfoResult.getData().getPlayBack().getID();//游戏场次id
+                UserUtils.PlayBackId = loginInfoResult.getData().getPlayBack().getID();//游戏场次id
 
 
             }
@@ -842,8 +874,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         });
 
     }
+
     //开始游戏分发场次
-    private void getCreatPlayList(String userName,String dollName){
+    private void getCreatPlayList(String userName, String dollName) {
         HttpManager.getInstance().getCreatPlayList(userName, dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
@@ -865,5 +898,11 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
+//    @OnClick(R.id.ctrl_betting_back_button)
+//    public void onViewClicked() {
+////        getWorkstation();
+//        getStartstation();
+//    }
 
 }

@@ -163,7 +163,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
-            android:background="@drawable/fillingcurrency_dialog"
+            android:background="@drawable/fillingcureency_dialog_gray"
             android:gravity="center"
             >
 
@@ -416,7 +416,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/ctrl_betting_determine"
             android:gravity="center"
@@ -437,6 +437,19 @@
                 android:textColor="#ffe41f"
                 android:textSize="12sp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/ctrl_betting_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="取消"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ctrl_confirm_layout"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fillingcurrency_dialog"/>
+
 
 
     </RelativeLayout>
