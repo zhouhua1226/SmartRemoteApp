@@ -45,8 +45,8 @@ public class ChangNicknameAvtivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        if (!UserUtils.UserName.equals("")){
-            nicknameEt.setText(UserUtils.UserName);
+        if (!UserUtils.NickName.equals("")){
+            nicknameEt.setText(UserUtils.NickName);
         }else {
             nicknameEt.setText(UserUtils.UserPhone);
         }
@@ -100,7 +100,7 @@ public class ChangNicknameAvtivity extends BaseActivity {
         HttpManager.getInstance().getUserName(phones, userName, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> result) {
-                UserUtils.UserName=result.getData().getAppUser().getUSERNAME();
+                UserUtils.NickName=result.getData().getAppUser().getNICKNAME();
                 MyToast.getToast(ChangNicknameAvtivity.this,"修改成功！").show();
                 nicknameEt.setText("");
                 finish();

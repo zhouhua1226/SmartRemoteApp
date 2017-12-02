@@ -153,8 +153,8 @@ public class MyCenterFragment extends BaseFragment {
 
     private void getUserImageAndName() {
         if (!Utils.isEmpty(UserUtils.UserPhone)) {
-            if (!UserUtils.UserName.equals("")) {
-                userName.setText(UserUtils.UserName);
+            if (!UserUtils.NickName.equals("")) {
+                userName.setText(UserUtils.NickName);
             } else {
                 userName.setText(UserUtils.UserPhone);
             }

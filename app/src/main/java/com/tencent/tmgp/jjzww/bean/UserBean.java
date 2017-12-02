@@ -26,6 +26,15 @@ public class UserBean implements Serializable {
     private String CREATETIME;
     private String IMAGE_URL;
     private String BALANCE;
+    private String NICKNAME;
+    public String getNICKNAME() {
+        return NICKNAME;
+    }
+
+    public void setNICKNAME(String NICKNAME) {
+        this.NICKNAME = NICKNAME;
+    }
+
 
     public String getDOLL_ID() {
         return DOLL_ID;

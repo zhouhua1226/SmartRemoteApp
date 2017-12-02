@@ -172,7 +172,8 @@ public class MainActivity extends BaseActivity {
                 UserUtils.UserPhone = loginInfoResult.getData().getAppUser().getPHONE();
                 //UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getPHONE();
                 //用户名  11/22 13：25
-                UserUtils.UserName = loginInfoResult.getData().getAppUser().getUSERNAME();
+//                UserUtils.UserName = loginInfoResult.getData().getAppUser().getUSERNAME();
+                UserUtils.NickName=loginInfoResult.getData().getAppUser().getNICKNAME();
                 //用户余额
                 UserUtils.UserBalance = loginInfoResult.getData().getAppUser().getBALANCE();
                 //用户头像  11/22 13：25
@@ -233,7 +234,8 @@ public class MainActivity extends BaseActivity {
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_LOGIN, true);
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_PHONE, phone);
                         UserUtils.UserPhone = phone;
-                        UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
+//                        UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
+                        UserUtils.NickName=result.getData().getAppUser().getNICKNAME();
                         UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
                         UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + result.getData().getAppUser().getIMAGE_URL();
                         UserUtils.DOLL_ID=result.getData().getAppUser().getDOLL_ID();

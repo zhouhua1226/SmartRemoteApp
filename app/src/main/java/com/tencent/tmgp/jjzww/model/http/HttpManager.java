@@ -101,8 +101,8 @@ public class HttpManager {
 //    }
 
     //修改用户名   11/21 13：15
-    public void getUserName(String phone,String userName,Subscriber<Result<AppUserBean>> subscriber){
-        Observable<Result<AppUserBean>> o= smartService.getUserName(phone,userName);
+    public void getUserName(String phone,String nickName,Subscriber<Result<AppUserBean>> subscriber){
+        Observable<Result<AppUserBean>> o= smartService.getUserName(phone,nickName);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -137,8 +137,8 @@ public class HttpManager {
     }
 
     //视屏上传
-    public void getRegPlayBack(int id,String time,String username,String state,String dollname,Subscriber<Result<LoginInfo>> subscriber){
-        Observable<Result<LoginInfo>> o= smartService.getRegPlayBack(id,time,username,state,dollname);
+    public void getRegPlayBack(int id,String time,String nickname,String state,String dollname,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o= smartService.getRegPlayBack(id,time,nickname,state,dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -192,8 +192,8 @@ public class HttpManager {
     }
 
     //开始游戏创建场次
-    public void  getCreatPlayList(String userName,String dollname,Subscriber<Result<LoginInfo>>subscriber){
-        Observable<Result<LoginInfo>> o =smartService.getCreatPlayList(userName,dollname);
+    public void  getCreatPlayList(String nickName,String dollname,Subscriber<Result<LoginInfo>>subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getCreatPlayList(nickName,dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

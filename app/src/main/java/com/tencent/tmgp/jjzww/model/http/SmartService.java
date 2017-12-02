@@ -67,7 +67,7 @@ public interface SmartService {
     @POST(UrlUtils.UserNickNameURL)
     Observable<Result> getNickName(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.NickName) String nickname
+            @Field(UrlUtils.NICKNANME) String nickname
     );
 
     //修改用户名   11/21 13：15
@@ -76,7 +76,7 @@ public interface SmartService {
     @POST(UrlUtils.USERNAMEURL)
         Observable<Result<AppUserBean>> getUserName(
             @Field(UrlUtils.PHONE) String phone,
-            @Field(UrlUtils.USERNAME) String userName
+            @Field(UrlUtils.NICKNANME) String nickName
     );
 
     //充值   11/22 15：15
@@ -110,7 +110,7 @@ public interface SmartService {
     Observable<Result<LoginInfo>> getRegPlayBack(
             @Field(UrlUtils.ID) int id,
             @Field(UrlUtils.TIME) String time,
-            @Field(UrlUtils.USERNAME) String userName,
+            @Field(UrlUtils.NICKNANME) String nickName,
             @Field(UrlUtils.STATE) String state,
             @Field(UrlUtils.DOLLNAME) String dollname
 
@@ -122,7 +122,7 @@ public interface SmartService {
     @FormUrlEncoded
     @POST(UrlUtils.VIDEOBACKURL)
     Observable<Result<LoginInfo>> getVideoBackList(
-            @Field(UrlUtils.USERNAME) String name
+            @Field(UrlUtils.NICKNANME) String name
     );
 
     //获取房间用户头像
@@ -155,7 +155,7 @@ public interface SmartService {
     @FormUrlEncoded
     @POST(UrlUtils.CREATPLAYLISTURL)
     Observable<Result<LoginInfo>> getCreatPlayList(
-            @Field(UrlUtils.USERNAME) String userName,
+            @Field(UrlUtils.NICKNANME) String nickName,
             @Field(UrlUtils.DOLLNAME) String dollName
     );
 

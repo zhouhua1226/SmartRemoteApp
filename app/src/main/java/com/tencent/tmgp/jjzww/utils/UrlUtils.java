@@ -15,7 +15,7 @@ public class UrlUtils {
     public static final String PHONE = "phone";
     public static final String SMSCODE = "code";
     public static final String FACEIMAGE = "base64Image";
-    public static final String NickName = "nickname";
+    public static final String NICKNANME = "nickName";
     public static final String USERNAME = "userName";
     public static final String USEPAYMONEY = "money";
     public static final String USERPLAYNUM = "gold";
