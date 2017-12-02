@@ -130,7 +130,7 @@ public interface SmartService {
     @FormUrlEncoded
     @POST(UrlUtils.CTRLUSERIMAGE)
     Observable<Result<AppUserBean>> getCtrlUserImage(
-            @Field(UrlUtils.PHONE) String phone
+            @Field(UrlUtils.USERNAME) String phone
     );
 
     //下注

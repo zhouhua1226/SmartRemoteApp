@@ -360,9 +360,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     }
 
-    public void getCtrlUserImage(String phone) {
-        String str = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
-        HttpManager.getInstance().getCtrlUserImage(str, new RequestSubscriber<Result<AppUserBean>>() {
+    public void getCtrlUserImage(String name) {
+        HttpManager.getInstance().getCtrlUserImage(name, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
                 UserUtils.UserImage1 = UrlUtils.USERFACEIMAGEURL + appUserBeanResult.getData().getAppUser().getIMAGE_URL();

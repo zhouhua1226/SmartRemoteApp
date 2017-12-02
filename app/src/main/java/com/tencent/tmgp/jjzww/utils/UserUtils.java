@@ -50,7 +50,7 @@ public class UserUtils {
             public void run() {
                 while (true) {
                     if (NettyUtils.socketTag) {
-                        AppClient.getInstance().doConnect(UserPhone);
+                        AppClient.getInstance().doConnect(UserName);
                         break;
                     }
                     if (Utils.isExit) {
