@@ -658,6 +658,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     Utils.showLogE(TAG, "观看者观察到下爪了......");
                     ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
                     ctrlQuizLayout.setEnabled(false);
+                    ctrlBetingLayout.setVisibility(View.GONE);
+                    ctrlButtomLayout.setVisibility(View.VISIBLE);
+
                 }
             } else {
                 if (moveControlResponse.getReturnCode() != ReturnCode.SUCCESS) {
@@ -846,6 +849,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         HttpManager.getInstance().getBets(userID, wager, guessKey, playBackId, dollID, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
+                coinTv.setText(appUserBeanResult.getData().getAppUser().getBALANCE());
+                UserUtils.UserBalance=appUserBeanResult.getData().getAppUser().getBALANCE();
 
             }
 
