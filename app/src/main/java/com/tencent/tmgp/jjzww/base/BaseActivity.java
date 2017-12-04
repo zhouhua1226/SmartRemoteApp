@@ -19,7 +19,6 @@ public abstract class BaseActivity extends AppCompatActivity{
         setContentView(getLayoutId());
         afterCreate(savedInstanceState);
         PushAgent.getInstance(this).onAppStart();
-
     }
 
     protected abstract int getLayoutId();

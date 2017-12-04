@@ -145,7 +145,6 @@ public class ZWWJFragment extends BaseFragment {
 
     public void setSessionId(String id) {
         this.sessionId = id;
-//        phone = (String) SPUtils.get(getContext(), UserUtils.SP_TAG_PHONE, "");
         UserUtils.setNettyInfo(sessionId, UserUtils.UserName, "");
         UserUtils.doNettyConnect();
     }
@@ -157,7 +156,6 @@ public class ZWWJFragment extends BaseFragment {
                     if ((roomBeens.size() > 0) && (!Utils.isEmpty(sessionId))) {
                         String room_id = roomBeens.get(position).getDOLL_ID();
                         boolean room_status = false;
-//                        UserUtils.setNettyInfo(sessionId, phone, room_id);
                         UserUtils.setNettyInfo(sessionId, UserUtils.NickName, room_id);
                         if (roomBeens.get(position).getDOLL_STATE().equals("0")) {
                             room_status = true;

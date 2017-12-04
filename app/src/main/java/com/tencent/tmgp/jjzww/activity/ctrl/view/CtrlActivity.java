@@ -501,7 +501,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             case R.id.ctrl_betting_back_button:
                 ctrlBetingLayout.setVisibility(View.GONE);
                 ctrlButtomLayout.setVisibility(View.VISIBLE);
-
                 break;
             default:
                 break;
@@ -656,6 +655,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 }
                 if (moveControlResponse.getMoveType().name().equals(MoveType.START.name())) {
                     setStartMode(false);
+                } else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
+                    //TODO 其他用户下爪了 观看者
+                    Utils.showLogE(TAG, "观看者观察到下爪了......");
                 }
             } else {
                 if (moveControlResponse.getReturnCode() != ReturnCode.SUCCESS) {
@@ -666,6 +668,10 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         .equals(MoveType.START.name())) {
                     getWorkstation();
                     ctrlCompl.startRecordVideo(mEZPlayer);
+                }  else if (moveControlResponse.getMoveType().name()
+                        .equals(MoveType.CATCH.name())) {
+                    //TODO 本人点击下爪了 下爪成功
+                    Utils.showLogE(TAG, "本人点击下爪成功......");
                 }
             }
         } else if (response instanceof String) {
@@ -777,13 +783,15 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         upFileName = "";
 
                     }
-                }, 2000);  //4s后删除 保证录制完毕
+                }, 2000);  //2s后删除 保证录制完毕
             }
             updataTime(upTime, state);
             upTime = "";
 
         }
     }
+
+
 
     //初始化振动器   2017/11/18 11:11
     private void setVibrator() {
@@ -895,13 +903,4 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         });
 
     }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
 }

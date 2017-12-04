@@ -66,13 +66,6 @@ public class GameCurrencyActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
     @OnClick(R.id.image_back)
     public void onViewClicked() {
         finish();

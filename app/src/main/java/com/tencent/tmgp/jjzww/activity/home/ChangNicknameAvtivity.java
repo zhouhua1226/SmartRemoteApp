@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * Created by hongxiu on 2017/9/26.
  */
 public class ChangNicknameAvtivity extends BaseActivity {
-    private static final String TAG="ChangNicknameAvtivity-";
+    private static final String TAG = "ChangNicknameAvtivity-";
     @BindView(R.id.back_image_bt)
     ImageButton backImageBt;
     @BindView(R.id.nickname_et)
@@ -45,9 +45,9 @@ public class ChangNicknameAvtivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         initView();
-        if (!UserUtils.NickName.equals("")){
+        if (!UserUtils.NickName.equals("")) {
             nicknameEt.setText(UserUtils.NickName);
-        }else {
+        } else {
             nicknameEt.setText(UserUtils.UserPhone);
         }
 
@@ -58,50 +58,41 @@ public class ChangNicknameAvtivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-    @OnClick({R.id.back_image_bt, R.id.save_bt,R.id.changen_image})
+    @OnClick({R.id.back_image_bt, R.id.save_bt, R.id.changen_image})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_image_bt:
                 finish();
                 break;
             case R.id.save_bt:
-                //Toast.makeText(this,"保存",Toast.LENGTH_SHORT).show();
-                //getNickName("",nicknameEt.getText().toString());
-                String name=nicknameEt.getText().toString();
+                String name = nicknameEt.getText().toString();
                 String ph = UserUtils.UserPhone;
-                Log.e("修改昵称《《《","用户名="+name+"  手机号="+ph);
-                if (Utils.isEmpty(ph)||Utils.isEmpty(name)) {
+                Log.e("修改昵称《《《", "用户名=" + name + "  手机号=" + ph);
+                if (Utils.isEmpty(ph) || Utils.isEmpty(name)) {
                     return;
                 }
-                if(Utils.isSpecialChar(name)) {
-                    MyToast.getToast(getApplicationContext(),"你输入的包含非法字符，请重新输入！").show();
-                }else {
+                if (Utils.isSpecialChar(name)) {
+                    MyToast.getToast(getApplicationContext(), "你输入的包含非法字符，请重新输入！").show();
+                } else {
                     getUserName(ph, name);
                 }
-
                 break;
             case R.id.changen_image:
-                    nicknameEt.setText("");
+                nicknameEt.setText("");
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
-    public void getUserName(String phone,String userName){
+    public void getUserName(String phone, String nickName) {
         String phones = Base64.encodeToString(phone.getBytes(), Base64.DEFAULT);
-        Log.e("修改昵称<<<","手机号加密后="+phones);
-        HttpManager.getInstance().getUserName(phones, userName, new RequestSubscriber<Result<AppUserBean>>() {
+        Log.e("修改昵称<<<", "手机号加密后=" + phones);
+        HttpManager.getInstance().getUserName(phones, nickName, new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> result) {
-                UserUtils.NickName=result.getData().getAppUser().getNICKNAME();
-                MyToast.getToast(ChangNicknameAvtivity.this,"修改成功！").show();
+                UserUtils.NickName = result.getData().getAppUser().getNICKNAME();
+                MyToast.getToast(ChangNicknameAvtivity.this, "修改成功！").show();
                 nicknameEt.setText("");
                 finish();
             }
@@ -112,7 +103,4 @@ public class ChangNicknameAvtivity extends BaseActivity {
             }
         });
     }
-
-
-
 }
