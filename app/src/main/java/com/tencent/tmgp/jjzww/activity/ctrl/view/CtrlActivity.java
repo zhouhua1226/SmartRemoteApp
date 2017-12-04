@@ -597,8 +597,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     case R.id.catch_ll:
                         setVibratorTime(300, -1);
                         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
-//                        MyToast.getToast(this,"点中了！！！！！！").show();
-//                        ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
                         break;
                     default:
                         break;
@@ -658,6 +656,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 } else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
                     //TODO 其他用户下爪了 观看者
                     Utils.showLogE(TAG, "观看者观察到下爪了......");
+                    ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
+                    ctrlQuizLayout.setEnabled(false);
                 }
             } else {
                 if (moveControlResponse.getReturnCode() != ReturnCode.SUCCESS) {
@@ -672,6 +672,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         .equals(MoveType.CATCH.name())) {
                     //TODO 本人点击下爪了 下爪成功
                     Utils.showLogE(TAG, "本人点击下爪成功......");
+                    ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
+                    ctrlQuizLayout.setEnabled(false);
                 }
             }
         } else if (response instanceof String) {
@@ -892,8 +894,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         HttpManager.getInstance().getPond(playId, new RequestSubscriber<Result<PondResponseBean>>() {
             @Override
             public void _onSuccess(Result<PondResponseBean> loginInfoResult) {
-                ctrlBettingNumberOne.setText( loginInfoResult.getData().getPond().getGUESS_Y());
-                ctrlBettingNumberTwo.setText( loginInfoResult.getData().getPond().getGUESS_N());
+                ctrlBettingNumberOne.setText( loginInfoResult.getData().getPond().getGUESS_Y()+"");
+                ctrlBettingNumberTwo.setText( loginInfoResult.getData().getPond().getGUESS_N()+"");
+
             }
 
             @Override

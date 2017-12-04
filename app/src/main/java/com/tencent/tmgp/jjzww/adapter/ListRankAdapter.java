@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.bean.UserBean;
+
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +65,12 @@ public class ListRankAdapter extends RecyclerView.Adapter<ListRankAdapter.ListRa
         }
         Glide.with(mContext).load(picter[position]).into(holder.rank_image);
         holder.rank_number.setText(bean.getDOLLTOTAL());
-        holder.rank_name.setText(bean.getUSERNAME());
+
+        if (bean.getNICKNAME().equals("")){
+            holder.rank_name.setText(bean.getUSERNAME());
+        }else {
+            holder.rank_name.setText(bean.getNICKNAME());
+        }
 
 
     }
