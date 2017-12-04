@@ -11,7 +11,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 22  //后期完善加入6.0
         versionCode 1
-        versionName "1.0.8"
+        versionName "1.1.1"
         multiDexEnabled true
     }
     buildTypes {
