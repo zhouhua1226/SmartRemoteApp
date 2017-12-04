@@ -28,6 +28,7 @@ public class UrlUtils {
     public static final String GUESSKEY = "guessKey";
     public static final String PLAYBACK = "playBackId";
     public static final String DOLLID = "dollId";
+    public static final String PLAYID = "playId";
 
 
     public static final String URL = "http://47.100.15.18:8080";
@@ -89,5 +90,7 @@ public class UrlUtils {
     //开始游戏分发场次
     public static final String CREATPLAYLISTURL = "http://47.100.15.18:8080/pooh-web/pay/creatPlayList";
 
+    //获取下注人数对比
+    public static final String GETPONDURL="http://47.100.15.18:8080/pooh-web/app/getPond";
 
 }

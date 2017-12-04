@@ -29,6 +29,7 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.MoveControlResponse;
 import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
+import com.iot.game.pooh.server.entity.json.app.AppInRoomRequest;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
 import com.iot.game.pooh.server.entity.json.enums.MoveType;
@@ -41,6 +42,7 @@ import com.tencent.tmgp.jjzww.base.BaseActivity;
 import com.tencent.tmgp.jjzww.base.MyApplication;
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
+import com.tencent.tmgp.jjzww.bean.PondResponseBean;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.model.http.HttpManager;
 import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
@@ -258,9 +260,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         super.onDestroy();
         Utils.showLogE(TAG, "onDestroy");
         ctrlCompl.stopRecordView(mEZPlayer);
-//        if (mEZPlayer != null) {
-//            mEZPlayer.release();
-//        }
+        if (mEZPlayer != null) {
+            mEZPlayer.release();
+        }
         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
         ctrlCompl.stopTimeCounter();
         ctrlCompl.sendCmdOutRoom();
@@ -445,9 +447,11 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         ctrlCompl.sendCmdCtrl(MoveType.START);
                         coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
                         getCreatPlayList(UserUtils.NickName, dollName);//开始游戏分发场次
+
                     }
                     setVibratorTime(300, -1);
                     rechargeButton.setVisibility(View.GONE);
+
                 } else {
                     MyToast.getToast(getApplicationContext(), "余额不足，请充值！").show();
                 }
@@ -464,7 +468,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 ctrlButtomLayout.setVisibility(View.GONE);
                 ctrlBetingLayout.setVisibility(View.VISIBLE);
                 getPlayId(dollName);//给围观群众分发id
-
                 break;
             case R.id.ctrl_instruction_image:
                 //说明
@@ -488,6 +491,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 //下注
                 if (zt.equals("1") || zt.equals("0")) {
                     getBets(UserUtils.USER_ID, Integer.valueOf(money).intValue(), zt, UserUtils.PlayBackId, dollId);
+                    coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
                     ctrlButtomLayout.setVisibility(View.VISIBLE);
                     ctrlBetingLayout.setVisibility(View.GONE);
                 } else {
@@ -594,6 +598,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     case R.id.catch_ll:
                         setVibratorTime(300, -1);
                         ctrlCompl.sendCmdCtrl(MoveType.CATCH);
+//                        MyToast.getToast(this,"点中了！！！！！！").show();
+//                        ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
                         break;
                     default:
                         break;
@@ -687,7 +693,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 getUserInfos(userInfos);
             }
         }
-    }
+}
 
     //监控网关区
     @Subscribe(thread = EventThread.MAIN_THREAD, tags = {
@@ -753,6 +759,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             if (Utils.isEmpty(upTime)) {
                 return;
             }
+
             ctrlCompl.stopRecordView(mEZPlayer); //录制完毕
             getPlayNum(UserUtils.UserPhone, String.valueOf(money));   //扣款
             if (number != 0) {
@@ -845,7 +852,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
                 UserUtils.PlayBackId = loginInfoResult.getData().getPlayBack().getID();//游戏场次id
-
+                getPond(UserUtils.PlayBackId);//获取下注人数
 
             }
 
@@ -864,6 +871,22 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
                 UserUtils.id = loginInfoResult.getData().getPlayBack().getID();
             }
+            @Override
+            public void _onError(Throwable e) {
+            }
+        });
+    }
+
+    //获取下注人数
+
+    private void getPond(int playId){
+
+        HttpManager.getInstance().getPond(playId, new RequestSubscriber<Result<PondResponseBean>>() {
+            @Override
+            public void _onSuccess(Result<PondResponseBean> loginInfoResult) {
+                ctrlBettingNumberOne.setText( loginInfoResult.getData().getPond().getGUESS_Y());
+                ctrlBettingNumberTwo.setText( loginInfoResult.getData().getPond().getGUESS_N());
+            }
 
             @Override
             public void _onError(Throwable e) {
@@ -880,11 +903,5 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-
-//    @OnClick(R.id.ctrl_betting_back_button)
-//    public void onViewClicked() {
-////        getWorkstation();
-//        getStartstation();
-//    }
 
 }

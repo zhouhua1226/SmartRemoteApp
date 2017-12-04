@@ -4,6 +4,7 @@ import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PlayBackBean;
+import com.tencent.tmgp.jjzww.bean.PondResponseBean;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.Token;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
@@ -165,6 +166,14 @@ public interface SmartService {
     @POST(UrlUtils.PLAYIDURL)
     Observable<Result<LoginInfo>> getPlayId(
             @Field(UrlUtils.DOLLNAME) String dollName
+    );
+
+    //获取下注人数
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.GETPONDURL)
+    Observable<Result<PondResponseBean>>getPond(
+            @Field(UrlUtils.PLAYID) int playId
     );
 
 }

@@ -84,7 +84,7 @@ public class CtrlModel {
             }
             try {
                 List<EZDeviceInfo> result = null;
-                result = MyApplication.getOpenSDK().getDeviceList(0, 10);
+                result = MyApplication.getOpenSDK().getDeviceList(0, 11);
                 return result;
             } catch (BaseException e) {
                 ErrorInfo errorInfo = (ErrorInfo) e.getObject();

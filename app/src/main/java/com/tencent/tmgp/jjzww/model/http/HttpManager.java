@@ -4,6 +4,7 @@ import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PlayBackBean;
+import com.tencent.tmgp.jjzww.bean.PondResponseBean;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.Token;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
@@ -194,6 +195,15 @@ public class HttpManager {
     //开始游戏创建场次
     public void  getCreatPlayList(String nickName,String dollname,Subscriber<Result<LoginInfo>>subscriber){
         Observable<Result<LoginInfo>> o =smartService.getCreatPlayList(nickName,dollname);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //获取下注人数
+    public void  getPond(int playId,Subscriber<Result<PondResponseBean>>subscriber){
+        Observable<Result<PondResponseBean>> o =smartService.getPond( playId);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
