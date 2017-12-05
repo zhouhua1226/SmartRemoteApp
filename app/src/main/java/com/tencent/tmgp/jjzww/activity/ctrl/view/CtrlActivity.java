@@ -29,7 +29,6 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.MoveControlResponse;
 import com.iot.game.pooh.server.entity.json.announce.GatewayPoohStatusMessage;
-import com.iot.game.pooh.server.entity.json.app.AppInRoomRequest;
 import com.iot.game.pooh.server.entity.json.app.AppInRoomResponse;
 import com.iot.game.pooh.server.entity.json.app.AppOutRoomResponse;
 import com.iot.game.pooh.server.entity.json.enums.MoveType;
@@ -59,10 +58,8 @@ import com.tencent.tmgp.jjzww.view.VibratorView;
 import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZPlayer;
 import com.videogo.openapi.bean.EZCameraInfo;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -677,6 +674,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                     Utils.showLogE(TAG, "本人点击下爪成功......");
                     ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
                     ctrlQuizLayout.setEnabled(false);
+                    ctrlBetingLayout.setVisibility(View.GONE);
+                    ctrlButtomLayout.setVisibility(View.VISIBLE);
                 }
             }
         } else if (response instanceof String) {

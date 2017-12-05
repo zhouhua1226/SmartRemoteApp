@@ -23,19 +23,17 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"/>
 
-        <com.tencent.tmgp.jjzww.view.TextViewAd
+        <com.tencent.tmgp.jjzww.view.MyTextSwitcher
             android:id="@+id/rolling_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="14sp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text=""
             android:layout_gravity="center"
-            android:textColor="@color/white"
             android:background="#efefef"
 
             />
 
+        <!--android:background="#efefef"-->
 
         <!--<RelativeLayout-->
             <!--android:id="@+id/refresh_rl"-->

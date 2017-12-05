@@ -1,40 +1,32 @@
 package com.tencent.tmgp.jjzww.fragment;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.activity.ctrl.view.CtrlActivity;
-import com.tencent.tmgp.jjzww.activity.home.MainActivity;
 import com.tencent.tmgp.jjzww.adapter.ZWWAdapter;
 import com.tencent.tmgp.jjzww.base.BaseFragment;
-import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
-import com.tencent.tmgp.jjzww.bean.PlayBackBean;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.VideoBackBean;
 import com.tencent.tmgp.jjzww.bean.ZwwRoomBean;
 import com.tencent.tmgp.jjzww.model.http.HttpManager;
 import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
-import com.tencent.tmgp.jjzww.utils.SPUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.EmptyLayout;
+import com.tencent.tmgp.jjzww.view.MyTextSwitcher;
 import com.tencent.tmgp.jjzww.view.SpaceItemDecoration;
-import com.tencent.tmgp.jjzww.view.TextViewAd;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
@@ -49,16 +41,16 @@ public class ZWWJFragment extends BaseFragment {
     EmptyLayout zwwEmptylayout;
     Unbinder unbinder;
     @BindView(R.id.rolling_tv)
-    TextViewAd rollingTv;
+    MyTextSwitcher rollingTv;
     Unbinder unbinder1;
 
     private List<ZwwRoomBean> roomBeens = new ArrayList<>();
     private ZWWAdapter zwwAdapter;
     private String sessionId;
-//    private String phone;
+    //    private String phone;
     private EmptyLayout.OnClickReTryListener onClickReTryListener;
-    private List<String> list1=new ArrayList<>();
-    private List<VideoBackBean> playBackBeanList=new ArrayList<>();
+    private List<String> list1 = new ArrayList<>();
+    private List<VideoBackBean> playBackBeanList = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -74,28 +66,26 @@ public class ZWWJFragment extends BaseFragment {
     }
 
     private void initText(List<String> listRun) {
-        if(listRun.size()>0)
-            rollingTv.setFocusable(true);
-        rollingTv.setmTexts(listRun);
-        rollingTv.setFrontColor(getResources().getColor(R.color.zww_broadcast_text));
-        rollingTv.setBackColor(getResources().getColor(R.color.run_text_bg));
-        rollingTv.setmDuration(1000);
-        rollingTv.setmInterval(1000);
+        int size = listRun.size();
+        String[] arr = listRun.toArray(new String[size]);
+        rollingTv.setTextStillTime(3000);
+        rollingTv.setResources(arr);
+
     }
 
-    private void getUserList(){
+    private void getUserList() {
         HttpManager.getInstance().getUserList(new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> listRankBeanResult) {
-                playBackBeanList=listRankBeanResult.getData().getPlayback();
-                Log.e("跑马灯","list0="+playBackBeanList.size()+playBackBeanList.get(0).getDOLLNAME());
-                for(int i=0;i<playBackBeanList.size();i++){
-                    String s="恭喜"+playBackBeanList.get(i).getUSERNAME()+"用户抓中一个"+playBackBeanList.get(i).getDOLLNAME();
-                    Log.e("跑马灯","item="+s);
+                playBackBeanList = listRankBeanResult.getData().getPlayback();
+                for (int i = 0; i < playBackBeanList.size(); i++) {
+                    String s = "恭喜" + playBackBeanList.get(i).getUSERNAME() +
+                            "用户抓中一个" + playBackBeanList.get(i).getDOLLNAME();
                     list1.add(s);
                 }
-                Log.e("跑马灯","list1="+list1.size());
+
                 initText(list1);
+
             }
 
             @Override
@@ -170,13 +160,13 @@ public class ZWWJFragment extends BaseFragment {
                 }
             };
 
-    private void enterNext(String name, String camera, boolean status, String gold,String id) {
+    private void enterNext(String name, String camera, boolean status, String gold, String id) {
         Intent intent = new Intent(getActivity(), CtrlActivity.class);
         intent.putExtra(Utils.TAG_ROOM_NAME, name);
         intent.putExtra(Utils.TAG_CAMERA_NAME, camera);
         intent.putExtra(Utils.TAG_ROOM_STATUS, status);
         intent.putExtra(Utils.TAG_DOLL_GOLD, gold);
-        intent.putExtra(Utils.TAG_DOLL_Id,id);
+        intent.putExtra(Utils.TAG_DOLL_Id, id);
         startActivity(intent);
     }
 

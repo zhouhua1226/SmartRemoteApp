@@ -41,11 +41,13 @@ import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.GetStatusResponse;
 import com.videogo.openapi.EZOpenSDK;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -86,7 +88,7 @@ public class MainActivity extends BaseActivity {
     private long mExitTime;
     private List<ZwwRoomBean> dollLists = new ArrayList<>();
     private String ph;
-    private List<VideoBackBean> playBackBeanList=new ArrayList<>();
+    private List<VideoBackBean> playBackBeanList = new ArrayList<>();
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
 
@@ -101,7 +103,7 @@ public class MainActivity extends BaseActivity {
         initWelcome();
         settings = getSharedPreferences("app_user", 0);// 获取SharedPreference对象
         editor = settings.edit();// 获取编辑对象。
-        editor.putBoolean("isVibrator",true);
+        editor.putBoolean("isVibrator", true);
     }
 
     private void initWelcome() {
@@ -173,13 +175,13 @@ public class MainActivity extends BaseActivity {
                 //UserUtils.UserNickName = loginInfoResult.getData().getAppUser().getPHONE();
                 //用户名  11/22 13：25
                 UserUtils.UserName = loginInfoResult.getData().getAppUser().getUSERNAME();
-                UserUtils.NickName=loginInfoResult.getData().getAppUser().getNICKNAME();
+                UserUtils.NickName = loginInfoResult.getData().getAppUser().getNICKNAME();
                 //用户余额
                 UserUtils.UserBalance = loginInfoResult.getData().getAppUser().getBALANCE();
                 //用户头像  11/22 13：25
                 UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + loginInfoResult.getData().getAppUser().getIMAGE_URL();
-                UserUtils.DOLL_ID=loginInfoResult.getData().getAppUser().getDOLL_ID();
-                UserUtils.USER_ID=loginInfoResult.getData().getAppUser().getUSER_ID();
+                UserUtils.DOLL_ID = loginInfoResult.getData().getAppUser().getDOLL_ID();
+                UserUtils.USER_ID = loginInfoResult.getData().getAppUser().getUSER_ID();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
                 if (dollLists.size() != 0) {
                     zwwjFragment.notifyAdapter(dollLists);
@@ -235,11 +237,11 @@ public class MainActivity extends BaseActivity {
                         SPUtils.put(getApplicationContext(), UserUtils.SP_TAG_PHONE, phone);
                         UserUtils.UserPhone = phone;
                         UserUtils.UserName = result.getData().getAppUser().getUSERNAME();
-                        UserUtils.NickName=result.getData().getAppUser().getNICKNAME();
+                        UserUtils.NickName = result.getData().getAppUser().getNICKNAME();
                         UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
                         UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + result.getData().getAppUser().getIMAGE_URL();
-                        UserUtils.DOLL_ID=result.getData().getAppUser().getDOLL_ID();
-                        UserUtils.USER_ID=result.getData().getAppUser().getUSER_ID();
+                        UserUtils.DOLL_ID = result.getData().getAppUser().getDOLL_ID();
+                        UserUtils.USER_ID = result.getData().getAppUser().getUSER_ID();
                         zwwjFragment.setSessionId(result.getData().getSessionID());
                         if (dollLists.size() == 0) {
                             zwwjFragment.showError();
@@ -442,7 +444,7 @@ public class MainActivity extends BaseActivity {
                     for (int j = 0; j < dollLists.size(); j++) {
                         ZwwRoomBean bean = dollLists.get(j);
                         if (bean.getDOLL_ID().equals(address)) {
-                            if(!poohType.equals(Utils.OK)) {
+                            if (!poohType.equals(Utils.OK)) {
                                 //设备异常了
                                 bean.setDOLL_STATE("0");
                             } else {
@@ -501,7 +503,6 @@ public class MainActivity extends BaseActivity {
             NettyUtils.sendGetDeviceStatesCmd();
         }
     }
-
 
 
 }
