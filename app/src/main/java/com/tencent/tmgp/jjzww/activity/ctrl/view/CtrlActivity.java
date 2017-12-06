@@ -58,10 +58,8 @@ import com.tencent.tmgp.jjzww.view.VibratorView;
 import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZPlayer;
 import com.videogo.openapi.bean.EZCameraInfo;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -338,6 +336,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             if (counter == 1) {
                 playerSecondIv.setVisibility(View.INVISIBLE);
             } else {
+                //先显示默认图片
+                Glide.with(getApplicationContext()).load(R.drawable.ctrl_default_user_bg)
+                        .asBitmap().transform(new GlideCircleTransform(CtrlActivity.this)).into(playerSecondIv);
                 //显示另外一个人
                 for (int i = 0; i < counter; i++) {
                     if (!userInfos.get(i).equals(UserUtils.NickName)) {
@@ -489,16 +490,10 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             case R.id.ctrl_confirm_layout:
                 //下注
                 if (zt.equals("1") || zt.equals("0")) {
-                    if (Integer.parseInt(UserUtils.UserBalance) >= money) {
-                        getBets(UserUtils.USER_ID, Integer.valueOf(money).intValue(), zt, UserUtils.PlayBackId, dollId);
-                        coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
-                        ctrlButtomLayout.setVisibility(View.VISIBLE);
-                        ctrlBetingLayout.setVisibility(View.GONE);
-                    } else {
-                        MyToast.getToast(this, "余额不足，请充值！").show();
-
-                    }
-
+                    getBets(UserUtils.USER_ID, Integer.valueOf(money).intValue(), zt, UserUtils.PlayBackId, dollId);
+                    coinTv.setText((Integer.parseInt(UserUtils.UserBalance) - money) + "");
+                    ctrlButtomLayout.setVisibility(View.VISIBLE);
+                    ctrlBetingLayout.setVisibility(View.GONE);
                 } else {
                     MyToast.getToast(getApplicationContext(), "请下注！").show();
                 }
@@ -676,7 +671,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         .equals(MoveType.START.name())) {
                     getWorkstation();
                     ctrlCompl.startRecordVideo(mEZPlayer);
-                } else if (moveControlResponse.getMoveType().name()
+                }  else if (moveControlResponse.getMoveType().name()
                         .equals(MoveType.CATCH.name())) {
                     //TODO 本人点击下爪了 下爪成功
                     Utils.showLogE(TAG, "本人点击下爪成功......");
@@ -711,7 +706,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 getUserInfos(userInfos);
             }
         }
-    }
+}
 
     //监控网关区
     @Subscribe(thread = EventThread.MAIN_THREAD, tags = {
@@ -777,7 +772,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             if (Utils.isEmpty(upTime)) {
                 return;
             }
-
             ctrlCompl.stopRecordView(mEZPlayer); //录制完毕
             getPlayNum(UserUtils.UserPhone, String.valueOf(money));   //扣款
             if (number != 0) {
@@ -802,6 +796,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
         }
     }
+
 
 
     //初始化振动器   2017/11/18 11:11
@@ -839,7 +834,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             public void _onSuccess(Result<LoginInfo> result) {
                 Log.e(TAG, "消费结果=" + result.getMsg());
                 UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
-
             }
 
             @Override
@@ -856,8 +850,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
                 coinTv.setText(appUserBeanResult.getData().getAppUser().getBALANCE());
-                UserUtils.UserBalance = appUserBeanResult.getData().getAppUser().getBALANCE();
-
+                UserUtils.UserBalance=appUserBeanResult.getData().getAppUser().getBALANCE();
             }
 
             @Override
@@ -892,7 +885,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
                 UserUtils.id = loginInfoResult.getData().getPlayBack().getID();
             }
-
             @Override
             public void _onError(Throwable e) {
             }
@@ -901,13 +893,13 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     //获取下注人数
 
-    private void getPond(int playId) {
+    private void getPond(int playId){
 
         HttpManager.getInstance().getPond(playId, new RequestSubscriber<Result<PondResponseBean>>() {
             @Override
             public void _onSuccess(Result<PondResponseBean> loginInfoResult) {
-                ctrlBettingNumberOne.setText(loginInfoResult.getData().getPond().getGUESS_Y() + "");
-                ctrlBettingNumberTwo.setText(loginInfoResult.getData().getPond().getGUESS_N() + "");
+                ctrlBettingNumberOne.setText( loginInfoResult.getData().getPond().getGUESS_Y()+"");
+                ctrlBettingNumberTwo.setText( loginInfoResult.getData().getPond().getGUESS_N()+"");
 
             }
 
