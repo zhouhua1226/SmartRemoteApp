@@ -170,15 +170,11 @@ public class ZWWJFragment extends BaseFragment {
         startActivity(intent);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getUserList();
-    }
 
     @Override
     public void onResume() {
         super.onResume();
+        getUserList();
     }
 
 
