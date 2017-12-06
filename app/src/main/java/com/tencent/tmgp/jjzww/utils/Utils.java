@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
 import com.gatz.netty.global.ConnectResultEvent;
+import com.tencent.tmgp.jjzww.bean.ConsigneeBean;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -217,5 +218,25 @@ public class Utils {
         }
         return version;
     }
+
+    /**
+     * 收发货信息拆分
+     * 2017/12/05 11：11
+     */
+    public static ConsigneeBean getConsigneeBean(String s){
+        ConsigneeBean consigneeBean=new ConsigneeBean();
+        String ss[]=s.split(",");
+        if(ss.length<5){
+            consigneeBean.setName(ss[0]);
+            consigneeBean.setPhone(ss[1]);
+            consigneeBean.setAddress(ss[2]);
+            consigneeBean.setRemark("");
+            if(ss.length>3){
+                consigneeBean.setRemark(ss[3]);
+            }
+        }
+        return consigneeBean;
+    }
+
 
 }

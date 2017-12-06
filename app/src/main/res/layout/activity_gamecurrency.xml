@@ -58,7 +58,19 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/gc_none_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="暂无兑换记录！"
+        android:textColor="@color/gray"
+        android:paddingTop="30dp"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        />
 
 
 </LinearLayout>

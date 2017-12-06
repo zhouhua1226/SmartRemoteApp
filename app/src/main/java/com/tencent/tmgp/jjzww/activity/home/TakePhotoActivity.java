@@ -18,6 +18,7 @@ import com.tencent.tmgp.jjzww.utils.UrlUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.jph.takephoto.model.CropOptions;
+import com.tencent.tmgp.jjzww.view.MyToast;
 
 
 import java.io.File;
@@ -93,6 +94,8 @@ public class TakePhotoActivity extends com.jph.takephoto.app.TakePhotoActivity i
             public void _onSuccess(Result<AppUserBean> result) {
                 Utils.showLogE(TAG,result.getMsg());
                 UserUtils.UserImage= UrlUtils.USERFACEIMAGEURL+result.getData().getAppUser().getIMAGE_URL();
+                MyToast.getToast(getApplicationContext(),"修改成功！").show();
+                finish();
             }
 
             @Override

@@ -58,6 +58,7 @@ public class InformationActivity extends BaseActivity {
                 break;
             case R.id.image_rl:
                 startActivity(new Intent(this,TakePhotoActivity.class));
+                finish();
                 break;
             case R.id.name_rl:
                 startActivity(new Intent(this,ChangNicknameAvtivity.class));

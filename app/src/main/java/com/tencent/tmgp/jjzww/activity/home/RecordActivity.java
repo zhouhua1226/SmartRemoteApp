@@ -60,11 +60,7 @@ public class RecordActivity extends BaseActivity {
     }
 
     private void initdata() {
-        if (Utils.isEmpty(UserUtils.UserName)) {
-            userName = UserUtils.UserPhone;
-        } else {
-            userName = UserUtils.UserName;
-        }
+        userName = UserUtils.NickName;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recodeRecyclerview.setLayoutManager(linearLayoutManager);
         recodeRecyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));

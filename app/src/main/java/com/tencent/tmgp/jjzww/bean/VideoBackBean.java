@@ -20,6 +20,15 @@ public class VideoBackBean implements Serializable{
     private int CONVERSIONGOLD;
     private String POSTSTATE;
     private String COUNT;
+    private String SENDGOODS;
+
+    public String getSENDGOODS() {
+        return SENDGOODS;
+    }
+
+    public void setSENDGOODS(String SENDGOODS) {
+        this.SENDGOODS = SENDGOODS;
+    }
 
     public String getCOUNT() {
         return COUNT;

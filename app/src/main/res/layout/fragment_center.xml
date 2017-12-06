@@ -53,7 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
-                    android:scrollbars="none"/>
+                    android:scrollbars="none"
+                    />
 
 
             <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
@@ -140,7 +141,7 @@
                 android:layout_marginTop="200dp"
                 android:paddingTop="30dp"
                 android:gravity="center_horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 />
 
 

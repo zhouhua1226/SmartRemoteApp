@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tencent.tmgp.jjzww.R;
+import com.tencent.tmgp.jjzww.bean.ExChangeMoneyBean;
+import com.tencent.tmgp.jjzww.bean.LoginInfo;
+import com.tencent.tmgp.jjzww.bean.Result;
+import com.tencent.tmgp.jjzww.bean.VideoBackBean;
+import com.tencent.tmgp.jjzww.model.http.HttpManager;
+import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
 
 import java.util.List;
 
@@ -17,10 +23,10 @@ import java.util.List;
 public class GameCurrencyAdapter extends RecyclerView.Adapter<GameCurrencyAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<String>mDatas;
+    private List<ExChangeMoneyBean>mDatas;
     private LayoutInflater mInflater;
 
-    public GameCurrencyAdapter(Context context, List<String>datas){
+    public GameCurrencyAdapter(Context context, List<ExChangeMoneyBean>datas){
         this.mContext=context;
         this.mDatas=datas;
         mInflater=LayoutInflater.from(context);
@@ -37,9 +43,9 @@ public class GameCurrencyAdapter extends RecyclerView.Adapter<GameCurrencyAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.title_tv.setText("可爱熊兑换游戏币");
-        holder.value_tv.setText("+50");
-        holder.times_tv.setText("2017/10/17 14:31");
+        holder.title_tv.setText(mDatas.get(position).getDOLLNAME());
+        holder.value_tv.setText("+"+mDatas.get(position).getCONMONEY());
+        holder.times_tv.setText(mDatas.get(position).getCREATETIME());
 
     }
 
@@ -61,6 +67,15 @@ public class GameCurrencyAdapter extends RecyclerView.Adapter<GameCurrencyAdapte
         }
 
     }
+
+    public void notify(List<ExChangeMoneyBean> lists) {
+        this.mDatas = lists;
+        notifyDataSetChanged();
+    }
+
+
+
+
 }
 
 

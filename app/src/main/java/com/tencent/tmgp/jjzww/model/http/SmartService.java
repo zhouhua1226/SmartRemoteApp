@@ -1,6 +1,7 @@
 package com.tencent.tmgp.jjzww.model.http;
 
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
+import com.tencent.tmgp.jjzww.bean.ConsigneeBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PlayBackBean;
@@ -175,5 +176,48 @@ public interface SmartService {
     Observable<Result<PondResponseBean>>getPond(
             @Field(UrlUtils.PLAYID) int playId
     );
+
+    //收货人信息
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.CONSIGNEEURL)
+    Observable<Result<LoginInfo>>getConsignee(
+            @Field(UrlUtils.CONSIGNEENAME) String name,
+            @Field(UrlUtils.CONSIGNEEPHONE) String phone,
+            @Field(UrlUtils.CONSIGNEEADDRESS) String address,
+            @Field(UrlUtils.CONSIGNEEUSERID) String userID
+    );
+
+    //发货
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.SENDGOODSURL)
+    Observable<Result<LoginInfo>>getSendGoods(
+            @Field(UrlUtils.SENDGOODSID) String id,
+            @Field(UrlUtils.SENDGOODSNUM) String number,
+            @Field(UrlUtils.SENDGOODSSHXX) String consignee,
+            @Field(UrlUtils.SENDGOODSREMARK) String remark,
+            @Field(UrlUtils.SENDGOODSUSERID) String userID
+    );
+
+    //兑换游戏币
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.EXCHANGEURL)
+    Observable<Result<LoginInfo>>getExchangeWWB(
+            @Field(UrlUtils.SENDGOODSID) String id,
+            @Field(UrlUtils.DOLLNAME) String dollName,
+            @Field(UrlUtils.SENDGOODSNUM) String number,
+            @Field(UrlUtils.USERID) String userID
+    );
+
+    //兑换记录列表
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlUtils.EXCHANGELISTURL)
+    Observable<Result<LoginInfo>>getExchangeList(
+            @Field(UrlUtils.USERID) String userID
+    );
+
 
 }

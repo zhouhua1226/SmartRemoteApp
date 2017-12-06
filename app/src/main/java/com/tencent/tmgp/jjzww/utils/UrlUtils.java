@@ -29,7 +29,17 @@ public class UrlUtils {
     public static final String PLAYBACK = "playBackId";
     public static final String DOLLID = "dollId";
     public static final String PLAYID = "playId";
-
+    //设置收货人信息接口字段
+    public static final String CONSIGNEENAME="name";
+    public static final String CONSIGNEEPHONE="phone";
+    public static final String CONSIGNEEADDRESS="address";
+    public static final String CONSIGNEEUSERID="userId";
+    //设置发货接口字段
+    public static final String SENDGOODSID="id";
+    public static final String SENDGOODSNUM="number";
+    public static final String SENDGOODSSHXX="consignee";
+    public static final String SENDGOODSREMARK="remark";
+    public static final String SENDGOODSUSERID="userId";
 
     public static final String URL = "http://47.100.15.18:8080";
 //    public static final String URL="http://106.75.142.42:8080/";
@@ -92,5 +102,17 @@ public class UrlUtils {
 
     //获取下注人数对比
     public static final String GETPONDURL="http://47.100.15.18:8080/pooh-web/app/getPond";
+
+    //发货接口
+    public static final String SENDGOODSURL=URL+"/pooh-web/app/sendGoods";
+
+    //收货人信息设置
+    public static final String CONSIGNEEURL=URL+"/pooh-web/app/cnsignee";
+
+    //兑换接口
+    public static final String EXCHANGEURL=URL+"/pooh-web/app/conversionGoods";
+
+    //兑换列表接口
+    public static final String EXCHANGELISTURL=URL+"/pooh-web/app/getConList";
 
 }

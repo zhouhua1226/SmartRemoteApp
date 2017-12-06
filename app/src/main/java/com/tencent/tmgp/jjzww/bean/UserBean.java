@@ -27,6 +27,34 @@ public class UserBean implements Serializable {
     private String IMAGE_URL;
     private String BALANCE;
     private String NICKNAME;
+    private String CNEE_NAME;
+    private String CNEE_PHONE;
+    private String CNEE_ADDRESS;
+
+    public String getCNEE_NAME() {
+        return CNEE_NAME;
+    }
+
+    public void setCNEE_NAME(String CNEE_NAME) {
+        this.CNEE_NAME = CNEE_NAME;
+    }
+
+    public String getCNEE_PHONE() {
+        return CNEE_PHONE;
+    }
+
+    public void setCNEE_PHONE(String CNEE_PHONE) {
+        this.CNEE_PHONE = CNEE_PHONE;
+    }
+
+    public String getCNEE_ADDRESS() {
+        return CNEE_ADDRESS;
+    }
+
+    public void setCNEE_ADDRESS(String CNEE_ADDRESS) {
+        this.CNEE_ADDRESS = CNEE_ADDRESS;
+    }
+
     public String getNICKNAME() {
         return NICKNAME;
     }

@@ -103,7 +103,8 @@ public class MainActivity extends BaseActivity {
         initWelcome();
         settings = getSharedPreferences("app_user", 0);// 获取SharedPreference对象
         editor = settings.edit();// 获取编辑对象。
-        editor.putBoolean("isVibrator", true);
+        editor.putBoolean("isVibrator",true);
+        editor.commit();
     }
 
     private void initWelcome() {
@@ -182,6 +183,9 @@ public class MainActivity extends BaseActivity {
                 UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + loginInfoResult.getData().getAppUser().getIMAGE_URL();
                 UserUtils.DOLL_ID = loginInfoResult.getData().getAppUser().getDOLL_ID();
                 UserUtils.USER_ID = loginInfoResult.getData().getAppUser().getUSER_ID();
+                UserUtils.UserAddress=loginInfoResult.getData().getAppUser().getCNEE_NAME()+" "+
+                                      loginInfoResult.getData().getAppUser().getCNEE_PHONE()+" "+
+                                      loginInfoResult.getData().getAppUser().getCNEE_ADDRESS();
                 zwwjFragment.setSessionId(loginInfoResult.getData().getSessionID());
                 if (dollLists.size() != 0) {
                     zwwjFragment.notifyAdapter(dollLists);
@@ -240,8 +244,11 @@ public class MainActivity extends BaseActivity {
                         UserUtils.NickName = result.getData().getAppUser().getNICKNAME();
                         UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
                         UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + result.getData().getAppUser().getIMAGE_URL();
-                        UserUtils.DOLL_ID = result.getData().getAppUser().getDOLL_ID();
-                        UserUtils.USER_ID = result.getData().getAppUser().getUSER_ID();
+                        UserUtils.DOLL_ID=result.getData().getAppUser().getDOLL_ID();
+                        UserUtils.USER_ID=result.getData().getAppUser().getUSER_ID();
+                        UserUtils.UserAddress=result.getData().getAppUser().getCNEE_NAME()+" "+
+                                              result.getData().getAppUser().getCNEE_PHONE()+" "+
+                                              result.getData().getAppUser().getCNEE_ADDRESS();
                         zwwjFragment.setSessionId(result.getData().getSessionID());
                         if (dollLists.size() == 0) {
                             zwwjFragment.showError();

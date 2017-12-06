@@ -1,6 +1,7 @@
 package com.tencent.tmgp.jjzww.model.http;
 
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
+import com.tencent.tmgp.jjzww.bean.ConsigneeBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PlayBackBean;
@@ -204,6 +205,42 @@ public class HttpManager {
     //获取下注人数
     public void  getPond(int playId,Subscriber<Result<PondResponseBean>>subscriber){
         Observable<Result<PondResponseBean>> o =smartService.getPond( playId);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //收货人信息
+    public void getConsignee(String name,String phone,String address,String userID,Subscriber<Result<LoginInfo>>subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getConsignee(name,phone,address,userID);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //发货
+    public void getSendGoods(String id,String number,String consignee,String remark,String userID,Subscriber<Result<LoginInfo>>subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getSendGoods(id,number,consignee,remark,userID);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //兑换游戏币
+    public void getExChangeWWB(String id,String dollName,String number,String userId,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getExchangeWWB(id,dollName,number,userId);
+        o.subscribeOn(Schedulers.newThread())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    //获取兑换记录列表
+    public void getExChangeList(String userId,Subscriber<Result<LoginInfo>> subscriber){
+        Observable<Result<LoginInfo>> o =smartService.getExchangeList(userId);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

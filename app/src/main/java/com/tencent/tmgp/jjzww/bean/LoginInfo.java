@@ -14,7 +14,25 @@ public class LoginInfo implements Serializable{
     private List<VideoBackBean> playback;
     private List<VideoBackBean> dollCount;
     private BetsBackBean betsBackBean;
-    private PlayBackBean playBack;
+    private List<PlayBackBean> playBackBeen;
+    private VideoBackBean playBack;
+    private List<ExChangeMoneyBean> conversionList;
+
+    public List<ExChangeMoneyBean> getConversionList() {
+        return conversionList;
+    }
+
+    public void setConversionList(List<ExChangeMoneyBean> conversionList) {
+        this.conversionList = conversionList;
+    }
+
+    public VideoBackBean getPlayBack() {
+        return playBack;
+    }
+
+    public void setPlayBack(VideoBackBean playBack) {
+        this.playBack = playBack;
+    }
 
     public List<PlayBackBean> getPlayBackBeen() {
         return playBackBeen;
@@ -24,16 +42,6 @@ public class LoginInfo implements Serializable{
         this.playBackBeen = playBackBeen;
     }
 
-    private List<PlayBackBean> playBackBeen;
-
-    public PlayBackBean getPlayBack() {
-        return playBack;
-    }
-
-    public void setPlayBack(PlayBackBean playBack) {
-        this.playBack = playBack;
-    }
-
     public BetsBackBean getBetsBackBean() {
         return betsBackBean;
     }
@@ -41,8 +49,6 @@ public class LoginInfo implements Serializable{
     public void setBetsBackBean(BetsBackBean betsBackBean) {
         this.betsBackBean = betsBackBean;
     }
-
-
 
     public List<VideoBackBean> getDollCount() {
         return dollCount;
