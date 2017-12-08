@@ -40,9 +40,11 @@ import com.tencent.tmgp.jjzww.activity.wechat.WeChatPayActivity;
 import com.tencent.tmgp.jjzww.base.BaseActivity;
 import com.tencent.tmgp.jjzww.base.MyApplication;
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
+import com.tencent.tmgp.jjzww.bean.GetPlayIdBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PondResponseBean;
 import com.tencent.tmgp.jjzww.bean.Result;
+import com.tencent.tmgp.jjzww.bean.StartGameBean;
 import com.tencent.tmgp.jjzww.model.http.HttpManager;
 import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
@@ -386,7 +388,6 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     }
 
     private void updataTime(String time, String state) {
-
         HttpManager.getInstance().getRegPlayBack(UserUtils.id, time, UserUtils.NickName, state, dollName, new RequestSubscriber<Result<LoginInfo>>() {
             @Override
             public void _onSuccess(Result<LoginInfo> loginInfoResult) {
@@ -846,7 +847,8 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     //下注接口
     private void getBets(String userID, Integer wager, String guessKey, Integer playBackId,
                          String dollID) {
-        HttpManager.getInstance().getBets(userID, wager, guessKey, playBackId, dollID, new RequestSubscriber<Result<AppUserBean>>() {
+        HttpManager.getInstance().getBets(userID, wager, guessKey, playBackId, dollID,
+                new RequestSubscriber<Result<AppUserBean>>() {
             @Override
             public void _onSuccess(Result<AppUserBean> appUserBeanResult) {
                 coinTv.setText(appUserBeanResult.getData().getAppUser().getBALANCE());
@@ -862,9 +864,9 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     //围观群众获取游戏场次
     private void getPlayId(String dollName) {
-        HttpManager.getInstance().getPlayId(dollName, new RequestSubscriber<Result<LoginInfo>>() {
+        HttpManager.getInstance().getPlayId(dollName, new RequestSubscriber<Result<GetPlayIdBean>>() {
             @Override
-            public void _onSuccess(Result<LoginInfo> loginInfoResult) {
+            public void _onSuccess(Result<GetPlayIdBean> loginInfoResult) {
                 UserUtils.PlayBackId = loginInfoResult.getData().getPlayBack().getID();//游戏场次id
                 getPond(UserUtils.PlayBackId);//获取下注人数
 
@@ -880,9 +882,10 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
 
     //开始游戏分发场次
     private void getCreatPlayList(String nickName, String dollName) {
-        HttpManager.getInstance().getCreatPlayList(nickName, dollName, new RequestSubscriber<Result<LoginInfo>>() {
+        HttpManager.getInstance().getCreatPlayList(nickName, dollName,
+                new RequestSubscriber<Result<StartGameBean>>() {
             @Override
-            public void _onSuccess(Result<LoginInfo> loginInfoResult) {
+            public void _onSuccess(Result<StartGameBean> loginInfoResult) {
                 UserUtils.id = loginInfoResult.getData().getPlayBack().getID();
             }
             @Override

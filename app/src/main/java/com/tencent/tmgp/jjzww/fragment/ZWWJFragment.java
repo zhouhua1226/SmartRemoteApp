@@ -1,12 +1,10 @@
 package com.tencent.tmgp.jjzww.fragment;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
-
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.activity.ctrl.view.CtrlActivity;
 import com.tencent.tmgp.jjzww.adapter.ZWWAdapter;
@@ -22,10 +20,8 @@ import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.EmptyLayout;
 import com.tencent.tmgp.jjzww.view.MyTextSwitcher;
 import com.tencent.tmgp.jjzww.view.SpaceItemDecoration;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.Unbinder;
 
@@ -68,7 +64,7 @@ public class ZWWJFragment extends BaseFragment {
     private void initText(List<String> listRun) {
         int size = listRun.size();
         String[] arr = listRun.toArray(new String[size]);
-        rollingTv.setTextStillTime(3000);
+        rollingTv.setTextStillTime(4000);
         rollingTv.setResources(arr);
 
     }

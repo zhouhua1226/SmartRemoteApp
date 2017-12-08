@@ -2,11 +2,13 @@ package com.tencent.tmgp.jjzww.model.http;
 
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.ConsigneeBean;
+import com.tencent.tmgp.jjzww.bean.GetPlayIdBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PlayBackBean;
 import com.tencent.tmgp.jjzww.bean.PondResponseBean;
 import com.tencent.tmgp.jjzww.bean.Result;
+import com.tencent.tmgp.jjzww.bean.StartGameBean;
 import com.tencent.tmgp.jjzww.bean.Token;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
 import com.google.gson.Gson;
@@ -185,8 +187,8 @@ public class HttpManager {
     }
 
     //游戏场次
-    public void getPlayId(String dollname,Subscriber<Result<LoginInfo>>subscriber){
-        Observable<Result<LoginInfo>> o =smartService.getPlayId(dollname);
+    public void getPlayId(String dollname,Subscriber<Result<GetPlayIdBean>>subscriber){
+        Observable<Result<GetPlayIdBean>> o =smartService.getPlayId(dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -194,8 +196,8 @@ public class HttpManager {
     }
 
     //开始游戏创建场次
-    public void  getCreatPlayList(String nickName,String dollname,Subscriber<Result<LoginInfo>>subscriber){
-        Observable<Result<LoginInfo>> o =smartService.getCreatPlayList(nickName,dollname);
+    public void  getCreatPlayList(String nickName,String dollname,Subscriber<Result<StartGameBean>>subscriber){
+        Observable<Result<StartGameBean>> o =smartService.getCreatPlayList(nickName,dollname);
         o.subscribeOn(Schedulers.newThread())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

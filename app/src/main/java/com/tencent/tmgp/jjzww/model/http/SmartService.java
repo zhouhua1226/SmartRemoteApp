@@ -2,11 +2,13 @@ package com.tencent.tmgp.jjzww.model.http;
 
 import com.tencent.tmgp.jjzww.bean.AppUserBean;
 import com.tencent.tmgp.jjzww.bean.ConsigneeBean;
+import com.tencent.tmgp.jjzww.bean.GetPlayIdBean;
 import com.tencent.tmgp.jjzww.bean.ListRankBean;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
 import com.tencent.tmgp.jjzww.bean.PlayBackBean;
 import com.tencent.tmgp.jjzww.bean.PondResponseBean;
 import com.tencent.tmgp.jjzww.bean.Result;
+import com.tencent.tmgp.jjzww.bean.StartGameBean;
 import com.tencent.tmgp.jjzww.bean.Token;
 import com.tencent.tmgp.jjzww.utils.UrlUtils;
 
@@ -156,7 +158,7 @@ public interface SmartService {
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST(UrlUtils.CREATPLAYLISTURL)
-    Observable<Result<LoginInfo>> getCreatPlayList(
+    Observable<Result<StartGameBean>> getCreatPlayList(
             @Field(UrlUtils.NICKNANME) String nickName,
             @Field(UrlUtils.DOLLNAME) String dollName
     );
@@ -165,7 +167,7 @@ public interface SmartService {
     @Headers("Content-Type: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST(UrlUtils.PLAYIDURL)
-    Observable<Result<LoginInfo>> getPlayId(
+    Observable<Result<GetPlayIdBean>> getPlayId(
             @Field(UrlUtils.DOLLNAME) String dollName
     );
 
