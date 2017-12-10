@@ -657,7 +657,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                 } else if (moveControlResponse.getMoveType().name().equals(MoveType.CATCH.name())) {
                     //TODO 其他用户下爪了 观看者
                     Utils.showLogE(TAG, "观看者观察到下爪了......");
-                    ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
+//                    ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
                     ctrlQuizLayout.setEnabled(false);
                     ctrlBetingLayout.setVisibility(View.GONE);
                     ctrlButtomLayout.setVisibility(View.VISIBLE);
@@ -676,7 +676,7 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
                         .equals(MoveType.CATCH.name())) {
                     //TODO 本人点击下爪了 下爪成功
                     Utils.showLogE(TAG, "本人点击下爪成功......");
-                    ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
+//                    ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);//点击下抓，竞猜变色
                     ctrlQuizLayout.setEnabled(false);
                     ctrlBetingLayout.setVisibility(View.GONE);
                     ctrlButtomLayout.setVisibility(View.VISIBLE);
@@ -814,15 +814,17 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
     private void setStartMode(boolean isFree) {
         startgameLl.setEnabled(isFree);
         if (isFree) {
-            startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_n);
+//            startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_n);
+            startgameLl.setEnabled(true);
             return;
         }
-        startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
+//        startgameLl.setBackgroundResource(R.drawable.ctrl_startgame_bg_d);
+        startgameLl.setEnabled(false);
         if (userInfos.size() > 1) {
-            ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcurrency_dialog);
+//            ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcurrency_dialog);
             ctrlQuizLayout.setEnabled(true);
         } else {
-            ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
+//            ctrlQuizLayout.setBackgroundResource(R.drawable.fillingcureency_dialog_gray);
             ctrlQuizLayout.setEnabled(false);
         }
     }

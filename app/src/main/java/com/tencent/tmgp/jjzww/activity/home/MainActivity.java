@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,24 +59,24 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.iv_tab_zww)
     ImageView ivTabZww;//娃娃机图标
-    @BindView(R.id.tv_tab_hall)
-    TextView tvTabHall;//娃娃机文字
+//    @BindView(R.id.tv_tab_hall)
+//    TextView tvTabHall;//娃娃机文字
     @BindView(R.id.layout_tab_zww)
-    LinearLayout layoutTabZww;//娃娃机图标布局
+    RelativeLayout layoutTabZww;//娃娃机图标布局
     @BindView(R.id.iv_tab_list)
     ImageView ivTabList;//排行榜图标
-    @BindView(R.id.tv_tab_list)
-    TextView tvTabList;//排行旁文字
+//    @BindView(R.id.tv_tab_list)
+//    TextView tvTabList;//排行旁文字
     @BindView(R.id.layout_tab_list)
     LinearLayout layoutTabList;//排行旁图标布局
     @BindView(R.id.iv_tab_my)
     ImageView ivTabMy;//我的图标
-    @BindView(R.id.tv_tab_my)
-    TextView tvTabMy;//我的文字
+//    @BindView(R.id.tv_tab_my)
+//    TextView tvTabMy;//我的文字
     @BindView(R.id.layout_tab_my)
     LinearLayout layoutTabMy;//我的图标布局
-    @BindView(R.id.lv_main_bottom)
-    LinearLayout lvMainBottom;
+//    @BindView(R.id.lv_main_bottom)
+//    LinearLayout lvMainBottom;
     @BindView(R.id.main_center)
     FrameLayout mainCenter;
 
@@ -280,12 +281,12 @@ public class MainActivity extends BaseActivity {
      * 设置未选中状态
      */
     private void setFocuse() {
-        ivTabZww.setBackgroundResource(R.drawable.zww1);
-        tvTabHall.setTextColor(getResources().getColor(R.color.main_gray));
-        ivTabList.setBackgroundResource(R.drawable.phb);
-        tvTabList.setTextColor(getResources().getColor(R.color.main_gray));
-        ivTabMy.setBackgroundResource(R.drawable.wd);
-        tvTabMy.setTextColor(getResources().getColor(R.color.main_gray));
+//        ivTabZww.setBackgroundResource(R.drawable.zww1);
+//        tvTabHall.setTextColor(getResources().getColor(R.color.main_gray));
+//        ivTabList.setBackgroundResource(R.drawable.phb);
+//        tvTabList.setTextColor(getResources().getColor(R.color.main_gray));
+//        ivTabMy.setBackgroundResource(R.drawable.wd);
+//        tvTabMy.setTextColor(getResources().getColor(R.color.main_gray));
     }
 
     private EmptyLayout.OnClickReTryListener onClickReTryListener = new EmptyLayout.OnClickReTryListener() {
@@ -305,9 +306,9 @@ public class MainActivity extends BaseActivity {
         }
         nowTransaction.replace(R.id.main_center, zwwjFragment);
         nowTransaction.commitAllowingStateLoss();
-        setFocuse();
-        ivTabZww.setBackgroundResource(R.drawable.zww);
-        tvTabHall.setTextColor(getResources().getColor(R.color.pink));
+//        setFocuse();
+//        ivTabZww.setBackgroundResource(R.drawable.zww);
+//        tvTabHall.setTextColor(getResources().getColor(R.color.pink));
     }
 
     private void showRankFg() {
@@ -317,9 +318,9 @@ public class MainActivity extends BaseActivity {
         }
         nowTransaction.replace(R.id.main_center, rankFragment);
         nowTransaction.commitAllowingStateLoss();
-        setFocuse();
-        ivTabList.setBackgroundResource(R.drawable.phb1);
-        tvTabList.setTextColor(getResources().getColor(R.color.pink));
+//        setFocuse();
+//        ivTabList.setBackgroundResource(R.drawable.phb1);
+//        tvTabList.setTextColor(getResources().getColor(R.color.pink));
     }
 
     private void showMyCenterFg() {
@@ -329,9 +330,9 @@ public class MainActivity extends BaseActivity {
         }
         nowTransaction.replace(R.id.main_center, myCenterFragment);
         nowTransaction.commitAllowingStateLoss();
-        setFocuse();
-        ivTabMy.setBackgroundResource(R.drawable.wd1);
-        tvTabMy.setTextColor(getResources().getColor(R.color.pink));
+//        setFocuse();
+//        ivTabMy.setBackgroundResource(R.drawable.wd1);
+//        tvTabMy.setTextColor(getResources().getColor(R.color.pink));
     }
 
     @OnClick({R.id.layout_tab_zww, R.id.layout_tab_list, R.id.layout_tab_my})

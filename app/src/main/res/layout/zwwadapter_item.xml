@@ -38,7 +38,7 @@
         android:layout_marginStart="33dp"
         android:layout_marginTop="14dp"
         android:layout_toEndOf="@+id/moppet_name_tv"
-        android:src="@drawable/money2" />
+        android:src="@drawable/ctrl_money_icon" />
 
     <TextView
         android:id="@+id/moppet_money_tv"
@@ -57,7 +57,6 @@
     <RelativeLayout
         android:layout_width="167dp"
         android:layout_height="24dp"
-        android:layout_above="@+id/line"
         android:background="#09000000">
 
         <ImageView
@@ -66,18 +65,18 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="14dp"
-            android:src="@drawable/red_point" />
+            android:src="@drawable/ctrl_idling_icon" />
 
-        <TextView
-            android:id="@+id/moppet_connect_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="3dp"
-            android:layout_toEndOf="@+id/moppet_connect_iv"
-            android:text="@string/busy_text"
-            android:textColor="@color/redx"
-            android:textSize="12sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/moppet_connect_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginStart="3dp"-->
+            <!--android:layout_toEndOf="@+id/moppet_connect_iv"-->
+            <!--android:text="@string/busy_text"-->
+            <!--android:textColor="@color/redx"-->
+            <!--android:textSize="12sp" />-->
     </RelativeLayout>
 </RelativeLayout>
 

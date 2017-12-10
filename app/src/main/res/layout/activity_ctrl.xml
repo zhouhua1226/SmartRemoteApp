@@ -130,7 +130,30 @@
                     android:id="@+id/player_counter_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ctr_money_bg"
+                    android:layout_alignParentRight="true"
+                    android:text="111q"
+                    android:gravity="center_vertical"
+                    android:padding="7dp"
+                    android:textColor="#fcf005"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/player_counter_tv"
+                    android:drawableLeft="@drawable/ctrl_money_icon"
+                    ></TextView>
+
+
             </RelativeLayout>
+
+
+
+
         </FrameLayout>
 
         <com.tencent.tmgp.jjzww.view.GifView
@@ -163,16 +186,18 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
-            android:background="@drawable/fillingcureency_dialog_gray"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ctrl_bet_button_bg"
             android:gravity="center"
             >
+            <!--android:background="@drawable/fillingcureency_dialog_gray"-->
 
             <ImageView
                 android:id="@+id/money_image"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/ctrl_betting_image" />
+                android:background="@drawable/ctrl_bet_button" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -192,7 +217,7 @@
             android:layout_height="12dp"
             android:background="@drawable/ctrl_betting_instruction"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/ctrl_quiz_layout"
+            android:layout_toLeftOf="@+id/ctrl_quiz_layout"
             android:layout_marginLeft="5dp"/>
 
 
@@ -202,7 +227,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/ctrl_startgame_bg_n"
+            android:background="@drawable/ctrl_startgame_button"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -227,11 +252,12 @@
             android:id="@+id/recharge_ll"
             android:layout_width="75dp"
             android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
+
             android:layout_centerVertical="true"
             android:background="@drawable/recordgame"
             android:orientation="horizontal">
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_marginEnd="15dp"-->
 
             <TextView
                 android:id="@+id/coin_tv"
@@ -329,9 +355,9 @@
             android:layout_height="wrap_content"
             android:background="#ffcad3"
             android:src="@drawable/ctrl_betting_add"
-            android:layout_alignTop="@+id/recharge_ll"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:layout_alignTop="@+id/ctrl_instruction_image"
+            android:layout_toEndOf="@+id/recharge_ll" />
 
 
     </RelativeLayout>
