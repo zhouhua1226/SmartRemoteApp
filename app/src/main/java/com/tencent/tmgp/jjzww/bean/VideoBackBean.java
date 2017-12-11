@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by yincong on 2017/11/25 12:35
  * 修改人：
  * 修改时间：
- * 类描述：
+ * 类描述：游戏记录实体类
  */
 public class VideoBackBean implements Serializable{
 

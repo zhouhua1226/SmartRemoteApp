@@ -50,6 +50,8 @@ public class UrlUtils {
     public static final String LOGIN = "http://47.100.15.18:8080/pooh-web/sms/getSMSCodeLogin";//"http://controller.ngrok.cc/m/sms/getRegSMSCode";
     //login without code
     public static final String LOGINWITHOUTCODE = "http://47.100.15.18:8080/pooh-web/sms/getDoll";
+    //退出登录
+    public static final String LOGOUT=URL+"/pooh-web/app/logout";
     //完整的URL：http://106.75.142.42:8080/pooh-web/uploadFiles/DollImage/A002201710310002.jpg
     public static final String PICTUREURL = "http://47.100.15.18:8080/pooh-web/uploadFiles/DollImage";
 

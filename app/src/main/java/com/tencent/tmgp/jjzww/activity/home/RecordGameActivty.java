@@ -97,7 +97,7 @@ public class RecordGameActivty extends BaseActivity {
         mydollNumTv.setText("1");
         mydollExchangenumTv.setText(videoBackBean.getCONVERSIONGOLD() + "");
         mydollIdTv.setText(videoBackBean.getID() + "");
-        getViewChange();
+        getViewChange(videoBackBean.getPOSTSTATE());
         Glide.with(this)
                 .load(UrlUtils.PICTUREURL + videoBackBean.getDOLL_URL())
                 .dontAnimate()
@@ -125,7 +125,7 @@ public class RecordGameActivty extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.image_back, R.id.image_service, R.id.gamemoney_button, R.id.shipments_button})
+    @OnClick({R.id.image_back, R.id.image_service, R.id.gamemoney_button, R.id.shipments_button,R.id.exchanged_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
@@ -160,17 +160,21 @@ public class RecordGameActivty extends BaseActivity {
                 intent.putExtras(bundle);
                 startActivityForResult(intent,0);
                 break;
+            case R.id.exchanged_tv:
+                startActivity(new Intent(this,GameCurrencyActivity.class));
+                finish();
+                break;
         }
     }
 
-    private void getViewChange(){
+    private void getViewChange(String status){
         //0:寄存   1:发货   2:兑换游戏币
-        if (videoBackBean.getPOSTSTATE().equals("0")) {
+        if (status.equals("0")) {
             mydollStateTv.setText("寄存中");
             nonesendLayout.setVisibility(View.VISIBLE);
             sendLayout.setVisibility(View.GONE);
             exchangedTv.setVisibility(View.GONE);
-        } else if(videoBackBean.getPOSTSTATE().equals("1")){
+        } else if(status.equals("1")){
             mydollStateTv.setText("已发货");
             nonesendLayout.setVisibility(View.GONE);
             sendLayout.setVisibility(View.VISIBLE);
@@ -181,7 +185,7 @@ public class RecordGameActivty extends BaseActivity {
             sendaddressTv.setText("地址："+consigneeBean.getAddress());
             sendremarkTv.setText("备注："+consigneeBean.getRemark());
 
-        } else if(videoBackBean.getPOSTSTATE().equals("2")){
+        } else if(status.equals("2")){
             mydollStateTv.setText("已兑换");
             nonesendLayout.setVisibility(View.GONE);
             sendLayout.setVisibility(View.GONE);
@@ -202,9 +206,8 @@ public class RecordGameActivty extends BaseActivity {
         videoBackBean= (VideoBackBean) data.getExtras().getSerializable("record");
         // 根据返回码的不同，设置参数
         if (requestCode == 0) {
-            getViewChange();
+            //getViewChange(videoBackBean.getPOSTSTATE());
         }
-
 
     }
 

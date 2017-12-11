@@ -41,6 +41,7 @@ import com.hwangjr.rxbus.annotation.Subscribe;
 import com.hwangjr.rxbus.annotation.Tag;
 import com.hwangjr.rxbus.thread.EventThread;
 import com.iot.game.pooh.server.entity.json.GetStatusResponse;
+import com.tencent.tmgp.jjzww.view.MyToast;
 import com.videogo.openapi.EZOpenSDK;
 
 import java.util.ArrayList;
@@ -182,6 +183,7 @@ public class MainActivity extends BaseActivity {
                 UserUtils.UserBalance = loginInfoResult.getData().getAppUser().getBALANCE();
                 //用户头像  11/22 13：25
                 UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + loginInfoResult.getData().getAppUser().getIMAGE_URL();
+                UserUtils.UserCatchNum=loginInfoResult.getData().getAppUser().getDOLLTOTAL();
                 UserUtils.DOLL_ID = loginInfoResult.getData().getAppUser().getDOLL_ID();
                 UserUtils.USER_ID = loginInfoResult.getData().getAppUser().getUSER_ID();
                 UserUtils.UserAddress=loginInfoResult.getData().getAppUser().getCNEE_NAME()+" "+
@@ -234,6 +236,7 @@ public class MainActivity extends BaseActivity {
                 public void _onSuccess(Result<LoginInfo> result) {
                     zwwjFragment.dismissEmptyLayout();
                     if (result.getMsg().equals(Utils.HTTP_OK)) {
+                        loginDialog.dismiss();
                         Utils.showLogE(TAG, "logInWithSMS::::" + result.getMsg());
                         dollLists = result.getData().getDollList();
                         Utils.token = result.getData().getAccessToken();
@@ -245,6 +248,7 @@ public class MainActivity extends BaseActivity {
                         UserUtils.NickName = result.getData().getAppUser().getNICKNAME();
                         UserUtils.UserBalance = result.getData().getAppUser().getBALANCE();
                         UserUtils.UserImage = UrlUtils.USERFACEIMAGEURL + result.getData().getAppUser().getIMAGE_URL();
+                        UserUtils.UserCatchNum=result.getData().getAppUser().getDOLLTOTAL();
                         UserUtils.DOLL_ID=result.getData().getAppUser().getDOLL_ID();
                         UserUtils.USER_ID=result.getData().getAppUser().getUSER_ID();
                         UserUtils.UserAddress=result.getData().getAppUser().getCNEE_NAME()+" "+
@@ -259,6 +263,8 @@ public class MainActivity extends BaseActivity {
                         getDeviceStates();
                         startTimer();
                         Utils.showLogE(TAG, "afterCreate:::::>>>>" + dollLists.size());
+                    }else {
+                        MyToast.getToast(getApplicationContext(),result.getMsg()).show();
                     }
                 }
 

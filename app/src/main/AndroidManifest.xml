@@ -183,6 +183,27 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
+        <activity android:name=".activity.home.BetRecordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+        <!-- ###############    微信回调类    #############  -->
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="standard"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="standard"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <!-- ###############    微信回调类    #############  -->
 
     </application>
 

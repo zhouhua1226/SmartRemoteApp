@@ -606,21 +606,25 @@ public class CtrlActivity extends BaseActivity implements IctrlView,
             case MotionEvent.ACTION_UP:
                 switch (view.getId()) {
                     case R.id.front_image:
+                        if(vibrator!=null)
                         vibrator.cancel();
                         ctrlCompl.sendCmdCtrl(MoveType.STOP);
                         topImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_top_n));
                         break;
                     case R.id.back_image:
+                        if(vibrator!=null)
                         vibrator.cancel();
                         ctrlCompl.sendCmdCtrl(MoveType.STOP);
                         belowImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_below_n));
                         break;
                     case R.id.left_image:
+                        if(vibrator!=null)
                         vibrator.cancel();
                         ctrlCompl.sendCmdCtrl(MoveType.STOP);
                         leftImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_left_n));
                         break;
                     case R.id.right_image:
+                        if(vibrator!=null)
                         vibrator.cancel();
                         ctrlCompl.sendCmdCtrl(MoveType.STOP);
                         rightImage.setImageDrawable(getResources().getDrawable(R.drawable.ctrl_action_down_right_n));

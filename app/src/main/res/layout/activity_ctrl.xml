@@ -252,7 +252,6 @@
             android:id="@+id/recharge_ll"
             android:layout_width="75dp"
             android:layout_height="20dp"
-
             android:layout_centerVertical="true"
             android:background="@drawable/recordgame"
             android:orientation="horizontal">
@@ -354,16 +353,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffcad3"
+            android:layout_centerVertical="true"
             android:src="@drawable/ctrl_betting_add"
             android:layout_marginRight="15dp"
-            android:layout_alignTop="@+id/ctrl_instruction_image"
             android:layout_toEndOf="@+id/recharge_ll" />
 
 
     </RelativeLayout>
 
 
-    //投注
+
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/ctrl_beting_layout"

@@ -5,23 +5,42 @@
     android:background="#ffcad3"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="166.6dp"
-        android:background="@drawable/zww_top_png1" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#efefef"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/apptheme_bg"
+        >
 
         <ImageView
-            android:layout_width="21dp"
-            android:layout_height="21dp"
-            android:background="@drawable/zww_broadcast_image1"
-            android:layout_gravity="center"
-            android:layout_marginLeft="15dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/app_text_logo"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="-10dp"
+            android:background="@drawable/zww_top_png1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#efefef"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:background="@drawable/zww_broadcast_image1"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"/>
 
         <com.tencent.tmgp.jjzww.view.MyTextSwitcher
             android:id="@+id/rolling_tv"
@@ -38,65 +57,10 @@
         <!--android:layout_gravity="center"-->
         <!--android:background="#efefef"-->
 
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/refresh_rl"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
 
-            <!--<ImageView-->
-                <!--android:id="@+id/sx_image"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginStart="65dp"-->
-                <!--android:src="@drawable/sx2" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginStart="11dp"-->
-                <!--android:layout_toEndOf="@+id/sx_image"-->
-                <!--android:text="换一批"-->
-                <!--android:textColor="#353535"-->
-                <!--android:textSize="14sp" />-->
-        <!--</RelativeLayout>-->
-
-        <!--<View-->
-            <!--android:layout_width="0.5dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginBottom="5dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:background="#dcdcdc" />-->
-
-        <!--<RelativeLayout-->
-            <!--android:id="@+id/service_rl"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/sx_image1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginStart="65dp"-->
-                <!--android:src="@drawable/kf2" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginStart="11dp"-->
-                <!--android:layout_toEndOf="@+id/sx_image1"-->
-                <!--android:text="客服"-->
-                <!--android:textColor="#353535"-->
-                <!--android:textSize="14sp" />-->
-        <!--</RelativeLayout>-->
     </LinearLayout>
+
+
 
     <ImageView
         android:layout_width="match_parent"
@@ -118,7 +82,7 @@
 
     </com.tencent.tmgp.jjzww.view.EmptyLayout>
 
-
+    </LinearLayout>
 
 
 </LinearLayout>

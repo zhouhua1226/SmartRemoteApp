@@ -15,12 +15,15 @@ import android.widget.Toast;
 
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.base.BaseActivity;
+import com.tencent.tmgp.jjzww.bean.LoginInfo;
+import com.tencent.tmgp.jjzww.bean.Result;
+import com.tencent.tmgp.jjzww.model.http.HttpManager;
+import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
 import com.tencent.tmgp.jjzww.utils.SPUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.MyToast;
 import com.tencent.tmgp.jjzww.view.SelectLoginDialog;
-import com.tencent.tmgp.jjzww.view.UpdateDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,10 +58,13 @@ public class SettingActivity extends BaseActivity {
     TextView settingUpdateTv;
     @BindView(R.id.setting_update_layout)
     RelativeLayout settingUpdateLayout;
+    @BindView(R.id.betrecord_rl)
+    RelativeLayout betrecordRl;
 
+    private String TAG="SettingActivity";
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
-    private Context context=SettingActivity.this;
+    private Context context = SettingActivity.this;
 
     @Override
     protected int getLayoutId() {
@@ -70,7 +76,7 @@ public class SettingActivity extends BaseActivity {
         initView();
         setIsVibrator();
         try {
-            settingUpdateTv.setText("当前版本："+Utils.getAppCodeOrName(this,1));
+            settingUpdateTv.setText("当前版本：" + Utils.getAppCodeOrName(this, 1));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,9 +95,10 @@ public class SettingActivity extends BaseActivity {
     }
 
     @OnClick({R.id.image_back, R.id.image_kf, R.id.money_rl,
-              R.id.record_rl, R.id.invitation_rl, R.id.feedback_rl,
-              R.id.gywm_rl, R.id.bt_out, R.id.vibrator_control_layout,
-              R.id.vibrator_control_imag,R.id.setting_update_layout})
+            R.id.record_rl, R.id.invitation_rl, R.id.feedback_rl,
+            R.id.gywm_rl, R.id.bt_out, R.id.vibrator_control_layout,
+            R.id.vibrator_control_imag, R.id.setting_update_layout,
+            R.id.betrecord_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_back:
@@ -108,6 +115,10 @@ public class SettingActivity extends BaseActivity {
                 //我的主娃娃记录
                 startActivity(new Intent(this, RecordActivity.class));
                 break;
+            case R.id.betrecord_rl:
+                //我的投注记录
+                startActivity(new Intent(this,BetRecordActivity.class));
+                break;
             case R.id.invitation_rl:
                 //邀请码
                 startActivity(new Intent(this, LnvitationCodeActivity.class));
@@ -121,10 +132,12 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(this, AboutUsActivity.class));
                 break;
             case R.id.bt_out:
-                Toast.makeText(this, "退出登录", Toast.LENGTH_SHORT).show();
-                SPUtils.remove(this, UserUtils.SP_TAG_LOGIN);
+                //getLogout(UserUtils.USER_ID);
+                Toast.makeText(context, "退出登录", Toast.LENGTH_SHORT).show();
+                SPUtils.remove(context, UserUtils.SP_TAG_LOGIN);
                 UserUtils.UserPhone = "";
-                Log.e("<<<<<<<<<<", "退出成功！");
+                UserUtils.USER_ID="";
+                finish();
                 break;
             case R.id.vibrator_control_layout:
             case R.id.vibrator_control_imag:
@@ -134,7 +147,7 @@ public class SettingActivity extends BaseActivity {
                 setBtnText(vibratorControlImag, Utils.isVibrator);
                 break;
             case R.id.setting_update_layout:
-                MyToast.getToast(getApplicationContext(),"当前为最新版!").show();
+//                MyToast.getToast(getApplicationContext(), "当前为最新版!").show();
 //                UpdateDialog updateDialog=new UpdateDialog(this,R.style.easy_dialog_style);
 //                updateDialog.setCancelable(false);
 //                updateDialog.show();
@@ -148,31 +161,31 @@ public class SettingActivity extends BaseActivity {
 //                        }
 //                    }
 //                });
-//                SelectLoginDialog selectLoginDialog=new SelectLoginDialog(this,R.style.easy_dialog_style);
-//                selectLoginDialog.setCancelable(false);
-//                selectLoginDialog.show();
-//                selectLoginDialog.setDialogResultListener(new SelectLoginDialog.DialogResultListener() {
-//                    @Override
-//                    public void getResult(int resultCode) {
-//                        switch (resultCode){
-//                            case 0:
-//                                MyToast.getToast(context,"QQ登录").show();
-//                                break;
-//                            case 1:
-//                                MyToast.getToast(context,"微信登录").show();
-//                                break;
-//                            case 2:
-//                                MyToast.getToast(context,"其它登录").show();
-//                                break;
-//                            case 3:
-//                                MyToast.getToast(context,"游客登录").show();
-//                                break;
-//                            case 4:
-//                                MyToast.getToast(context,"取消登录").show();
-//                                break;
-//                        }
-//                    }
-//                });
+                SelectLoginDialog selectLoginDialog=new SelectLoginDialog(this,R.style.easy_dialog_style);
+                selectLoginDialog.setCancelable(false);
+                selectLoginDialog.show();
+                selectLoginDialog.setDialogResultListener(new SelectLoginDialog.DialogResultListener() {
+                    @Override
+                    public void getResult(int resultCode) {
+                        switch (resultCode){
+                            case 0:
+                                MyToast.getToast(context,"QQ登录").show();
+                                break;
+                            case 1:
+                                MyToast.getToast(context,"微信登录").show();
+                                break;
+                            case 2:
+                                MyToast.getToast(context,"其它登录").show();
+                                break;
+                            case 3:
+                                MyToast.getToast(context,"游客登录").show();
+                                break;
+                            case 4:
+                                MyToast.getToast(context,"取消登录").show();
+                                break;
+                        }
+                    }
+                });
 
                 break;
 
@@ -198,5 +211,25 @@ public class SettingActivity extends BaseActivity {
         else
             btn.setSelected(false);
     }
+
+    private void getLogout(String userId){
+        HttpManager.getInstance().getLogout(userId, new RequestSubscriber<Result<LoginInfo>>() {
+            @Override
+            public void _onSuccess(Result<LoginInfo> loginInfoResult) {
+                Log.e(TAG,"退出登录结果="+loginInfoResult.getMsg());
+                if(loginInfoResult.getMsg().equals("success")) {
+                    Toast.makeText(context, "退出登录", Toast.LENGTH_SHORT).show();
+                    SPUtils.remove(context, UserUtils.SP_TAG_LOGIN);
+                    UserUtils.UserPhone = "";
+                }
+            }
+
+            @Override
+            public void _onError(Throwable e) {
+
+            }
+        });
+    }
+
 
 }

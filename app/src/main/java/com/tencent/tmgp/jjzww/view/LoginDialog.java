@@ -104,7 +104,7 @@ public class LoginDialog extends Dialog implements View.OnClickListener {
                         return;
                     }
                 }
-                this.dismiss();
+                //this.dismiss();
                 break;
         }
     }

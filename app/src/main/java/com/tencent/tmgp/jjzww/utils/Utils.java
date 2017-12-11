@@ -230,7 +230,7 @@ public class Utils {
             consigneeBean.setName(ss[0]);
             consigneeBean.setPhone(ss[1]);
             consigneeBean.setAddress(ss[2]);
-            consigneeBean.setRemark("");
+            consigneeBean.setRemark("暂无");
             if(ss.length>3){
                 consigneeBean.setRemark(ss[3]);
             }

@@ -353,11 +353,11 @@
         android:id="@+id/exchanged_tv"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="已兑换游戏币！"
+        android:text="点击查看"
         android:gravity="center"
         android:textSize="15sp"
         android:background="@color/white"
-        android:textColor="@color/gray"
+        android:textColor="@color/pink"
         android:visibility="gone"
         />
 

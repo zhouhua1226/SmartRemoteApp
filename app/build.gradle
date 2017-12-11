@@ -10,8 +10,8 @@ android {
         applicationId "com.tencent.tmgp.jjzww"
         minSdkVersion 17
         targetSdkVersion 22  //后期完善加入6.0
-        versionCode 2
-        versionName "1.1.2"
+        versionCode 3
+        versionName "1.1.3"
         multiDexEnabled true
     }
     buildTypes {
@@ -70,4 +70,5 @@ dependencies {
     compile project(':PushSDK')
     compile 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
     compile 'com.makeramen:roundedimageview:2.2.1'
+    compile project(':polygonimageview')
 }
