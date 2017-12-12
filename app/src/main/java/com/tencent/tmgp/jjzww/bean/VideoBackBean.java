@@ -22,6 +22,16 @@ public class VideoBackBean implements Serializable{
     private String COUNT;
     private String SENDGOODS;
 
+    public String getIMAGE_URL() {
+        return IMAGE_URL;
+    }
+
+    public void setIMAGE_URL(String IMAGE_URL) {
+        this.IMAGE_URL = IMAGE_URL;
+    }
+
+    private String IMAGE_URL;
+
     public String getSENDGOODS() {
         return SENDGOODS;
     }

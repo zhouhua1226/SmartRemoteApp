@@ -92,7 +92,6 @@ public class MyTextSwitcher extends TextSwitcher implements ViewSwitcher.ViewFac
         TextView tv = new TextView(context);
         tv.setTextColor(getResources().getColor(R.color.zww_broadcast_text));
         tv.setTextSize(13);
-//        center
         tv.setGravity(View.TEXT_ALIGNMENT_CENTER);
         return tv;
     }

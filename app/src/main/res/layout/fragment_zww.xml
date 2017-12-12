@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffcad3"
     android:orientation="vertical">
 
@@ -31,31 +32,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#efefef"
+            android:background="@color/apptheme_bg"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="21dp"
-                android:layout_height="21dp"
-                android:background="@drawable/zww_broadcast_image1"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"/>
+            <!--<ImageView-->
+                <!--android:layout_width="21dp"-->
+                <!--android:layout_height="21dp"-->
+                <!--android:background="@drawable/zww_broadcast_image1"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginLeft="15dp"/>-->
 
-        <com.tencent.tmgp.jjzww.view.MyTextSwitcher
-            android:id="@+id/rolling_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:background="#efefef"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:singleLine="true"
-            android:clickable="true"
-            />
-        <!--android:layout_gravity="center"-->
-        <!--android:background="#efefef"-->
+            <com.tencent.tmgp.jjzww.view.MarqueeView
+                android:id="@+id/marqueeview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mvAnimDuration="500"
+                app:mvInterval="3000"
+                app:mvTextSize="14sp"/>
+
+
+        <!--<com.tencent.tmgp.jjzww.view.MyTextSwitcher-->
+            <!--android:id="@+id/rolling_tv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@color/apptheme_bg"-->
+            <!--android:focusable="true"-->
+            <!--android:focusableInTouchMode="true"-->
+            <!--android:singleLine="true"-->
+            <!--android:clickable="true"-->
+            <!--/>-->
+        <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="#efefef"&ndash;&gt;-->
 
 
     </LinearLayout>
@@ -77,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
+            android:background="#eceaea"
             android:scrollbars="none">
         </android.support.v7.widget.RecyclerView>
 

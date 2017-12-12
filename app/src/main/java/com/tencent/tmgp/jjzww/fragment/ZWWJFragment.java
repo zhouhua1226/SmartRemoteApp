@@ -5,23 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import com.tencent.tmgp.jjzww.R;
 import com.tencent.tmgp.jjzww.activity.ctrl.view.CtrlActivity;
 import com.tencent.tmgp.jjzww.adapter.ZWWAdapter;
 import com.tencent.tmgp.jjzww.base.BaseFragment;
 import com.tencent.tmgp.jjzww.bean.LoginInfo;
+import com.tencent.tmgp.jjzww.bean.Marquee;
 import com.tencent.tmgp.jjzww.bean.Result;
 import com.tencent.tmgp.jjzww.bean.VideoBackBean;
 import com.tencent.tmgp.jjzww.bean.ZwwRoomBean;
 import com.tencent.tmgp.jjzww.model.http.HttpManager;
 import com.tencent.tmgp.jjzww.model.http.RequestSubscriber;
+import com.tencent.tmgp.jjzww.utils.UrlUtils;
 import com.tencent.tmgp.jjzww.utils.UserUtils;
 import com.tencent.tmgp.jjzww.utils.Utils;
 import com.tencent.tmgp.jjzww.view.EmptyLayout;
-import com.tencent.tmgp.jjzww.view.MyTextSwitcher;
+import com.tencent.tmgp.jjzww.view.MarqueeView;
 import com.tencent.tmgp.jjzww.view.SpaceItemDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.Unbinder;
 
@@ -36,17 +41,17 @@ public class ZWWJFragment extends BaseFragment {
     @BindView(R.id.zww_emptylayout)
     EmptyLayout zwwEmptylayout;
     Unbinder unbinder;
-    @BindView(R.id.rolling_tv)
-    MyTextSwitcher rollingTv;
-    Unbinder unbinder1;
+    //    @BindView(R.id.rolling_tv)
+//    MyTextSwitcher rollingTv;
+    @BindView(R.id.marqueeview)
+    MarqueeView marqueeview;
 
     private List<ZwwRoomBean> roomBeens = new ArrayList<>();
     private ZWWAdapter zwwAdapter;
     private String sessionId;
-    //    private String phone;
     private EmptyLayout.OnClickReTryListener onClickReTryListener;
-    private List<String> list1 = new ArrayList<>();
     private List<VideoBackBean> playBackBeanList = new ArrayList<>();
+    private List<Marquee> marquees = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -61,11 +66,9 @@ public class ZWWJFragment extends BaseFragment {
 
     }
 
-    private void initText(List<String> listRun) {
-        int size = listRun.size();
-        String[] arr = listRun.toArray(new String[size]);
-        rollingTv.setTextStillTime(4000);
-        rollingTv.setResources(arr);
+    private void initText() {
+
+
 
     }
 
@@ -75,13 +78,15 @@ public class ZWWJFragment extends BaseFragment {
             public void _onSuccess(Result<LoginInfo> listRankBeanResult) {
                 playBackBeanList = listRankBeanResult.getData().getPlayback();
                 for (int i = 0; i < playBackBeanList.size(); i++) {
+                    Marquee marquee=new Marquee();
                     String s = "恭喜" + playBackBeanList.get(i).getUSERNAME() +
                             "用户抓中一个" + playBackBeanList.get(i).getDOLLNAME();
-                    list1.add(s);
+                    marquee.setTitle(s);
+                    marquee.setImgUrl(UrlUtils.USERFACEIMAGEURL+playBackBeanList.get(i).getIMAGE_URL());
+                    marquees.add(marquee);
                 }
-
-                initText(list1);
-
+                marqueeview.setImage(true);
+                marqueeview.startWithList(marquees);
             }
 
             @Override
@@ -172,6 +177,5 @@ public class ZWWJFragment extends BaseFragment {
         super.onResume();
         getUserList();
     }
-
 
 }
