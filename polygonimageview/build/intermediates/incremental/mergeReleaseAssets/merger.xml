@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\com.hongxiu.wawaji.2.2\SmartRemoteApp\polygonimageview\src\main\assets"/><source path="D:\com.hongxiu.wawaji.2.2\SmartRemoteApp\polygonimageview\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\com.hongxiu.wawaji.2.2\SmartRemoteApp\polygonimageview\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\SmartRemoteApp\polygonimageview\src\main\assets"/><source path="D:\SmartRemoteApp\polygonimageview\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\SmartRemoteApp\polygonimageview\src\release\assets"/></dataSet></merger>

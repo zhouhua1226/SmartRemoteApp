@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="167dp"
+    android:layout_width="165dp"
     android:layout_height="wrap_content"
     android:background="@drawable/center_item">
 
     <ImageView
         android:id="@+id/moppet_image"
-        android:background="@drawable/loading"
-        android:layout_width="167dp"
+        android:src="@drawable/loading"
+        android:layout_width="match_parent"
         android:layout_height="90dp" />
 
     <ImageView
         android:id="@+id/line"
-        android:layout_width="167dp"
+        android:layout_width="165dp"
         android:layout_height="1px"
         android:visibility="gone"
         android:layout_below="@+id/moppet_image"
@@ -27,7 +27,7 @@
         android:layout_marginTop="11dp"
         android:paddingBottom="5dp"
         android:text="未知"
-        android:textColor="#784c4c"
+        android:textColor="#683B20"
         android:textSize="12sp" />
 
     <ImageView
@@ -52,11 +52,11 @@
         android:paddingLeft="3dp"
         android:text="19"
         android:gravity="center"
-        android:textColor="#784c4c"
+        android:textColor="#683B20"
         android:textSize="12sp" />
 
     <RelativeLayout
-        android:layout_width="167dp"
+        android:layout_width="165dp"
         android:layout_height="24dp"
         android:background="#09000000">
 
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/ctrl_idling_icon" />
 
         <!--<TextView-->

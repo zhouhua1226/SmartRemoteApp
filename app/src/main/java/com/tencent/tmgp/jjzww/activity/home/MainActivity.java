@@ -150,7 +150,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -287,11 +286,11 @@ public class MainActivity extends BaseActivity {
      * 设置未选中状态
      */
     private void setFocuse() {
-//        ivTabZww.setBackgroundResource(R.drawable.zww1);
-//        tvTabHall.setTextColor(getResources().getColor(R.color.main_gray));
-//        ivTabList.setBackgroundResource(R.drawable.phb);
+        ivTabZww.setBackgroundResource(R.drawable.zww_unicon);
+        ivTabList.setBackgroundResource(R.drawable.rank_unicon);
+        ivTabMy.setBackgroundResource(R.drawable.mycenter_unicon);
 //        tvTabList.setTextColor(getResources().getColor(R.color.main_gray));
-//        ivTabMy.setBackgroundResource(R.drawable.wd);
+//        tvTabHall.setTextColor(getResources().getColor(R.color.main_gray));
 //        tvTabMy.setTextColor(getResources().getColor(R.color.main_gray));
     }
 
@@ -312,8 +311,8 @@ public class MainActivity extends BaseActivity {
         }
         nowTransaction.replace(R.id.main_center, zwwjFragment);
         nowTransaction.commitAllowingStateLoss();
-//        setFocuse();
-//        ivTabZww.setBackgroundResource(R.drawable.zww);
+        setFocuse();
+        ivTabZww.setBackgroundResource(R.drawable.zww_icon);
 //        tvTabHall.setTextColor(getResources().getColor(R.color.pink));
     }
 
@@ -324,8 +323,8 @@ public class MainActivity extends BaseActivity {
         }
         nowTransaction.replace(R.id.main_center, rankFragment);
         nowTransaction.commitAllowingStateLoss();
-//        setFocuse();
-//        ivTabList.setBackgroundResource(R.drawable.phb1);
+        setFocuse();
+        ivTabList.setBackgroundResource(R.drawable.rank_icon);
 //        tvTabList.setTextColor(getResources().getColor(R.color.pink));
     }
 
@@ -336,9 +335,9 @@ public class MainActivity extends BaseActivity {
         }
         nowTransaction.replace(R.id.main_center, myCenterFragment);
         nowTransaction.commitAllowingStateLoss();
-//        setFocuse();
-//        ivTabMy.setBackgroundResource(R.drawable.wd1);
-//        tvTabMy.setTextColor(getResources().getColor(R.color.pink));
+        setFocuse();
+        ivTabMy.setBackgroundResource(R.drawable.mycenter_icon);
+       //tvTabMy.setTextColor(getResources().getColor(R.color.pink));
     }
 
     @OnClick({R.id.layout_tab_zww, R.id.layout_tab_list, R.id.layout_tab_my})

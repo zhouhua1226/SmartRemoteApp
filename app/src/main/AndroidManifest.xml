@@ -205,6 +205,13 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <!-- ###############    微信回调类    #############  -->
 
+        <activity android:name=".activity.home.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+
     </application>
 
 </manifest>

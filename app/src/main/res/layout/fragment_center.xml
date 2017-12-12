@@ -80,6 +80,7 @@
                 tools:text="云梦一霸"
                 android:textSize="15sp"
                 android:textColor="@color/white"
+                android:textStyle="bold"
                 />
 
 

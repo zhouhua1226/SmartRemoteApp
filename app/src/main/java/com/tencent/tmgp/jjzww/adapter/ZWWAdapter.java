@@ -52,15 +52,15 @@ public class ZWWAdapter extends RecyclerView.Adapter<ZWWAdapter.ZWWViewHolder> {
         Glide.with(mContext).load(UrlUtils.PICTUREURL + bean.getDOLL_URL()).error(R.drawable.loading).into(holder.imageView);
         holder.itemView.setEnabled(true);
         if (bean.getDOLL_STATE().equals("10")) {
-            holder.connectIv.setImageResource(R.drawable.ctrl_idling_icon);
+            holder.connectIv.setImageResource(R.drawable.ctrl_work_icon);
 //            holder.connectTv.setTextColor(mContext.getResources().getColor(R.color.green));
 //            holder.connectTv.setText(mContext.getString(R.string.free_text));
         } else if (bean.getDOLL_STATE().equals("11")) {
-            holder.connectIv.setImageResource(R.drawable.ctrl_work_icon);
+            holder.connectIv.setImageResource(R.drawable.ctrl_idling_icon);
 //            holder.connectTv.setTextColor(mContext.getResources().getColor(R.color.redx));
-//            holder.connectTv.setText(mContext.getString(R.string.busy_text));
+//           holder.connectTv.setText(mContext.getString(R.string.busy_text));
         } else {
-            holder.connectIv.setImageResource(R.drawable.ctrl_work_icon);
+            holder.connectIv.setImageResource(R.drawable.ctrl_repair_icon);
 //            holder.connectTv.setTextColor(mContext.getResources().getColor(R.color.redx));
 //            holder.connectTv.setText(mContext.getString(R.string.preserve_text));
             holder.itemView.setEnabled(false);

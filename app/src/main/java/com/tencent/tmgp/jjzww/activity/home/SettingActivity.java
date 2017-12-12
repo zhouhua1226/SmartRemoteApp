@@ -161,31 +161,33 @@ public class SettingActivity extends BaseActivity {
 //                        }
 //                    }
 //                });
-                SelectLoginDialog selectLoginDialog=new SelectLoginDialog(this,R.style.easy_dialog_style);
-                selectLoginDialog.setCancelable(false);
-                selectLoginDialog.show();
-                selectLoginDialog.setDialogResultListener(new SelectLoginDialog.DialogResultListener() {
-                    @Override
-                    public void getResult(int resultCode) {
-                        switch (resultCode){
-                            case 0:
-                                MyToast.getToast(context,"QQ登录").show();
-                                break;
-                            case 1:
-                                MyToast.getToast(context,"微信登录").show();
-                                break;
-                            case 2:
-                                MyToast.getToast(context,"其它登录").show();
-                                break;
-                            case 3:
-                                MyToast.getToast(context,"游客登录").show();
-                                break;
-                            case 4:
-                                MyToast.getToast(context,"取消登录").show();
-                                break;
-                        }
-                    }
-                });
+//                SelectLoginDialog selectLoginDialog=new SelectLoginDialog(this,R.style.easy_dialog_style);
+//                selectLoginDialog.setCancelable(false);
+//                selectLoginDialog.show();
+//                selectLoginDialog.setDialogResultListener(new SelectLoginDialog.DialogResultListener() {
+//                    @Override
+//                    public void getResult(int resultCode) {
+//                        switch (resultCode){
+//                            case 0:
+//                                MyToast.getToast(context,"QQ登录").show();
+//                                break;
+//                            case 1:
+//                                MyToast.getToast(context,"微信登录").show();
+//                                break;
+//                            case 2:
+//                                MyToast.getToast(context,"其它登录").show();
+//                                break;
+//                            case 3:
+//                                MyToast.getToast(context,"游客登录").show();
+//                                break;
+//                            case 4:
+//                                MyToast.getToast(context,"取消登录").show();
+//                                break;
+//                        }
+//                    }
+//                });
+                startActivity(new Intent(this,LoginActivity.class));
+
 
                 break;
 

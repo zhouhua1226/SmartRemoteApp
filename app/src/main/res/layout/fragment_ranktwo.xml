@@ -41,7 +41,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     app:poly_border="true"
-                    app:poly_border_color="#E2E0D9"
+                    app:poly_border_color="#CCCCCC"
                     app:poly_border_width="5dp"
                     app:poly_corner_radius="5"
                     app:poly_rotation_angle="90"
@@ -82,6 +82,7 @@
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/white"
                         android:textSize="14sp"
+                        android:textStyle="bold"
                         />
                     <View
                         android:layout_width="match_parent"
@@ -99,6 +100,7 @@
                         android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="3dp"
+                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
@@ -118,7 +120,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     app:poly_border="true"
-                    app:poly_border_color="#f5f506"
+                    app:poly_border_color="#FFE311"
                     app:poly_border_width="5dp"
                     app:poly_corner_radius="5"
                     app:poly_rotation_angle="90"
@@ -151,6 +153,7 @@
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/white"
                         android:textSize="14sp"
+                        android:textStyle="bold"
                         />
                     <View
                         android:layout_width="match_parent"
@@ -168,6 +171,7 @@
                         android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="3dp"
+                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
@@ -187,7 +191,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     app:poly_border="true"
-                    app:poly_border_color="#cf7548"
+                    app:poly_border_color="#CE8236"
                     app:poly_border_width="5dp"
                     app:poly_corner_radius="5"
                     app:poly_rotation_angle="90"
@@ -220,6 +224,7 @@
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/white"
                         android:textSize="14sp"
+                        android:textStyle="bold"
                         />
                     <View
                         android:layout_width="match_parent"
@@ -237,6 +242,7 @@
                         android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="3dp"
+                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
@@ -285,7 +291,7 @@
             android:text="0"
             android:textStyle="bold"
             android:textSize="15sp"
-            android:textColor="#22dfb6"
+            android:textColor="#26BAAF"
             android:layout_centerHorizontal="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
